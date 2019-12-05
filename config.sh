@@ -5,3 +5,4 @@ file="/credentials.json"
 path="$dir$file"
 
 export GOOGLE_APPLICATION_CREDENTIALS=$path
+env | grep GOOGLE
