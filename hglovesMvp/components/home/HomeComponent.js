@@ -3,21 +3,26 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image } from 'react-native';
 
 const ScreenDim = Dimensions.get("window");
+const imageWidth = ScreenDim.width * 80 / 100;
+const imageHeight = Math.round(imageWidth * 363 / 293);
 
 class HomeComponent extends React.Component {
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.handContainer}>
-                    <Image style={styles.hand} source={require('../../assets/hand.png')} />
+                <View style={styles.headerContainer}>
+                    <Text style={{ ...styles.headerText, fontFamily: 'open-sans-bold' }}>Ceci est un MVP</Text>
+                    <Text style={{ ...styles.headerText, fontFamily: 'open-sans' }}>Veuillez cliquer sur Communiquer pour démarrer la simulation</Text>
                 </View>
-                <View style={styles.lormContainer}>
+                <View style={styles.logoContainer}>
+                    <Image
+                        style={{ width: imageWidth, height: imageHeight }}
+                        source={require('../../assets/images/home/logo.png')}
+                    />
                 </View>
-                <View style={styles.inputContainer}>
-                    <View style={styles.recordButton}>
-                        <Text style={styles.recordText}>Parler</Text>
-                    </View>
+                <View style={styles.footerContainer}>
+
                 </View>
             </View>
         );
@@ -26,40 +31,35 @@ class HomeComponent extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        display: 'flex',
         width: '100%',
         height: '100%',
+        backgroundColor: '#1c3956',
     },
-    handContainer: {
-
+    headerContainer: {
+        display: 'flex',
+        width: '80%',
+        height: '20%',
+        marginLeft: '10%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    hand: {
-        marginTop: '20%',
-        width: '100%',
-        height: '60%',
+    headerText: {
+        textAlign: 'center',
+        color: 'white'
     },
-    lormContainer: {
-
-    },
-    inputContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        minWidth: '40%',
-        height: '8%'
-    },
-    recordButton: {
-        width: '100%',
+    logoContainer: {
+        display: 'flex',
+        width: '80%',
+        marginLeft: '10%',
         height: '100%',
-        backgroundColor: '#1C3956',
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 50
     },
-    recordText: {
-        color: '#FFFFFF'
-    }
+    footerContainer: {
+        display: 'flex',
+        width: '100%',
+        height: '10%',
+    },
 });
 
 export default HomeComponent;
