@@ -9,7 +9,7 @@ public class QuickStart
         TextToSpeechClient client = TextToSpeechClient.Create();
         SynthesisInput input = new SynthesisInput
         {
-            Text = "Dorian est la plus grosse salope du languedoc roussillon!"
+            Text = "Dorian est la plus belle personne du languedoc roussillon!"
         };
         VoiceSelectionParams voice = new VoiceSelectionParams
         {
