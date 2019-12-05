@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@google-cloud/text-to-speech": "^2.0.2",
     "expo": "^35.0.0",
     "expo-font": "^7.0.0",
     "react": "16.8.3",
