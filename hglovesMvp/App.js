@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 
 import HomeComponent from './components/home/HomeComponent';
+import MainComponent from './components/main/MainComponent';
 
 const ScreenDim = Dimensions.get("window");
 
@@ -26,11 +27,11 @@ class App extends React.Component {
 
         if (!fontLoaded)
             return (
-                <View></View>
+                <View/>
             );
         return (
             <View style={styles.container}>
-                <HomeComponent />
+                <MainComponent />
             </View>
         );
     }
