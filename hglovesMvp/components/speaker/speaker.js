@@ -1,7 +1,7 @@
 import * as Speech from 'expo-speech';
 
-function speaker(text, language) {
+function textToSpeech(text, language) {
   Speech.speak(text, {language : language});
 }
 
-export default speaker;
+export default textToSpeech;
