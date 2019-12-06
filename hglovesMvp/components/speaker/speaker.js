@@ -1,9 +1,7 @@
-const soundObject = new Expo.Audio.Sound();
+import * as Speech from 'expo-speech';
 
-try {
-  await soundObject.loadAsync(require('../../audio/output.mp3'));
-  await soundObject.playAsync();
-  console.log("Sound is playing !")
-} catch (error) {
-  console.log("An error occurred!")
+function textToSpeech(text, language) {
+  Speech.speak(text, {language : language});
 }
+
+export default textToSpeech;
