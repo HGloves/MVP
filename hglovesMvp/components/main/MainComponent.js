@@ -32,22 +32,26 @@ class MainComponent extends React.Component {
                                       onPress={this.onPress}>
                         {!this.state.onRecord ?
                             <>
-                                <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>
-                                    Parler
-                                </Text>
-                                <Image style={styles.microphone} source={require('../../assets/microphone.png')} />
+                                <View style={{ ...styles.buttonActionContainer, width: '70%'}}>
+                                    <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>Parler</Text>
+                                </View>
+                                <View style={{ ...styles.buttonActionContainer, width: '30%'}}>
+                                    <Image style={styles.buttonAction} source={require('../../assets/microphone.png')} />
+                                </View>
                             </>
                             :
                             <>
-                                <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>
-                                    En cours
-                                </Text>
-                                <Image style={styles.microphone} source={require('../../assets/record.png')} />
+                                <View style={{ ...styles.buttonActionContainer, width: '70%'}}>
+                                    <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>En cours</Text>
+                                </View>
+                                <View style={{ ...styles.buttonActionContainer, width: '30%'}}>
+                                    <Image style={styles.buttonAction} source={require('../../assets/record.png')} />
+                                </View>
                             </>
                         }
                     </TouchableOpacity>
                     <View style={styles.inputContainer}>
-                        <TextInput placeholder={"Bonjour"}/>
+                        <TextInput style={styles.input}placeholder={"Bonjour"}/>
                     </View>
                 </View>
             </View>
@@ -85,29 +89,35 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#1C3956',
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 50,
+        borderTopRightRadius: 30,
         height: '100%',
         width: '30%',
-    },
-    inputContainer: {
-        height: '100%',
-        width: '60%',
     },
     recordText: {
         color: '#FFFFFF',
         fontSize: 20,
-        marginTop: '12%',
-        marginLeft: '10%'
     },
-    microphone: {
+    buttonActionContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonAction: {
         width: 32,
         height: 32,
-        marginTop: '12%',
-        marginLeft: '7%'
     },
+    inputContainer: {
+        height: '100%',
+        width: '60%',
+        borderTopRightRadius: 4,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4,
+        backgroundColor: 'green'
+    },
+    input: {
+        backgroundColor: 'red'
+    }
 });
 
 export default MainComponent;
