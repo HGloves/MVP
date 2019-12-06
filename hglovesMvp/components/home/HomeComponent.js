@@ -12,7 +12,7 @@ const iconHeight = iconWidth;
 class HomeComponent extends React.Component {
 
     handleNavigation = () => {
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('Annimation')
     }
 
     render() {

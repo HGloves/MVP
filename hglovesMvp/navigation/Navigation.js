@@ -3,6 +3,9 @@ import { createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from '../components/home/HomeComponent'
 import MainScreen from '../components/main/MainComponent'
 
+import AnnimationScreen from '../components/annimation/AnnimationComponent'
+
+
 noHeader = {
     header: null
 }
@@ -14,6 +17,10 @@ AppNavigator = createStackNavigator({
     },
     Main: {
         screen: MainScreen,
+        navigationOptions: noHeader
+    },
+    Annimation: {
+        screen: AnnimationScreen,
         navigationOptions: noHeader
     }
 })
