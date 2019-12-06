@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import MainComponent from './components/main/MainComponent';
 import Navigation from './navigation/Navigation';
@@ -27,12 +28,16 @@ class App extends React.Component {
 
         if (!fontLoaded)
             return (
-                <View/>
+                <PaperProvider>
+                    <View />
+                </PaperProvider>
             );
         return (
-            <View style={styles.container}>
-                <Navigation />
-            </View>
+            <PaperProvider>
+                <View style={styles.container}>
+                    <Navigation />
+                </View>
+            </PaperProvider>
         );
     }
 }

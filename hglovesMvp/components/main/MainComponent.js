@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { IconButton } from 'react-native-paper';
+import HelpComponent from './HelpComponent';
 
 const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 80 / 100;
@@ -12,14 +14,23 @@ class MainComponent extends React.Component {
         super(props);
         this.state = {
             onRecord: false,
+            helpStatus: false,
         }
     }
 
     onPress = () => {
-        this.setState({onRecord: !this.state.onRecord});
+        this.setState({ onRecord: !this.state.onRecord });
     };
 
+    helpStatusHandler = status => {
+        this.setState({
+            helpStatus: status,
+        });
+    }
+
     render() {
+        const { helpStatus } = this.state;
+
         return (
             <View style={styles.container}>
                 <View style={styles.handContainer}>
@@ -29,31 +40,38 @@ class MainComponent extends React.Component {
                 </View>
                 <View style={styles.actionsContainer}>
                     <TouchableOpacity style={styles.recordContainer}
-                                      onPress={this.onPress}>
+                        onPress={this.onPress}>
                         {!this.state.onRecord ?
                             <>
-                                <View style={{ ...styles.buttonActionContainer, width: '70%'}}>
+                                <View style={{ ...styles.buttonActionContainer, width: '70%' }}>
                                     <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>Parler</Text>
                                 </View>
-                                <View style={{ ...styles.buttonActionContainer, width: '30%'}}>
+                                <View style={{ ...styles.buttonActionContainer, width: '30%' }}>
                                     <Image style={styles.buttonAction} source={require('../../assets/microphone.png')} />
                                 </View>
                             </>
                             :
                             <>
-                                <View style={{ ...styles.buttonActionContainer, width: '70%'}}>
+                                <View style={{ ...styles.buttonActionContainer, width: '70%' }}>
                                     <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>En cours</Text>
                                 </View>
-                                <View style={{ ...styles.buttonActionContainer, width: '30%'}}>
+                                <View style={{ ...styles.buttonActionContainer, width: '30%' }}>
                                     <Image style={styles.buttonAction} source={require('../../assets/record.png')} />
                                 </View>
                             </>
                         }
                     </TouchableOpacity>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.input}placeholder={"Bonjour"}/>
+                        <TextInput style={styles.input} placeholder={"Bonjour"} />
+                        <IconButton
+                            style={styles.helpButton}
+                            icon="book-open"
+                            color={'#1C3956'}
+                            onPress={() => this.helpStatusHandler(true)}
+                        />
                     </View>
                 </View>
+                <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
             </View>
         );
     }
@@ -107,17 +125,27 @@ const styles = StyleSheet.create({
         height: 32,
     },
     inputContainer: {
+        display: 'flex',
         height: '100%',
         width: '60%',
         borderTopRightRadius: 4,
         borderTopLeftRadius: 4,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        backgroundColor: 'green'
+        // backgroundColor: 'green',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     input: {
+        display: 'flex',
+        width: '80%',
         backgroundColor: 'red'
-    }
+    },
+    helpButton: {
+        display: 'flex',
+        width: '10%',
+    },
 });
 
 export default MainComponent;
