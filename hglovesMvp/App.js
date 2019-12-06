@@ -3,13 +3,14 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native';
 
 import HomeComponent from './components/home/HomeComponent';
+import MainComponent from "./components/main/MainComponent";
 
 const ScreenDim = Dimensions.get("window");
 
 export default function App() {
   return (
     <View style={styles.container}>
-        <HomeComponent />
+        <MainComponent />
     </View>
   );
 }
