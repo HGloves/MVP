@@ -3,8 +3,6 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import { Provider as PaperProvider } from 'react-native-paper';
-
-import MainComponent from './components/main/MainComponent';
 import Navigation from './navigation/Navigation';
 
 const ScreenDim = Dimensions.get("window");
@@ -35,8 +33,7 @@ class App extends React.Component {
         return (
             <PaperProvider>
                 <View style={styles.container}>
-                    {/*<Navigation />*/}
-                    <MainComponent/>
+                    <Navigation />
                 </View>
             </PaperProvider>
         );
