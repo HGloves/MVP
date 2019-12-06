@@ -1,151 +1,88 @@
-// import React from 'react';
-// import { Dimensions } from 'react-native'
-// import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, {Component} from 'react';
+import { Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Animated} from 'react-native';
+import { TouchableWithoutFeedback } from "react-native-web";
 
-// const ScreenDim = Dimensions.get("window");
-// const imageWidth = ScreenDim.width * 60 / 100;
-// const imageHeight = Math.round(imageWidth * 363 / 293);
+const ScreenDim = Dimensions.get("window");
 
-// const iconWidth = ScreenDim.width * 5 / 100;
-// const iconHeight = iconWidth;
+export default class AnnimationComponent extends Component  {
+    constructor(props) {
+        super(props);
+        this.state = {text: ""};
+        this.lorm = [1,
+            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 300, fade: 0, letter: "b"},
+            3,4,5,6,7,8,9,10,11,12,13,14,
+            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 10, fade: 0, letter: 'o'},
+            16,17,18,19,20,21,22,23,24,25,26]
+    }
 
-// class HomeComponent extends React.Component {
+    moveElement(letter) {
+        console.log("moving");
+        let obj = this.lorm.find(function (elem) {
+            if (elem.letter !== undefined && elem.letter === letter.toLowerCase())
+                return elem
+        });
+        if (obj !== undefined) {
+            Animated.sequence([
+                Animated.timing(obj, {
+                    toValue: 1,
+                    duration: 1000
+                }),
+                Animated.spring(obj.anim, {
+                    toValue: {x: obj.dx, y: obj.dy},
+                }),
+                Animated.timing(obj, {
+                    toValue: 0,
+                    duration: 1000
+                }),
+            ]).start()
+        }
+    }
 
-//     handleNavigation = () => {
-//         this.props.navigation.navigate('Main')
-//     }
+    /*   whichLetters() {
+           if (this.state.text.length > 0) {
+               let word = this.state.text.split("");
+               for (let i = 0; word.length > i;i++) {
+                   console.log("lette r: " + word[i].toLowerCase() + " = lorm: " + this.alphabet.lorm[this.alphabet.letters.indexOf(word[i].toLowerCase())]);
+               }
+           }
+       };*/
 
-//     render() {
-//         return (
-//             <View style={styles.container}>
-//                 <View style={styles.headerContainer}>
-//                     <Text style={{ ...styles.headerText, fontFamily: 'open-sans-bold' }}>Ceci est un MVP</Text>
-//                     <Text style={{ ...styles.headerText, fontFamily: 'open-sans' }}>Veuillez cliquer sur Communiquer pour démarrer la simulation</Text>
-//                 </View>
-//                 <View style={styles.logoContainer}>
-//                     <Image
-//                         style={{ width: imageWidth, height: imageHeight }}
-//                         source={require('../../assets/images/home/logo.png')}
-//                     />
-//                 </View>
-//                 <View style={styles.footerContainer}>
-//                     <TouchableOpacity style={styles.footerButton}
-//                         onPress={() => this.handleNavigation()}>
-//                         <Text style={{ ...styles.footerText }}>Communiquer</Text>
-//                         <Image
-//                             style={{ width: iconWidth, height: iconHeight }}
-//                             source={require('../../assets/images/icon/mic.png')}
-//                         />
-//                     </TouchableOpacity>
-//                 </View>
-//             </View>
-//         );
-//     }
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         display: 'flex',
-//         width: '100%',
-//         height: '100%',
-//         backgroundColor: '#1c3956',
-//     },
-//     headerContainer: {
-//         display: 'flex',
-//         width: '80%',
-//         height: '25%',
-//         marginLeft: '10%',
-//         flexDirection: 'column',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     headerText: {
-//         textAlign: 'center',
-//         color: 'white'
-//     },
-//     logoContainer: {
-//         display: 'flex',
-//         width: '90%',
-//         marginLeft: '10%',
-//         height: '67%',
-//     },
-//     footerContainer: {
-//         display: 'flex',
-//         width: '100%',
-//         height: '8%',
-//         flexDirection: 'row-reverse',
-//     },
-//     footerButton: {
-//         display: 'flex',
-//         width: '40%',
-//         height: '100%',
-//         backgroundColor: 'white',
-//         borderTopLeftRadius: 30,
-//         flexDirection: 'row',
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//     },
-//     footerText: {
-//         textAlign: 'center',
-//         color: '#1c3956',
-//         fontFamily: 'open-sans-bold',
-//         fontSize: 30,
-//     },
-// });
-
-// export default HomeComponent;
-
-
-
-import React, { Component } from 'react';
-import { Animated, TouchableWithoutFeedback, Text, View, StyleSheet } from 'react-native';
-
-export default class AnnimationComponent extends Component {
-  constructor(props) {
-    super(props)
-
-    this.moveAnimation = new Animated.ValueXY({ x: 10, y: 450 })
-  }
-
-  _moveBall = () => {
-    Animated.spring(this.moveAnimation, { 
-      toValue: {x: 250, y: 10},
-    }).start()
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Animated.View style={[styles.tennisBall, this.moveAnimation.getLayout()]}>
-          <TouchableWithoutFeedback style={styles.button} onPress={this._moveBall}>
-            <Text style={styles.buttonText}>Press</Text>
-          </TouchableWithoutFeedback>        
-        </Animated.View>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Animated.View style={styles.tennisBall}>
+                    <TouchableWithoutFeedback style={styles.button} onPress={() => this.moveElement("b")}>
+                        <View>
+                            <Text style={styles.buttonText}>Press</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Animated.View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ecf0f1',
-  },
-  tennisBall: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'greenyellow',
-    borderRadius: 100,
-    width: 100,
-    height: 100,
-  },
-  button: {
-    paddingTop: 24,
-    paddingBottom: 24,
-  },
-  buttonText: {
-    fontSize: 24,
-    color: '#333',
-  }
+    container: {
+        flex: 1,
+        backgroundColor: '#ecf0f1',
+    },
+    tennisBall: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'greenyellow',
+        borderRadius: 100,
+        width: 100,
+        height: 100,
+    },
+    button: {
+        paddingTop: 24,
+        paddingBottom: 24,
+    },
+    buttonText: {
+        fontSize: 24,
+        color: '#333',
+    }
 });
