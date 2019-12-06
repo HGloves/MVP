@@ -11,6 +11,10 @@ const iconHeight = iconWidth;
 
 class HomeComponent extends React.Component {
 
+    handleNavigation = () => {
+        this.props.navigation.navigate('Main')
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -25,7 +29,8 @@ class HomeComponent extends React.Component {
                     />
                 </View>
                 <View style={styles.footerContainer}>
-                    <TouchableOpacity style={styles.footerButton}>
+                    <TouchableOpacity style={styles.footerButton}
+                        onPress={() => this.handleNavigation()}>
                         <Text style={{ ...styles.footerText }}>Communiquer</Text>
                         <Image
                             style={{ width: iconWidth, height: iconHeight }}
