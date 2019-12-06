@@ -6,7 +6,10 @@ We had 2 weeks to developp an MVP of our solution.
 
 # How to install and start
 
-``` npm i && npm start ```
+```
+cd hglovesMvp
+npm i && npm start 
+```
 
 # Hgloves
 
