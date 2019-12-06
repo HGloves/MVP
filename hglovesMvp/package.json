@@ -8,8 +8,19 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@google-cloud/text-to-speech": "^2.0.2",
     "expo": "^35.0.0",
+    "expo-av": "^7.0.1",
+    "expo-speech": "~7.0.0",
+    "fs": "0.0.1-security",
+    "metro-react-native-babel-preset": "^0.57.0",
+    "node-libs-react-native": "^1.0.3",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "react-native-dotenv": "^0.2.0",
+    "react-native-fs": "^2.16.2",
+    "react-native-util": "^1.0.2",
+    "rn-nodeify": "^10.2.0",
+    "stream": "0.0.2",
     "expo-font": "^7.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -22,6 +33,9 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
+  },
+  "browser": {
+    "child_process": false
   },
   "private": true
 }
