@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 80 / 100;
+const imageWidth = ScreenDim.width * 60 / 100;
 const imageHeight = Math.round(imageWidth * 363 / 293);
 
 const iconWidth = ScreenDim.width * 5 / 100;
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     footerText: {
         textAlign: 'center',
         color: '#1c3956',
-        fontFamily: 'open-sans-bold'
+        fontFamily: 'open-sans-bold',
+        fontSize: 30,
     },
 });
 
