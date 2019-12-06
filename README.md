@@ -11,7 +11,7 @@ cd hglovesMvp
 npm i && npm start 
 ```
 
-# Hgloves
+# HGloves
 
 ## What is our solution ?
 
