@@ -5,8 +5,8 @@ import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 
 const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 80 / 100;
-const imageHeight = Math.round(imageWidth * 363 / 293);
+const imageWidth = ScreenDim.width * 90 / 100;
+const imageHeight = Math.round(imageWidth * 2400 / 1920);
 
 class MainComponent extends React.Component {
 
@@ -62,7 +62,9 @@ class MainComponent extends React.Component {
                         }
                     </TouchableOpacity>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.input} placeholder={"Bonjour"} />
+                        <View style={styles.inputView}>
+                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>HELLO TEST</Text>
+                        </View>
                         <IconButton
                             style={styles.helpButton}
                             icon="book-open"
@@ -84,15 +86,22 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     handContainer: {
-
+        width: '100%',
+        height: '78%',
+        backgroundColor: 'green',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     hand: {
-        marginTop: '20%',
-        width: '100%',
-        height: '60%',
+        backgroundColor: 'grey',
+        width: imageWidth,
+        height: imageHeight
     },
     lormContainer: {
-
+        backgroundColor: "red",
+        width: '100%',
+        height: '15%'
     },
     actionsContainer: {
         position: 'absolute',
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         width: '100%',
-        height: '8%',
+        height: '7%',
     },
     recordContainer: {
         flex: 1,
@@ -127,20 +136,26 @@ const styles = StyleSheet.create({
     inputContainer: {
         display: 'flex',
         height: '100%',
-        width: '60%',
-        borderTopRightRadius: 4,
-        borderTopLeftRadius: 4,
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        // backgroundColor: 'green',
+        width: '70%',
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
     },
+    inputView: {
+        marginLeft: '8%',
+        height: '75%',
+        width: '70%',
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
+        backgroundColor: '#F1F0FF',
+        justifyContent: 'space-around',
+    },
     input: {
-        display: 'flex',
         width: '80%',
-        backgroundColor: 'red'
+        marginLeft: '10%',
+        color: '#1C3956'
     },
     helpButton: {
         display: 'flex',

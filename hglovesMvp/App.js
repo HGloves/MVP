@@ -35,7 +35,8 @@ class App extends React.Component {
         return (
             <PaperProvider>
                 <View style={styles.container}>
-                    <Navigation />
+                    {/*<Navigation />*/}
+                    <MainComponent/>
                 </View>
             </PaperProvider>
         );
