@@ -42,3 +42,5 @@ This is our [website](http://hgloves.tk/) and you can find us on our social netw
 * Hugo Codinach ([LinkedIn](https://www.linkedin.com/in/hugo-codinach/)/[GitHub](https://github.com/hugocodinach)) hugo.codinach@epitech.eu
 
 * Lilian Lesueur ([LinkedIn](https://www.linkedin.com/in/lilian-lesueur-9b10a4167/)/[GitHub](https://github.com/lilianlesueur)) lilian.lesueur@epitech.eu
+
+* Nicolas Albiges ([LinkedIn](https://www.linkedin.com/in/nicolas-albiges/)/[GitHub](https://github.com/NicolasAlbiges)) nicolas.albiges@epitech.eu
