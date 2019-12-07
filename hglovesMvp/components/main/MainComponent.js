@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, Text } from 'react-native';
+import RecordButton from './RecordButton'
 import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
@@ -13,16 +14,12 @@ class MainComponent extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            onRecord: false,
             helpStatus: false,
             exerciseStatus: false,
         }
     }
-
-    onPress = () => {
-        this.setState({ onRecord: !this.state.onRecord });
-    };
 
     helpStatusHandler = status => {
         this.setState({
@@ -48,28 +45,7 @@ class MainComponent extends React.Component {
                     <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>H</Text>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <TouchableOpacity style={styles.recordContainer}
-                        onPress={this.onPress}>
-                        {!this.state.onRecord ?
-                            <>
-                                <View style={{ ...styles.buttonActionContainer, width: '70%' }}>
-                                    <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>Parler</Text>
-                                </View>
-                                <View style={{ ...styles.buttonActionContainer, width: '30%' }}>
-                                    <Image style={styles.buttonAction} source={require('../../assets/microphone.png')} />
-                                </View>
-                            </>
-                            :
-                            <>
-                                <View style={{ ...styles.buttonActionContainer, width: '70%' }}>
-                                    <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>En cours</Text>
-                                </View>
-                                <View style={{ ...styles.buttonActionContainer, width: '30%' }}>
-                                    <Image style={styles.buttonAction} source={require('../../assets/record.png')} />
-                                </View>
-                            </>
-                        }
-                    </TouchableOpacity>
+                    <RecordButton/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
                             <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>HELLO TEST</Text>
@@ -132,27 +108,6 @@ const styles = StyleSheet.create({
         left: 0,
         width: '100%',
         height: '7%',
-    },
-    recordContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#1C3956',
-        borderTopRightRadius: 30,
-        height: '100%',
-        width: '30%',
-    },
-    recordText: {
-        color: '#FFFFFF',
-        fontSize: 20,
-    },
-    buttonActionContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonAction: {
-        width: 32,
-        height: 32,
     },
     inputContainer: {
         display: 'flex',
