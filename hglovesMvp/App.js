@@ -3,8 +3,6 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import { Provider as PaperProvider } from 'react-native-paper';
-
-import MainComponent from './components/main/MainComponent';
 import Navigation from './navigation/Navigation';
 
 const ScreenDim = Dimensions.get("window");

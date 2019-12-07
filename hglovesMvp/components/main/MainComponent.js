@@ -34,6 +34,7 @@ class MainComponent extends React.Component {
                     <Image style={styles.hand} source={require('../../assets/hand.png')} />
                 </View>
                 <View style={styles.lormContainer}>
+                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>H</Text>
                 </View>
                 <View style={styles.actionsContainer}>
                     <RecordButton/>
@@ -64,20 +65,25 @@ const styles = StyleSheet.create({
     handContainer: {
         width: '100%',
         height: '78%',
-        backgroundColor: 'green',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center'
     },
     hand: {
-        backgroundColor: 'grey',
         width: imageWidth,
         height: imageHeight
     },
     lormContainer: {
-        backgroundColor: "red",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: '100%',
         height: '15%'
+    },
+    lormLetter: {
+        color: '#1C3956',
+        fontSize: 50
     },
     actionsContainer: {
         position: 'absolute',
