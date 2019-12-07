@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
+import ExerciseListComponent from '../exercise/ExerciseListComponent';
 
 const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 90 / 100;
@@ -15,6 +16,7 @@ class MainComponent extends React.Component {
         this.state = {
             onRecord: false,
             helpStatus: false,
+            exerciseStatus: false,
         }
     }
 
@@ -28,8 +30,14 @@ class MainComponent extends React.Component {
         });
     }
 
+    exerciseStatusHandler = status => {
+        this.setState({
+            exerciseStatus: status,
+        })
+    }
+
     render() {
-        const { helpStatus } = this.state;
+        const { helpStatus, exerciseStatus } = this.state;
 
         return (
             <View style={styles.container}>
@@ -67,14 +75,21 @@ class MainComponent extends React.Component {
                             <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>HELLO TEST</Text>
                         </View>
                         <IconButton
-                            style={styles.helpButton}
+                            style={styles.exButton}
                             icon="book-open"
                             color={'#1C3956'}
-                            onPress={() => this.helpStatusHandler(true)}
+                            onPress={() => this.exerciseStatusHandler(true)}
                         />
                     </View>
                 </View>
+                <IconButton
+                    style={styles.helpButton}
+                    icon="alphabetical"
+                    color={'#1C3956'}
+                    onPress={() => this.helpStatusHandler(true)}
+                />
                 <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
+                <ExerciseListComponent status={exerciseStatus} handleClose={this.exerciseStatusHandler} {...this.props} />
             </View>
         );
     }
@@ -164,6 +179,11 @@ const styles = StyleSheet.create({
         color: '#1C3956'
     },
     helpButton: {
+        position: 'absolute',
+        right: 6,
+        top: 6,
+    },
+    exButton: {
         display: 'flex',
         width: '10%',
     },
