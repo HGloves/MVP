@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{0254FEFB-D015-B871-E9A8-79062DD318A4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LormLightScript.cs">
+    <Files>
+      <File FileName="Assets/Scripts/RecordVoiceButtonScript.cs" Line="10" Column="1" />
+      <File FileName="Assets/Scripts/LormLightScript.cs.cs" Line="48" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="mvp_app" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="LormLightScript.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="889a58fe-268a-48f9-81ac-401285e147c2" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
