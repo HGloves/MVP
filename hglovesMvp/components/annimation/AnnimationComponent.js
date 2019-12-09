@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, TextInput, Animated} from 'react-native';
-import { TouchableWithoutFeedback } from "react-native-web";
+import {Animated, Dimensions, StyleSheet, Text, View} from 'react-native'
+import {TouchableWithoutFeedback} from "react-native-web";
 
 const ScreenDim = Dimensions.get("window");
 
@@ -10,32 +9,30 @@ export default class AnnimationComponent extends Component  {
         super(props);
         this.state = {text: ""};
         this.lorm = [1,
-            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 300, fade: 0, letter: "b"},
+            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 300, letter: "b"},
             3,4,5,6,7,8,9,10,11,12,13,14,
-            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 10, fade: 0, letter: 'o'},
+            {anim: new Animated.ValueXY({x:10, y:10}), dx: 10, dy: 10, letter: 'o'},
             16,17,18,19,20,21,22,23,24,25,26]
     }
 
-    moveElement(letter) {
-        console.log("moving");
-        let obj = this.lorm.find(function (elem) {
-            if (elem.letter !== undefined && elem.letter === letter.toLowerCase())
+    findElement(letter) {
+        return this.lorm.find(function (elem) {
+            if (elem.letter !== undefined && elem.letter === letter.toLowerCase()) {
+                console.log(elem);
                 return elem
+            }
         });
+    }
+
+    moveElement(obj) {
+        console.log("moving");
         if (obj !== undefined) {
             Animated.sequence([
-                Animated.timing(obj, {
-                    toValue: 1,
-                    duration: 1000
-                }),
                 Animated.spring(obj.anim, {
                     toValue: {x: obj.dx, y: obj.dy},
                 }),
-                Animated.timing(obj, {
-                    toValue: 0,
-                    duration: 1000
-                }),
-            ]).start()
+            ]).start();
+            console.log("end of sequence");
         }
     }
 
@@ -51,8 +48,8 @@ export default class AnnimationComponent extends Component  {
     render() {
         return (
             <View style={styles.container}>
-                <Animated.View style={styles.tennisBall}>
-                    <TouchableWithoutFeedback style={styles.button} onPress={() => this.moveElement("b")}>
+                <Animated.View style={[styles.tennisBall, this.findElement("b").anim.getLayout()]}>
+                    <TouchableWithoutFeedback style={styles.button} onPress={() => this.moveElement(this.findElement("b"))}>
                         <View>
                             <Text style={styles.buttonText}>Press</Text>
                         </View>
