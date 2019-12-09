@@ -407,6 +407,7 @@ class MainComponent extends React.Component {
                     style={styles.helpButton}
                     icon="alphabetical"
                     color={'#1C3956'}
+                    size={50}
                     onPress={() => this.helpStatusHandler(true)}
                 />
                 <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
