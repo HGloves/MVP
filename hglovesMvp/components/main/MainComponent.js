@@ -376,6 +376,12 @@ class MainComponent extends React.Component {
         })
     }
 
+    inputHandler = status => {
+        this.setState({
+            input: status,
+        })
+    }
+
     render() {
         const { helpStatus, exerciseStatus } = this.state;
 
