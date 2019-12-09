@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 60 / 100;
@@ -19,7 +20,9 @@ class HomeComponent extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <LinearGradient
+            colors={['#1c3956', '#153f67', '#0c4579', '#034b8b', '#03509d']}
+            style={styles.container}>
                 <View style={styles.headerContainer}>
                     <Text style={{ ...styles.headerText, fontFamily: 'open-sans-bold' }}>Ceci est un MVP</Text>
                     <Text style={{ ...styles.headerText, fontFamily: 'open-sans' }}>Veuillez cliquer sur Communiquer pour démarrer la simulation</Text>
@@ -40,7 +43,7 @@ class HomeComponent extends React.Component {
                         />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </LinearGradient>
         );
     }
 }
