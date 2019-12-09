@@ -173,9 +173,10 @@ class MainComponent extends React.Component {
                     id: 'P5', px0: 25, px1: 35, py0: 40, py1: 45, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1
                 },
-
-                { id: 'V/W', px0: 25, px1: 40, py0: 70, py1: 85, touchId: -1, touched: false, maxSimultaneousTouchOnZone: -1 },
-
+                {
+                    id: 'V/W', px0: 25, px1: 40, py0: 70, py1: 85, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1
+                },
                 {
                     id: 'B0', px0: 30, px1: 45, py0: 25, py1: 30, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1
@@ -478,7 +479,7 @@ class MainComponent extends React.Component {
         })
     }
 
-    inputHandler = status => {
+    inputHandler = status => {
         this.setState({
             input: status,
         })
@@ -498,7 +499,7 @@ class MainComponent extends React.Component {
                     <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton />
+                    <RecordButton func={this.inputHandler}/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
                             <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
