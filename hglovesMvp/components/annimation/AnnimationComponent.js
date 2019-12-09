@@ -1,122 +1,135 @@
-import React, {Component} from 'react';
-import {Animated, Dimensions, StyleSheet, Text, View} from 'react-native'
-import {TouchableWithoutFeedback} from "react-native-web";
+import React, {Component, useState } from 'react';
+import { Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Animated, Image, Button} from 'react-native';
+import { TouchableWithoutFeedback } from "react-native-web";
+import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const ScreenDim = Dimensions.get("window");
 
 export default class AnnimationComponent extends Component  {
     constructor(props) {
         super(props);
-        this.state = {text: ""};
-        this.trx = undefined;
-        this.try = undefined;
-        this.Spos = {x: 200, y: 200 };
-        this.lorm = [1,
-            {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 100, y: 100}), dx: 10, dy: 300, fade: 0, letter: "b"},
-            3,4,5,6,7,8,9,10,11,12,13,14,
-            {animFade: new Animated.Value(0), moveAnim: new Animated.Value(10), dx: 10, dy: 10, fade: 0, letter: 'o'},
-            16,17,18,
-            {animFade: new Animated.Value(0), moveAnim: new Animated.Value(0), dx: 200, dy: 200, fade: 0, letter: "s"},
-            20,21,22,23,24,25,26];
-        let range = 1, snapshot = 200, radius = 100;
-        /// translateX
+        this.state = {text : "sbab"};
+        this.lormPos = new Map([
+            ["0", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100})}],
+            ["a", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100}), animType: this.staticElement, xEnd: 50, yEnd: 100}],
+            ["b", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 150, y: 100}), animType: this.moveElement, xStart: 150, yStart: 100, xEnd: 150, yEnd: 250}],
+            ["s", {animFade: new Animated.Value(0), moveAnim: new Animated.Value(0), animType: this.circleElement, xStart: 150, yStart: 500, xEnd: 200, yEnd: 200}]
+        ]);
+        let snapshot = 200, radius = 100;
         let inputRangeX = [], outputRangeX = [];
         for (let i=0; i<=snapshot; ++i) {
             let value = i/snapshot;
-            let move = Math.sin(value * Math.PI * 2) * radius + this.Spos.x;
+            let move = Math.sin(value * Math.PI * 2) * radius + this.lormPos.get("s").xStart;
             inputRangeX.push(value);
             outputRangeX.push(move);
         }
-        this.trx = this.lorm[18].moveAnim.interpolate({ inputRange: inputRangeX, outputRange: outputRangeX });
-        /// translateY
+        this.trx = this.lormPos.get("s").moveAnim.interpolate({ inputRange: inputRangeX, outputRange: outputRangeX });
         let inputRangeY = [], outputRangeY = [];
         for (let i=0; i<=snapshot; ++i) {
             let value = i/snapshot;
-            let move = -Math.cos(value * Math.PI * 2) * radius + this.Spos.y;
+            let move = -Math.cos(value * Math.PI * 2) * radius + this.lormPos.get("s").yStart;
             inputRangeY.push(value);
             outputRangeY.push(move);
         }
-        this.try = this.lorm[18].moveAnim.interpolate({ inputRange: inputRangeY, outputRange: outputRangeY });
+        this.try = this.lormPos.get("s").moveAnim.interpolate({ inputRange: inputRangeY, outputRange: outputRangeY });
     }
 
-    findElem(letter) {
-        return this.lorm.find(function (elem) {
-            if (elem.letter !== undefined && elem.letter === letter.toLowerCase())
-                return elem
-        });
-    }
-
-    moveElement(letter) {
-        console.log("moving");
-        let obj = this.lorm.find(function (elem) {
-            if (elem.letter !== undefined && elem.letter === letter.toLowerCase())
-                return elem
-        });
-        if (obj !== undefined && obj.letter !== "s") {
+    moveElement = (obj, callback) => {
+        console.log("mooving", obj.moveAnim.y, obj.yEnd);
+        if (obj !== undefined) {
             Animated.sequence([
                 Animated.timing(obj.animFade, {
                     toValue: 1,
                     duration: 200
                 }),
                 Animated.timing(obj.moveAnim, {
-                    toValue: {x: obj.dx, y: obj.dy},
+                    toValue: {x: obj.xEnd, y: obj.yEnd},
                     duration: 100
+                }),
+                Animated.timing(obj.animFade, {
+                    toValue: 0,
+                    duration: 1000
+                }),
+                Animated.timing(obj.moveAnim, {
+                    toValue: {x: obj.xStart, y: obj.yStart},
+                    duration: 100
+                })
+            ]).start(callback)
+        }
+    };
+
+    staticElement = (obj, callback) => {
+        console.log("fade");
+        if (obj !== undefined) {
+            Animated.sequence([
+                Animated.timing(obj.moveAnim, {
+                    toValue: {x: obj.xEnd, y: obj.yEnd},
+                    duration: 200
+                }),
+                Animated.timing(obj.animFade, {
+                    toValue: 1,
+                    duration: 1000
                 }),
                 Animated.timing(obj.animFade, {
                     toValue: 0,
                     duration: 200
                 })
-            ]).start()
+            ]).start(callback)
         }
-        if (obj.letter === "s") {
-            obj.moveAnim.setValue(0);
-            obj.animFade.setValue(0);
-            Animated.sequence([
-                Animated.timing(obj.animFade, {
-                    toValue: 1,
-                    duration: 200
-                }),
-                    Animated.timing(obj.moveAnim, {
+    };
+
+    circleElement = (obj, callback) => {
+        obj.moveAnim.setValue(0);
+        obj.animFade.setValue(0);
+        Animated.sequence([
+            Animated.timing(obj.animFade, {
+                toValue: 1,
+                duration: 200
+            }),
+            Animated.timing(obj.moveAnim, {
                 toValue: 1,
                 duration: 1000,
-            }),
-                Animated.timing(obj.animFade, {
-                    toValue: 0,
-                    duration: 200
                 }),
-            ]).start();
-        }
-    }
+            Animated.timing(obj.animFade, {
+                toValue: 0,
+                duration: 200
+            }),
+        ]).start(callback);
+    };
 
-    /*   whichLetters() {
-           if (this.state.text.length > 0) {
-               let word = this.state.text.split("");
-               for (let i = 0; word.length > i;i++) {
-                   console.log("lette r: " + word[i].toLowerCase() + " = lorm: " + this.alphabet.lorm[this.alphabet.letters.indexOf(word[i].toLowerCase())]);
-               }
-           }
-       };, opacity: this.fadeAnim*/
+    whichLetters = () => {
+        console.log("Before annimation : " + this.state.text[0]);
+        obj = this.lormPos.get(this.state.text[0]);
+        obj.animType(obj , () => {
+            this.setState({text : this.state.text.substr(1)}, () => {
+                if (this.state.text === "") {
+                    console.log("QUIT\n");
+                    return;
+                }
+                console.log (this.state.text + " After\n");
+                this.whichLetters();
+            });
+        });
+    };
 
     render() {
-        const transform = [{ translateY: this.try }, {translateX: this.trx}];
+        const transformS = [{ translateY: this.try }, {translateX: this.trx}];
         return (
             <View style={styles.container}>
                 <Animated.View style={{display: 'flex',
-                            transform,
+                            transform: (this.state.text[0] !== "s" ?  [{translateX: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.x}, {translateY: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.y}] : transformS),
                             justifyContent: 'center',
                             alignItems: 'center',
                             backgroundColor: 'greenyellow',
                             borderRadius: 200,
                             width: 100,
                             height: 100,
-                            opacity: this.findElem("b").animFade}}>
+                            opacity: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).animFade}}>
                 </Animated.View>
-
-                <TouchableWithoutFeedback style={styles.button} onPress={() => this.moveElement("b")}>
-                        <View>
-                            <Text style={styles.buttonText}>Press</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+                <Button
+          title="Press me"
+          onPress={() => this.whichLetters()} />
             </View>
         );
     }
@@ -126,6 +139,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ecf0f1',
+    },
+    handContainer: {
+        width: '100%',
+        height: '78%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     tennisBall: {
         display: 'flex',
