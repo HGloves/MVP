@@ -8,7 +8,6 @@ const ScreenDim = Dimensions.get("window");
 export default class AnnimationComponent extends Component  {
     constructor(props) {
         super(props);
-        this.state = {text : "bab"};
         this.lormPos = new Map([
             ["0", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100})}],
             ["a", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100}), animType: this.staticElement, xEnd: 50, yEnd: 100}],
@@ -60,37 +59,48 @@ export default class AnnimationComponent extends Component  {
         }
     }
 
+    // incrementIndex = () => {
+    //     if (this.props.text.length == this.props.index) {
+    //         this.setState({index: -1})
+    //     } else {
+    //          this.setState({index: index + 1});
+    //      }
+        // }
+    //     
+
     whichLetters = () => {
-        console.log("Before annimation : " + this.state.text[0])
-        obj = this.lormPos.get(this.state.text[0])
-        obj.animType(obj , () => {
-            this.setState({text : this.state.text.substr(1)}, () => {
-                if (this.state.text == "") {
-                    console.log("QUIT\n")
-                    return;
-                }
-                console.log (this.state.text + " After\n");
-                this.whichLetters();
-            });
-        });
+        console.log("Before annimation : " + this.props.text[this.props.index])
+        obj = this.lormPos.get(this.props.text[this.props.index])
+        obj.animType(obj , this.props.incrementIndex
+            // console.log (this.props.text + " After\n");
+            // this.whichLetters();
+            // this.setState({text : this.props.text.substr(1)}, () => {
+            //     if (this.props.text == "") {
+            //         this.index = 0
+            //         return;
+            //     }
+            //     console.log (this.props.text + " After\n");
+            //     this.whichLetters();
+            // });
+        );
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <Animated.View style={{display: 'flex',
-                            transform: [{translateX: this.lormPos.get(this.state.text[0] == undefined ? "0" : this.state.text[0]).moveAnim.x}, {translateY: this.lormPos.get(this.state.text[0] == undefined ? "0" : this.state.text[0]).moveAnim.y}],
+                            transform: [{translateX: this.lormPos.get(this.props.index == -1 ? "0" : this.props.text[this.props.index]).moveAnim.x}, {translateY: this.lormPos.get(this.props.index == -1 ? "0" : this.props.text[this.props.index]).moveAnim.y}],
                             justifyContent: 'center',
                             alignItems: 'center',
                             backgroundColor: 'greenyellow',
                             borderRadius: 200,
                             width: 100,
                             height: 100,
-                            opacity: this.lormPos.get(this.state.text[0] == undefined ? "0" : this.state.text[0]).animFade}}>
+                            opacity: this.lormPos.get(this.props.index == -1 ? "0" : this.props.text[this.props.index]).animFade}}>
                 </Animated.View>
                 <Button
-          title="Press me"
-          onPress={() => this.whichLetters()} />
+                title="Press me"
+                onPress={() => this.whichLetters()} />
             </View>
         );
     }
