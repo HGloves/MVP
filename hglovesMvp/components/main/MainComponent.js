@@ -450,7 +450,7 @@ class MainComponent extends React.Component {
                         {...this._panResponder.panHandlers} />
                 </View>
                 <View style={styles.lormContainer}>
-                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
+                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</Text>
                 </View>
                 <View style={styles.actionsContainer}>
                     <RecordButton func={this.inputHandler}/>
