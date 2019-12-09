@@ -2,6 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from '../components/home/HomeComponent'
 import MainScreen from '../components/main/MainComponent'
+import ExerciseScreen from '../components/exercise/ExerciseComponent';
 
 import AnnimationScreen from '../components/annimation/AnnimationComponent'
 
@@ -19,8 +20,8 @@ AppNavigator = createStackNavigator({
         screen: MainScreen,
         navigationOptions: noHeader
     },
-    Annimation: {
-        screen: AnnimationScreen,
+    Exercise: {
+        screen: ExerciseScreen,
         navigationOptions: noHeader
     }
 })
