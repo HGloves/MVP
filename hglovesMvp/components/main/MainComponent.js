@@ -1,15 +1,24 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, PanResponder, Text, View, Image, Button} from 'react-native';
+import {PanResponder, Button} from 'react-native';
 import update from 'immutability-helper';
+import { StyleSheet, View, Image, Text } from 'react-native';
+import RecordButton from './RecordButton'
+import { IconButton } from 'react-native-paper';
+import HelpComponent from './HelpComponent';
+import ExerciseListComponent from '../exercise/ExerciseListComponent';
 
 const ScreenDim = Dimensions.get("window");
+const imageWidth = ScreenDim.width * 90 / 100;
+const imageHeight = Math.round(imageWidth * 2400 / 1920);
 
 class MainComponent extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
+            helpStatus: false,
+            exerciseStatus: false,
             imageHandX: -1,
             imageHandY: -1,
             imageHandWidth: -1,
@@ -18,6 +27,7 @@ class MainComponent extends React.Component {
             lastTouchOnTouchable: true,
             direction: 'None',
             input: 'Your input: ',
+            lastLetter: '',
             //Id de la zone, coordonnée de la zone, touchId (null si pas touché)
             touchableDetect: [
                 {id: 'A', px0: 5, px1: 20, py0: 40, py1: 45, touchId: -1, touched: false,
@@ -145,7 +155,7 @@ class MainComponent extends React.Component {
                 {letter: 'O', zones: ['O'], type: 'simultaneousTouch', nbOfTouch: 1},
                 {letter: 'U', zones: ['U'], type: 'simultaneousTouch', nbOfTouch: 1},
                 {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1},
+                {letter: 'N', zones: ['N', 'Y0'], type: 'simultaneousTouch', nbOfTouch: 1},
                 {letter: 'C', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 1},
                 {letter: 'Ç', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 2},
                 {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4},
@@ -185,16 +195,16 @@ class MainComponent extends React.Component {
                     this._computeDirection(evt, gestureState)
                 },
                 onPanResponderStart: (evt, gestureState) => {
-//                    console.log("Touch")
-//                    console.log(gestureState)
+                    console.log("Touch")
+                    console.log(gestureState)
+                    if (this.state.lastTouchOnTouchable)
+                        this.setState({lastUsedId: this.state.lastUsedId + 1})
                     this._computeHandTouch(evt, gestureState)
                 },
                 onPanResponderRelease: (evt, gestureState) => {
                     console.log("Release")
                     let allTouched = true;
 
-                    if (this.state.lastTouchOnTouchable)
-                        this.setState({lastUsedId: this.state.lastUsedId + 1})
                     for (let i = 0; i < this.state.letterDetect.length; i += 1) {
                         for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
                             let index = this.state.touchableDetect.findIndex(x => x.id === 
@@ -224,6 +234,7 @@ class MainComponent extends React.Component {
                                 if (validated) {
                                     console.log("Touching letter: " + this.state.letterDetect[i].letter)
                                     this.setState({input: this.state.input + this.state.letterDetect[i].letter})
+                                    this.setState({lastLetter: this.state.letterDetect[i].letter})
                                     this._clearTouch();
                                 }
                             } 
@@ -250,6 +261,7 @@ class MainComponent extends React.Component {
                                 if (validated) {
                                     console.log("Touching letter: " + this.state.letterDetect[i].letter)
                                     this.setState({input: this.state.input + this.state.letterDetect[i].letter})
+                                    this.setState({lastLetter: this.state.letterDetect[i].letter})
                                     this._clearTouch();
                                 }
                             }
@@ -259,6 +271,7 @@ class MainComponent extends React.Component {
                         }
                         allTouched = true;
                     }
+//                    this._clearTouch();
                 }
             }
         )
@@ -351,18 +364,53 @@ class MainComponent extends React.Component {
         })), 0)      
     }
 
+    helpStatusHandler = status => {
+        this.setState({
+            helpStatus: status,
+        });
+    }
+
+    exerciseStatusHandler = status => {
+        this.setState({
+            exerciseStatus: status,
+        })
+    }
+
     render() {
+        const { helpStatus, exerciseStatus } = this.state;
 
         return (
             <View style={styles.container}>
-                <View top={this.state.debugLastY0} left={this.state.debugLastX0}
-                width={this.state.debugLastX1 - this.state.debugLastX0}
-                height={this.state.debugLastY1 - this.state.debugLastY0}
-                backgroundColor='salmon' style={styles.rectangle}></View>
-                <Image style={styles.handImage} source={require('../../assets/hand.png')}
-                {...this._panResponder.panHandlers}
-                ref={view => { this.mainComponent = view; }}/>
-                <Text>{this.state.input}</Text>
+                <View style={styles.handContainer}>
+                    <Image style={styles.hand} source={require('../../assets/hand.png')} 
+                    ref={view => { this.mainComponent = view; }}
+                    {...this._panResponder.panHandlers}/>
+                </View>
+                <View style={styles.lormContainer}>
+                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
+                </View>
+                <View style={styles.actionsContainer}>
+                    <RecordButton/>
+                    <View style={styles.inputContainer}>
+                        <View style={styles.inputView}>
+                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>HELLO TEST</Text>
+                        </View>
+                        <IconButton
+                            style={styles.exButton}
+                            icon="book-open"
+                            color={'#1C3956'}
+                            onPress={() => this.exerciseStatusHandler(true)}
+                        />
+                    </View>
+                </View>
+                <IconButton
+                    style={styles.helpButton}
+                    icon="alphabetical"
+                    color={'#1C3956'}
+                    onPress={() => this.helpStatusHandler(true)}
+                />
+                <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
+                <ExerciseListComponent status={exerciseStatus} handleClose={this.exerciseStatusHandler} {...this.props} />
             </View>
         );
     }
@@ -370,15 +418,74 @@ class MainComponent extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        marginTop: '7%',
+        display: 'flex',
         width: '100%',
         height: '100%',
     },
-    handImage: {
-//        resizeMode: 'contain',
-        width: ScreenDim.width,
-        height: 500,
+    handContainer: {
+        width: '100%',
+        height: '78%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    hand: {
+        width: imageWidth,
+        height: imageHeight
+    },
+    lormContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '15%'
+    },
+    lormLetter: {
+        color: '#1C3956',
+        fontSize: 50
+    },
+    actionsContainer: {
+        position: 'absolute',
+        flex: 1,
+        flexDirection: 'row',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        height: '7%',
+    },
+    inputContainer: {
+        display: 'flex',
+        height: '100%',
+        width: '70%',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    inputView: {
+        marginLeft: '8%',
+        height: '75%',
+        width: '70%',
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
+        backgroundColor: '#F1F0FF',
+        justifyContent: 'space-around',
+    },
+    input: {
+        width: '80%',
+        marginLeft: '10%',
+        color: '#1C3956'
+    },
+    helpButton: {
+        position: 'absolute',
+        right: 6,
+        top: 6,
+    },
+    exButton: {
+        display: 'flex',
+        width: '10%',
     },
     rectangle: {
         position: 'absolute', 
@@ -387,10 +494,3 @@ const styles = StyleSheet.create({
 });
 
 export default MainComponent;
-
-{/* <Button
-onPress={this._handleClick}
-title="Learn More"
-color="#841584"
-accessibilityLabel="Learn more about this purple button"
-/> */}
