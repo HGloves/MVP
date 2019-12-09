@@ -15,7 +15,7 @@ const fontSize = ScreenDim.width * 40 / 100 * (100 / 11) * 0.01;
 class HomeComponent extends React.Component {
 
     handleNavigation = () => {
-        this.props.navigation.navigate('Annimation')
+        this.props.navigation.navigate('Main')
     }
 
     render() {
