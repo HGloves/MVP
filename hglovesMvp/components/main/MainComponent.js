@@ -7,6 +7,7 @@ import RecordButton from './RecordButton'
 import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
+import Animation from '../annimation/AnnimationComponent'
 
 import textToSpeech from '../speaker/speaker';
 import { speak } from 'expo-speech';
@@ -32,6 +33,8 @@ class MainComponent extends React.Component {
             input: '',
             lastLetter: '',
             timeoutId: undefined,
+            index: 0,
+            googleSpeech: false,
             //Id de la zone, coordonnée de la zone, touchId (null si pas touché)
             prevNbOfTouch: -1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
@@ -437,6 +440,11 @@ class MainComponent extends React.Component {
         this.setState({
             input: status,
         })
+        this.setState({googleSpeech: true})
+    }
+
+    stopAnimation = () => {
+        this.setState({googleSpeech: false, input: ''})
     }
 
     render() {
@@ -444,6 +452,11 @@ class MainComponent extends React.Component {
 
         return (
             <View style={styles.container}>
+                {this.state.googleSpeech === true ?
+                    <Animation text={this.state.input} index={this.state.index} stopAnimation={this.stopAnimation}/>
+                    :
+                    null
+                }
                 <View style={styles.handContainer}>
                     <Image style={styles.hand} source={require('../../assets/hand.png')}
                         ref={view => { this.mainComponent = view; }}
