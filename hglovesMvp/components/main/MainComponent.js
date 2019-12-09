@@ -42,34 +42,32 @@ class MainComponent extends React.Component {
                 {id: 'A', px0: 5, px1: 20, py0: 40, py1: 45, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'T0', px0: 5, px1: 20, py0: 45, py1: 50, touchId: -1, touched: false,
+                {id: 'T0', px0: 5, px1: 25, py0: 45, py1: 55, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'T1', px0: 10, px1: 25, py0: 50, py1: 55, touchId: -1, touched: false,
+                {id: 'T1', px0: 10, px1: 30, py0: 50, py1: 60, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'E', px0: 30, px1: 40, py0: 5, py1: 10, touchId: -1, touched: false,
+                {id: 'E', px0: 30, px1: 45, py0: 5, py1: 15, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'O', px0: 65, px1: 80, py0: 5, py1: 15, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'U', px0: 80, px1: 95, py0: 25, py1: 30, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'M', px0: 70, px1: 85, py0: 45, py1: 50, touchId: -1, touched: false,
+                {id: 'M', px0: 70, px1: 85, py0: 40, py1: 52.5, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'C', px0: 45, px1: 65, py0: 80, py1: 95, touchId: -1, touched: false,
+                {id: 'C', px0: 40, px1: 70, py0: 80, py1: 95, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'N', px0: 30, px1: 45, py0: 40, py1: 45, touchId: -1, touched: false,
+                {id: 'N', px0: 30, px1: 45, py0: 35, py1: 47.5, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'K', px0: 40, px1: 70, py0: 50, py1: 75, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'I/J', px0: 45, px1: 60, py0: 5, py1: 10, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
+
                 {id: 'D0', px0: 45, px1: 60, py0: 15, py1: 25, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'D2', px0: 45, px1: 60, py0: 25, py1: 30, touchId: -1, touched: false,
+                {id: 'D1', px0: 45, px1: 60, py0: 25, py1: 35, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'D3', px0: 45, px1: 60, py0: 30, py1: 35, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-
 
                 {id: 'L0', px0: 45, px1: 60, py0: 35, py1: 50, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -78,52 +76,45 @@ class MainComponent extends React.Component {
                 {id: 'L2', px0: 45, px1: 60, py0: 65, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'Z0', px0: 40, px1: 50, py0: 70, py1: 80, touchId: -1, touched: false,
+                {id: 'Z0', px0: 45, px1: 65, py0: 70, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'Z1', px0: 50, px1: 60, py0: 65, py1: 75, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'Z2', px0: 60, px1: 70, py0: 60, py1: 70, touchId: -1, touched: false,
+                {id: 'Z1', px0: 60, px1: 80, py0: 55, py1: 65, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'P0', px0: 25, px1: 35, py0: 15, py1: 25, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'P1', px0: 25, px1: 35, py0: 25, py1: 35, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
+//                {id: 'P0', px0: 25, px1: 35, py0: 15, py1: 25, touchId: -1, touched: false,
+//                    maxSimultaneousTouchOnZone: -1},
+//                {id: 'P1', px0: 25, px1: 35, py0: 25, py1: 35, touchId: -1, touched: false,
+//                    maxSimultaneousTouchOnZone: -1},
                 {id: 'P2', px0: 25, px1: 35, py0: 35, py1: 45, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'V/W', px0: 25, px1: 40, py0: 70, py1: 85, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
+//                {id: 'V/W', px0: 25, px1: 40, py0: 70, py1: 85, touchId: -1, touched: false,
+//                    maxSimultaneousTouchOnZone: -1},
 
                 {id: 'B0', px0: 30, px1: 45, py0: 20, py1: 30, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'B1', px0: 30, px1: 45, py0: 30, py1: 40, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'G0', px0: 65, px1: 75, py0: 15, py1: 20, touchId: -1, touched: false,
+
+                {id: 'G0', px0: 65, px1: 75, py0: 15, py1: 25, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'G1', px0: 65, px1: 75, py0: 20, py1: 25, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'G2', px0: 65, px1: 75, py0: 25, py1: 30, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'G3', px0: 65, px1: 75, py0: 30, py1: 35, touchId: -1, touched: false,
+                {id: 'G1', px0: 65, px1: 75, py0: 25, py1: 35, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'H0', px0: 80, px1: 90, py0: 30, py1: 35, touchId: -1, touched: false,
+                {id: 'H0', px0: 80, px1: 90, py0: 30, py1: 40, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'H1', px0: 80, px1: 90, py0: 35, py1: 40, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'H2', px0: 75, px1: 85, py0: 40, py1: 45, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
+//                {id: 'H1', px0: 80, px1: 90, py0: 35, py1: 40, touchId: -1, touched: false,
+//                    maxSimultaneousTouchOnZone: -1},
+//                {id: 'H2', px0: 75, px1: 85, py0: 40, py1: 45, touchId: -1, touched: false,
+//                    maxSimultaneousTouchOnZone: -1},
 
 
-                {id: 'F0', px0: 25, px1: 30, py0: 10, py1: 25, touchId: -1, touched: false,
+                {id: 'F0', px0: 25, px1: 35, py0: 10, py1: 35, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'F1', px0: 55, px1: 60, py0: 10, py1: 25, touchId: -1, touched: false,
+                {id: 'F1', px0: 55, px1: 60, py0: 10, py1: 35, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'X0', px0: 35, px1: 50, py0: 85, py1: 95, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'X1', px0: 50, px1: 65, py0: 85, py1: 95, touchId: -1, touched: false,
+                {id: 'X0', px0: 35, px1: 45, py0: 85, py1: 95, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'X2', px0: 35, px1: 50, py0: 85, py1: 95, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -148,7 +139,7 @@ class MainComponent extends React.Component {
                 {id: 'Y1', px0: 60, px1: 75, py0: 40, py1: 50, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
-                {id: 'R3', px0: 25, px1: 40, py0: 60, py1: 80, touchId: -1, touched: false,
+                {id: 'R3+V/W', px0: 20, px1: 40, py0: 60, py1: 85, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'R2', px0: 40, px1: 55, py0: 60, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -157,40 +148,41 @@ class MainComponent extends React.Component {
                 {id: 'R0', px0: 70, px1: 85, py0: 60, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
             ],
-            letterDetect: [
-                {letter: 'S', zones: ['S0', 'S1', 'S2', 'S3'], type: 'slideTouch'},
-                {letter: 'A', zones: ['A'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'E', zones: ['E'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'O', zones: ['O'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'U', zones: ['U'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'N', zones: ['N', 'Y0'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'C', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'Ç', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 2},
-                {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4, toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'Z2', 'S0', 'S1', 'S2', 'S3']},
-                {letter: 'I', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'J', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 2},
-                {letter: 'V', zones: ['V/W'], type: 'simultaneousTouch', nbOfTouch: 1},
-                {letter: 'W', zones: ['V/W'], type: 'simultaneousTouch', nbOfTouch: 2},
-                {letter: 'B', zones: ['B0', 'B1'], type: 'slideTouch', direction: 'Top to Bottom'},
-                {letter: 'X', zones: ['X0', 'X1', 'X2'], type: 'slideTouch', direction: 'Left to Right'},
-                {letter: 'L', zones: ['D0', 'D2', 'D3', 'L0', 'L1', 'L2'], type: 'slideTouch', direction: 'Top to Bottom'},
-                {letter: 'D', zones: ['D0', 'D2', 'D3'], type: 'slideTouch', direction: 'Top to Bottom'},
-                {letter: 'G', zones: ['G0', 'G1', 'G2', 'G3'], type: 'slideTouch', direction: 'Top to Bottom'},
-                {letter: 'H', zones: ['H0', 'H1', 'H2'], type: 'slideTouch', direction: 'Top to Bottom'},
-                {letter: 'F', zones: ['F0', 'F1'], type: 'alternateTouch'},
-                {letter: 'T', zones: ['T0', 'T1'], type: 'slideTouch', direction: 'Top to Bottom', alternativeDirection: 'Left to Right'},
-                {letter: 'P', zones: ['P0', 'P1', 'P2'], type: 'slideTouch', direction: 'Bottom to Top'},
-                {letter: 'Z', zones: ['Z0', 'Z1', 'Z2'], type: 'slideTouch', direction: 'Left to Right', alternativeDirection: 'Bottom to Top'},
-                {letter: 'Q', zones: ['Q0', 'Q1', 'Q2'], type: 'slideTouch', direction: 'Bottom to Top'},
-                {letter: 'Y', zones: ['Y0', 'L0', 'Y1'], type: 'slideTouch', direction: 'Left to Right'},
-                {letter: 'R', zones: ['R0', 'R1', 'R2', 'R3'], type: 'alternateTouch'},
-            ],
             debugLastX0: 0,
             debugLastX1: 10,
             debugLastY0: 0,
             debugLastY1: 10,
-        }
+        };
+
+        this.letterDetect = [
+            {letter: 'S', zones: ['S0', 'S1', 'S2', 'S3'], type: 'slideTouch'},
+            {letter: 'A', zones: ['A'], type: 'simultaneousTouch', nbOfTouch: 1},
+            {letter: 'E', zones: ['E'], type: 'simultaneousTouch', nbOfTouch: 1},
+            {letter: 'P', zones: ['F0', 'P2'], type: 'slideTouch', direction: 'Bottom to Top'},
+            {letter: 'O', zones: ['O'], type: 'simultaneousTouch', nbOfTouch: 1},
+            {letter: 'U', zones: ['U'], type: 'simultaneousTouch', nbOfTouch: 1},
+            {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y1', 'Q0']},
+            {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y0', 'P2', 'B2']},
+            {letter: 'X', zones: ['X0', 'C', 'X2'], type: 'slideTouch', direction: 'Left to Right'},
+            {letter: 'C', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['X0', 'X2']},
+            {letter: 'Ç', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 2, toleratedZones: ['X0', 'X2']},
+            {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4, toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'Z2', 'S0', 'S1', 'S2', 'S3']},
+            {letter: 'I', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 1},
+            {letter: 'J', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 2},
+            {letter: 'R', zones: ['R0', 'R1', 'R2', 'R3+V/W'], type: 'alternateTouch'},
+            {letter: 'V', zones: ['R3+V/W'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['K', 'S3']},
+            {letter: 'W', zones: ['R3+V/W'], type: 'simultaneousTouch', nbOfTouch: 2, toleratedZones: ['K', 'S3']},
+            {letter: 'B', zones: ['B0', 'B1'], type: 'slideTouch', direction: 'Top to Bottom'},
+            {letter: 'L', zones: ['D0', 'D1', 'L0', 'L1', 'L2'], type: 'slideTouch', direction: 'Top to Bottom'},
+            {letter: 'D', zones: ['D0', 'D1'], type: 'slideTouch', direction: 'Top to Bottom'},
+            {letter: 'G', zones: ['G0', 'G1'], type: 'slideTouch', direction: 'Top to Bottom'},
+            {letter: 'H', zones: ['H0', 'M'], type: 'slideTouch', direction: 'Top to Bottom'},
+            {letter: 'F', zones: ['F0', 'F1'], type: 'alternateTouch'},
+            {letter: 'T', zones: ['T0', 'T1'], type: 'slideTouch', direction: 'Top to Bottom', alternativeDirection: 'Left to Right'},
+            {letter: 'Z', zones: ['Z0', 'Z1'], type: 'slideTouch', direction: 'Left to Right', alternativeDirection: 'Bottom to Top'},
+            {letter: 'Q', zones: ['Q0', 'Q1', 'Q2'], type: 'slideTouch', direction: 'Bottom to Top'},
+            {letter: 'Y', zones: ['Y0', 'L0', 'Y1'], type: 'slideTouch', direction: 'Left to Right'},
+        ]
 
         this._panResponder = PanResponder.create(
             {
@@ -210,37 +202,46 @@ class MainComponent extends React.Component {
                 },
                 onPanResponderStart: (evt, gestureState) => {
 //                    console.log("Touch")
-//                    console.log(gestureState)
+//                   console.log(gestureState)
+                    if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches &&
+                        gestureState.numberActiveTouches === 5) {
+                        this.updateInput(this.state.input + ' ');
+                        this.setState({lastLetter: ' '})
+                    } else {                    
+                        this._computeHandTouch(evt, gestureState)
+                    }
                     this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
-                    this._computeHandTouch(evt, gestureState)
                 },
                 onPanResponderRelease: (evt, gestureState) => {
 //                    console.log("Release")
                     let allTouched = true;
                     let validated = true;
 
+                    console.log("=======================NEW TURN==================")
 //                    if (this.state.lastTouchOnTouchable)
                         this.setState({lastUsedId: this.state.lastUsedId + 1})
-                    for (let i = 0; i < this.state.letterDetect.length; i += 1) {
-                        for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
+                    for (let i = 0; i < this.letterDetect.length; i += 1) {
+                        for (let j = 0; j < this.letterDetect[i].zones.length; j += 1) {
                             let index = this.state.touchableDetect.findIndex(x => x.id ===
-                                this.state.letterDetect[i].zones[j]);
-                            if (this.state.touchableDetect[index].touched === false)
+                                this.letterDetect[i].zones[j]);
+                            if (index >= 0 && this.state.touchableDetect[index].touched === false) {
+//                                console.log(this.letterDetect[i].letter + ': missing ' + this.state.touchableDetect[index].id);
                                 allTouched = false;
+                            }
                         }
                         if (allTouched === true) {
                             validated = true;
-                            console.log("allTouched for: " + this.state.letterDetect[i].letter)
-                            if (this.state.letterDetect[i].type === 'slideTouch' &&
-                                (this.state.letterDetect[i].direction === undefined ||
-                                    this.state.letterDetect[i].direction === this.state.direction ||
-                                    (this.state.letterDetect[i].alternativeDirection !== undefined &&
-                                        this.state.letterDetect[i].alternativeDirection ===
+                            console.log("allTouched for: " + this.letterDetect[i].letter)
+                            if (this.letterDetect[i].type === 'slideTouch' &&
+                                (this.letterDetect[i].direction === undefined ||
+                                    this.letterDetect[i].direction === this.state.direction ||
+                                    (this.letterDetect[i].alternativeDirection !== undefined &&
+                                        this.letterDetect[i].alternativeDirection ===
                                         this.state.direction))) {
                                 console.log('slideTouch')
                                 let prevId = -2;
-                                for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
-                                    let index = this.state.touchableDetect.findIndex(x => x.id === this.state.letterDetect[i].zones[j]);
+                                for (let j = 0; j < this.letterDetect[i].zones.length; j += 1) {
+                                    let index = this.state.touchableDetect.findIndex(x => x.id === this.letterDetect[i].zones[j]);
                                     if (j >= 1 && prevId !== this.state.touchableDetect[index].touchId) {
                                         console.log('InvalidTouch: TouchId differ (' +  prevId + ' : ' + this.state.touchableDetect[index].touchId + ')')
                                         validated = false
@@ -249,12 +250,12 @@ class MainComponent extends React.Component {
                                     prevId = this.state.touchableDetect[index].touchId;
                                 }
                             }  
-                            else if (this.state.letterDetect[i].type === 'simultaneousTouch') {
+                            else if (this.letterDetect[i].type === 'simultaneousTouch') {
                                 console.log("SimultaneousTouch")
-                                for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
-                                    let index = this.state.touchableDetect.findIndex(x => x.id === this.state.letterDetect[i].zones[j]);
-                                    if ((this.state.letterDetect[i].nbOfTouch !== undefined &&
-                                        this.state.letterDetect[i].nbOfTouch !== this.state.touchableDetect[index].maxSimultaneousTouchOnZone)) {
+                                for (let j = 0; j < this.letterDetect[i].zones.length; j += 1) {
+                                    let index = this.state.touchableDetect.findIndex(x => x.id === this.letterDetect[i].zones[j]);
+                                    if ((this.letterDetect[i].nbOfTouch !== undefined &&
+                                        this.letterDetect[i].nbOfTouch !== this.state.touchableDetect[index].maxSimultaneousTouchOnZone)) {
                                         //NE PAS CLEAR SI C'EST 'F' PAR EXEMPLE
                                         console.log("Nombre de touche invalide")
                                         validated = false
@@ -263,9 +264,10 @@ class MainComponent extends React.Component {
                                 }
                                 for (let k = 0; validated && k < this.state.touchableDetect.length; k += 1) {
                                     if (this.state.touchableDetect[k].touched &&
-                                    this.state.letterDetect[i].zones.findIndex(x => x === this.state.touchableDetect[k].id) === -1 &&
-                                    (this.state.letterDetect[i].toleratedZones === undefined ||
-                                    this.state.letterDetect[i].toleratedZones.findIndex(x => x === this.state.touchableDetect[k].id) === -1) &&
+                                    this.letterDetect[i].zones.findIndex(x => x === this.state.touchableDetect[k].id) === -1 &&
+                                    this.letterDetect[i].toleratedZones !== 'ALL' &&
+                                    (this.letterDetect[i].toleratedZones === undefined ||
+                                    this.letterDetect[i].toleratedZones.findIndex(x => x === this.state.touchableDetect[k].id) === -1) &&
                                     (this.state.alwaysTolerated.findIndex(x => x === this.state.touchableDetect[k].id) === -1)) {
                                         console.log("Zone: " + this.state.touchableDetect[k].id + " as been touch but we don't want it to")
                                         validated = false
@@ -273,14 +275,14 @@ class MainComponent extends React.Component {
                                     }
                                 }
                             }
-                            else if (this.state.letterDetect[i].type === 'alternateTouch') {
+                            else if (this.letterDetect[i].type === 'alternateTouch') {
                                 console.log('alternateTouch')
-                                for (let k = 0; validated && k < this.state.letterDetect[i].zones.length; k += 1) {
+                                for (let k = 0; validated && k < this.letterDetect[i].zones.length; k += 1) {
                                     let index = this.state.touchableDetect.findIndex(x => x.id === 
-                                    this.state.letterDetect[i].zones[k]);
-                                    for (let m = 0; validated && m < this.state.letterDetect[i].zones.length; m += 1) {
+                                    this.letterDetect[i].zones[k]);
+                                    for (let m = 0; validated && m < this.letterDetect[i].zones.length; m += 1) {
                                         let index_bis = this.state.touchableDetect.findIndex(x => x.id === 
-                                            this.state.letterDetect[i].zones[m]);
+                                            this.letterDetect[i].zones[m]);
                                         if (index !== index_bis && this.state.touchableDetect[index].touchId ===
                                         this.state.touchableDetect[index_bis].touchId) {
                                             console.log('InvalidTouch: ' + this.state.touchableDetect[index].id + ' and ' +
@@ -295,9 +297,9 @@ class MainComponent extends React.Component {
                                 validated = false;
                             }
                             if (validated) {
-                                console.log("Touching letter: " + this.state.letterDetect[i].letter)
-                                this.updateInput(this.state.input + this.state.letterDetect[i].letter);
-                                this.setState({lastLetter: this.state.letterDetect[i].letter})
+                                console.log("Touching letter: " + this.letterDetect[i].letter)
+                                this.updateInput(this.state.input + this.letterDetect[i].letter);
+                                this.setState({lastLetter: this.letterDetect[i].letter})
                                 this._clearTouch();
                             }
                         }
@@ -367,7 +369,7 @@ class MainComponent extends React.Component {
                 tmp[i].touchId = this.state.lastUsedId
                 tmp[i].maxSimultaneousTouchOnZone = gestureState.numberActiveTouches
                 this.setState({touchableDetect: tmp});
-//                console.log("Touch zone : " + touchableDetect[i].id);
+                console.log("Touch zone : " + touchableDetect[i].id);
                 this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
                 this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
                 this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
@@ -569,3 +571,10 @@ const styles = StyleSheet.create({
 });
 
 export default MainComponent;
+
+
+
+{/* <View top={this.state.debugLastY0} left={(ScreenDim.width - imageWidth) / 2 + this.state.debugLastX0}
+width={this.state.debugLastX1 - this.state.debugLastX0}
+height={this.state.debugLastY1 - this.state.debugLastY0}
+backgroundColor='salmon' style={styles.rectangle}></View> */}
