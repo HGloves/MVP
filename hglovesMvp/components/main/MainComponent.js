@@ -8,6 +8,9 @@ import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 
+import textToSpeech from '../speaker/speaker';
+import { speak } from 'expo-speech';
+
 const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 90 / 100;
 const imageHeight = Math.round(imageWidth * 2400 / 1920);
@@ -28,6 +31,8 @@ class MainComponent extends React.Component {
             direction: 'None',
             input: '',
             lastLetter: '',
+            timeoutId: undefined,
+            //Id de la zone, coordonnée de la zone, touchId (null si pas touché)
             prevNbOfTouch: -1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
             touchableDetect: [
@@ -288,7 +293,7 @@ class MainComponent extends React.Component {
                             }
                             if (validated) {
                                 console.log("Touching letter: " + this.state.letterDetect[i].letter)
-                                this.setState({input: this.state.input + this.state.letterDetect[i].letter})
+                                this.updateInput(this.state.input + this.state.letterDetect[i].letter);
                                 this.setState({lastLetter: this.state.letterDetect[i].letter})
                                 this._clearTouch();
                             }
@@ -381,7 +386,13 @@ class MainComponent extends React.Component {
                 this.setState({ imageHandWidth: width });
             if (this.state.imageHandHeight === -1)
                 this.setState({ imageHandHeight: height });
-        })), 0)
+        })), 0);
+        // textToSpeech('Comment on fait un rond', 'FR');
+    }
+
+    componentWillUnmount() {
+        if (this.state.timeoutId)
+            clearTimeout(this.state.timeoutId);
     }
 
     helpStatusHandler = status => {
@@ -394,6 +405,30 @@ class MainComponent extends React.Component {
         this.setState({
             exerciseStatus: status,
         })
+    }
+
+    handleInputEnd = () => {
+        const { input } = this.state;
+
+        textToSpeech(input.toLowerCase(), 'FR');
+        this.setState({
+            timeoutId: undefined,
+            input: '',
+            lastLetter: '',
+        });
+    }
+
+    updateInput = newInput => {
+        this.setState({
+            input: newInput,
+        }, () => {
+            if (this.state.timeoutId)
+                clearTimeout(this.state.timeoutId);
+            let id = setTimeout(this.handleInputEnd, 4000);
+            this.setState({
+                timeoutId: id,
+            });
+        });
     }
 
     inputHandler = status => {
