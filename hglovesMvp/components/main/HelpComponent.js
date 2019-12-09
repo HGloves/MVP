@@ -77,7 +77,7 @@ class HelpComponent extends React.Component {
                                     })}
                                 </View>
                             </ScrollView>
-                            <View style={styles.legendContainer}>
+                            <ScrollView style={styles.legendContainer}>
                                 {legends.map((legend, key) => {
                                     return (
                                         <View key={key} style={styles.legendDiv}>
@@ -91,11 +91,11 @@ class HelpComponent extends React.Component {
                                         </View>
                                     );
                                 })}
-                                <Button
-                                    onPress={() => handleClose(false)}
-                                    color={'#1C3956'}
-                                >J'ai compris</Button>
-                            </View>
+                            </ScrollView>
+                            <Button
+                                onPress={() => handleClose(false)}
+                                color={'#1C3956'}
+                            >J'ai compris</Button>
                         </Dialog.Content>
                     </Dialog>
                 </Portal>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         width: '100%',
         height: '20%',
-        paddingTop: '5%',
+        marginVertical: '5%',
         flexDirection: 'column',
     },
     legendDiv: {
