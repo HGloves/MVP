@@ -9,6 +9,8 @@ const imageHeight = Math.round(imageWidth * 363 / 293);
 const iconWidth = ScreenDim.width * 5 / 100;
 const iconHeight = iconWidth;
 
+const fontSize = ScreenDim.width * 40 / 100 * (100 / 11) * 0.01;
+
 class HomeComponent extends React.Component {
 
     handleNavigation = () => {
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#1c3956',
         fontFamily: 'open-sans-bold',
-        fontSize: 30,
+        fontSize: fontSize,
     },
 });
 

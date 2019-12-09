@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dimensions, Platform } from 'react-native'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av'
 import * as Permissions from 'expo-permissions'
@@ -66,14 +65,12 @@ class RecordButton extends React.Component {
 
             const data = await response.json()
             if (data.results != undefined && data.results[0].alternatives[0] != undefined) {
-                this.setState({ transcript: data.results[0].alternatives[0].transcript });
+                this.props.func(data.results[0].alternatives[0].transcript)
             }
         } catch (err) {
             console.log(err)
         }
-
         this.setState({ isFetching: false })
-        console.log(this.state.transcript)
     }
 
     startRecording = async () => {

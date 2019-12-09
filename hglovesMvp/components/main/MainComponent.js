@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import {PanResponder, Button} from 'react-native';
+import { PanResponder, Button } from 'react-native';
 import update from 'immutability-helper';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import RecordButton from './RecordButton'
@@ -26,7 +26,7 @@ class MainComponent extends React.Component {
             lastUsedId: 0,
             lastTouchOnTouchable: true,
             direction: 'None',
-            input: 'Your input: ',
+            input: '',
             lastLetter: '',
             prevNbOfTouch: -1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
@@ -62,6 +62,7 @@ class MainComponent extends React.Component {
                 {id: 'D3', px0: 45, px1: 60, py0: 30, py1: 35, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
+
                 {id: 'L0', px0: 45, px1: 60, py0: 35, py1: 50, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'L1', px0: 45, px1: 60, py0: 50, py1: 65, touchId: -1, touched: false,
@@ -74,22 +75,6 @@ class MainComponent extends React.Component {
                 {id: 'Z1', px0: 50, px1: 60, py0: 65, py1: 75, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'Z2', px0: 60, px1: 70, py0: 60, py1: 70, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-
-                {id: 'G0', px0: 65, px1: 75, py0: 15, py1: 20, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'G1', px0: 65, px1: 75, py0: 20, py1: 25, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'G2', px0: 65, px1: 75, py0: 25, py1: 30, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'G3', px0: 65, px1: 75, py0: 30, py1: 35, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-
-                {id: 'H0', px0: 80, px1: 90, py0: 30, py1: 35, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'H1', px0: 80, px1: 90, py0: 35, py1: 40, touchId: -1, touched: false,
-                    maxSimultaneousTouchOnZone: -1},
-                {id: 'H2', px0: 75, px1: 85, py0: 40, py1: 45, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
 
                 {id: 'P0', px0: 25, px1: 35, py0: 15, py1: 25, touchId: -1, touched: false,
@@ -106,6 +91,22 @@ class MainComponent extends React.Component {
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'B1', px0: 30, px1: 45, py0: 30, py1: 40, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
+                {id: 'G0', px0: 65, px1: 75, py0: 15, py1: 20, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+                {id: 'G1', px0: 65, px1: 75, py0: 20, py1: 25, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+                {id: 'G2', px0: 65, px1: 75, py0: 25, py1: 30, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+                {id: 'G3', px0: 65, px1: 75, py0: 30, py1: 35, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+
+                {id: 'H0', px0: 80, px1: 90, py0: 30, py1: 35, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+                {id: 'H1', px0: 80, px1: 90, py0: 35, py1: 40, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+                {id: 'H2', px0: 75, px1: 85, py0: 40, py1: 45, touchId: -1, touched: false,
+                    maxSimultaneousTouchOnZone: -1},
+
 
                 {id: 'F0', px0: 25, px1: 30, py0: 10, py1: 25, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -134,7 +135,6 @@ class MainComponent extends React.Component {
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'Q2', px0: 70, px1: 85, py0: 70, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-
                 {id: 'Y0', px0: 30, px1: 45, py0: 40, py1: 50, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'Y1', px0: 60, px1: 75, py0: 40, py1: 50, touchId: -1, touched: false,
@@ -183,7 +183,7 @@ class MainComponent extends React.Component {
             debugLastY0: 0,
             debugLastY1: 10,
         }
-        
+
         this._panResponder = PanResponder.create(
             {
                 onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -215,20 +215,20 @@ class MainComponent extends React.Component {
                         this.setState({lastUsedId: this.state.lastUsedId + 1})
                     for (let i = 0; i < this.state.letterDetect.length; i += 1) {
                         for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
-                            let index = this.state.touchableDetect.findIndex(x => x.id === 
-                            this.state.letterDetect[i].zones[j]);
+                            let index = this.state.touchableDetect.findIndex(x => x.id ===
+                                this.state.letterDetect[i].zones[j]);
                             if (this.state.touchableDetect[index].touched === false)
                                 allTouched = false;
                         }
                         if (allTouched === true) {
                             validated = true;
                             console.log("allTouched for: " + this.state.letterDetect[i].letter)
-                            if (this.state.letterDetect[i].type === 'slideTouch' && 
-                            (this.state.letterDetect[i].direction === undefined ||
-                            this.state.letterDetect[i].direction === this.state.direction ||
-                            (this.state.letterDetect[i].alternativeDirection !== undefined &&
-                            this.state.letterDetect[i].alternativeDirection === 
-                            this.state.direction))) {
+                            if (this.state.letterDetect[i].type === 'slideTouch' &&
+                                (this.state.letterDetect[i].direction === undefined ||
+                                    this.state.letterDetect[i].direction === this.state.direction ||
+                                    (this.state.letterDetect[i].alternativeDirection !== undefined &&
+                                        this.state.letterDetect[i].alternativeDirection ===
+                                        this.state.direction))) {
                                 console.log('slideTouch')
                                 let prevId = -2;
                                 for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
@@ -246,7 +246,7 @@ class MainComponent extends React.Component {
                                 for (let j = 0; j < this.state.letterDetect[i].zones.length; j += 1) {
                                     let index = this.state.touchableDetect.findIndex(x => x.id === this.state.letterDetect[i].zones[j]);
                                     if ((this.state.letterDetect[i].nbOfTouch !== undefined &&
-                                    this.state.letterDetect[i].nbOfTouch !== this.state.touchableDetect[index].maxSimultaneousTouchOnZone)) {
+                                        this.state.letterDetect[i].nbOfTouch !== this.state.touchableDetect[index].maxSimultaneousTouchOnZone)) {
                                         //NE PAS CLEAR SI C'EST 'F' PAR EXEMPLE
                                         console.log("Nombre de touche invalide")
                                         validated = false
@@ -299,7 +299,7 @@ class MainComponent extends React.Component {
                 }
             }
         )
-//        this._handleClick = this._handleClick.bind(this);
+        //        this._handleClick = this._handleClick.bind(this);
     }
 
     _percentageOf(oneHundredPercentage, value) {
@@ -315,7 +315,7 @@ class MainComponent extends React.Component {
             tmp[i].touchId = -1
             tmp[i].maxSimultaneousTouchOnZone = -1
         }
-        this.setState({touchableDetect: tmp, direction: 'None'});
+        this.setState({ touchableDetect: tmp, direction: 'None' });
     }
 
     _clearTouchIndex(index) {
@@ -323,7 +323,7 @@ class MainComponent extends React.Component {
         tmp[index].touched = false
         tmp[index].touchId = -1
         tmp[index].maxSimultaneousTouchOnZone = -1
-        this.setState({touchableDetect: tmp});      
+        this.setState({ touchableDetect: tmp });
     }
 
     _computeDirection(evt, gestureState) {
@@ -353,7 +353,7 @@ class MainComponent extends React.Component {
 //        console.log("Entering in _computeHandTouch with this.state.lastUsedId = " + this.state.lastUsedId)
         for (let i = 0; i < touchableDetect.length; i += 1) {
             if (percentageX >= touchableDetect[i].px0 && percentageX <= touchableDetect[i].px1 &&
-            percentageY >= touchableDetect[i].py0 && percentageY <= touchableDetect[i].py1) {
+                percentageY >= touchableDetect[i].py0 && percentageY <= touchableDetect[i].py1) {
                 let tmp = [...this.state.touchableDetect];
                 tmp[i].touched = true
                 tmp[i].touchId = this.state.lastUsedId
@@ -372,16 +372,16 @@ class MainComponent extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => (this.mainComponent.measure( (fx, fy, width, height, px, py) => {
+        setTimeout(() => (this.mainComponent.measure((fx, fy, width, height, px, py) => {
             if (this.state.imageHandX === -1)
-                this.setState({imageHandX: px});
+                this.setState({ imageHandX: px });
             if (this.state.imageHandY === -1)
-                this.setState({imageHandY: py});
+                this.setState({ imageHandY: py });
             if (this.state.imageHandWidth === -1)
-                this.setState({imageHandWidth: width});
+                this.setState({ imageHandWidth: width });
             if (this.state.imageHandHeight === -1)
-                this.setState({imageHandHeight: height});
-        })), 0)      
+                this.setState({ imageHandHeight: height });
+        })), 0)
     }
 
     helpStatusHandler = status => {
@@ -396,24 +396,30 @@ class MainComponent extends React.Component {
         })
     }
 
+    inputHandler = status => {
+        this.setState({
+            input: status,
+        })
+    }
+
     render() {
-        const { helpStatus, exerciseStatus } = this.state;
+        const { helpStatus, exerciseStatus, input } = this.state;
 
         return (
             <View style={styles.container}>
                 <View style={styles.handContainer}>
-                    <Image style={styles.hand} source={require('../../assets/hand.png')} 
-                    ref={view => { this.mainComponent = view; }}
-                    {...this._panResponder.panHandlers}/>
+                    <Image style={styles.hand} source={require('../../assets/hand.png')}
+                        ref={view => { this.mainComponent = view; }}
+                        {...this._panResponder.panHandlers} />
                 </View>
                 <View style={styles.lormContainer}>
                     <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton/>
+                    <RecordButton func={this.inputHandler}/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
-                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>HELLO TEST</Text>
+                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
                         </View>
                         <IconButton
                             style={styles.exButton}
@@ -427,6 +433,7 @@ class MainComponent extends React.Component {
                     style={styles.helpButton}
                     icon="alphabetical"
                     color={'#1C3956'}
+                    size={50}
                     onPress={() => this.helpStatusHandler(true)}
                 />
                 <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
@@ -508,7 +515,7 @@ const styles = StyleSheet.create({
         width: '10%',
     },
     rectangle: {
-        position: 'absolute', 
+        position: 'absolute',
         zIndex: 1,
     },
 });

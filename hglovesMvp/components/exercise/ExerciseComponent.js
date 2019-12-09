@@ -40,12 +40,11 @@ class ExerciseComponent extends React.Component {
                         <View style={styles.lettersContainer}>
                             {navigation.getParam('name').split('').map((letter, key) => {
                                 let width = (100 / navigation.getParam('name').split('').length - 2).toString() + '%';
-                                // let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
-                                let fontSize = ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01;
+                                let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
                                 return (
                                     <Card style={{ ...styles.letterCard, width: width }}
                                         key={key}>
-                                        <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize }}>{letter}</Text>
+                                        <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>
                                     </Card>
                                 );
                             })}
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
         height: '78%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     hand: {
         width: handWidth,
@@ -96,7 +95,8 @@ const styles = StyleSheet.create({
     footerContainer: {
         display: 'flex',
         width: '100%',
-        height: '22%',
+        marginTop: '4%',
+        height: '18%',
         flexDirection: 'row',
     },
     footerImageContainer: {
