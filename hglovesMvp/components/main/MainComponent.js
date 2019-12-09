@@ -202,7 +202,7 @@ class MainComponent extends React.Component {
 //                   console.log(gestureState)
                     if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches &&
                         gestureState.numberActiveTouches === 5) {
-                        this.setState({input: this.state.input + ' '})
+                        this.updateInput(this.state.input + ' ');
                         this.setState({lastLetter: ' '})
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
@@ -295,7 +295,7 @@ class MainComponent extends React.Component {
                             }
                             if (validated) {
                                 console.log("Touching letter: " + this.letterDetect[i].letter)
-                                this.setState({input: this.state.input + this.letterDetect[i].letter})
+                                this.updateInput(this.state.input + this.letterDetect[i].letter);
                                 this.setState({lastLetter: this.letterDetect[i].letter})
                                 this._clearTouch();
                             }

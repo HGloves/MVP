@@ -4,7 +4,7 @@ import HomeScreen from '../components/home/HomeComponent'
 import MainScreen from '../components/main/MainComponent'
 import ExerciseScreen from '../components/exercise/ExerciseComponent';
 
-import AnnimationScreen from '../components/annimation/AnnimationComponent'
+// import AnnimationScreen from '../components/annimation/AnnimationComponent'
 
 
 noHeader = {
