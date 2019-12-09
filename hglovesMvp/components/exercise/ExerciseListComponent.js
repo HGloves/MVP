@@ -50,7 +50,7 @@ class ExerciseListComponent extends React.Component {
                                     return (
                                         <TouchableOpacity
                                             key={key}
-                                            style={styles.exContainer}
+                                            style={{ ...styles.exContainer, marginBottom: (exercises.length - key <= 3 ? '0%' : '10%')}}
                                             onPress={() => this.handleNavigation(exercise)}
                                             >
                                             <Image
