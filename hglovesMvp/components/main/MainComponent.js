@@ -8,6 +8,7 @@ import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
 import textToSpeech from '../speaker/speaker';
 import { speak } from 'expo-speech';
+import TextBeat from '../common/TextBeat';
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
@@ -93,7 +94,7 @@ class MainComponent extends React.Component {
                     <HandComponent style={styles.hand} updateInput={this.updateInput}/>
                 </View>
                 <View style={styles.lormContainer}>
-                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</Text>
+                    <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</TextBeat>
                 </View>
                 <View style={styles.actionsContainer}>
                     <RecordButton input={input} func={this.inputHandler}/>
