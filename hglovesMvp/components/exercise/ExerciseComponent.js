@@ -99,12 +99,10 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-            backgroundColor: 'red'
         },
         hand: {
             width: handWidth,
             height: handHeight,
-            backgroundColor: 'green'
         },
         footerContainer: {
             display: 'flex',
