@@ -1,13 +1,12 @@
-const textToSpeech = require('@google-cloud/text-to-speech');
+const textToSpeechGoogle = require('@google-cloud/text-to-speech');
 
 const fs = require('fs');
 const util = require('util');
-main()
-async function main() {
+textToSpeech('Bonjour, ceci est un example de conversion.')
+async function textToSpeech(text) {
   console.log('Start encoding\n');
-  const client = new textToSpeech.TextToSpeechClient();
+  const client = new textToSpeechGoogle.TextToSpeechClient();
 
-  const text = 'Bonjour, ceci est un example de conversion.';
   const request = {
     input: {text: text},
     voice: {languageCode: 'fr-FR', ssmlGender: 'NEUTRAL'},

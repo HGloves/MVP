@@ -1,3 +1,7 @@
 credentials.json
 package-lock.json
+apiKey.json
 node_modules
+yarn.lock
+.idea
+.DS_Store
