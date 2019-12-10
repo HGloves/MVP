@@ -2,10 +2,10 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
+import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
-
 const ScreenDim = Dimensions.get("window");
-const screenRatio = ScreenDim.width / ScreenDim.height;
+const screenRatio = ScreenDim.width / ScreenDim.height
 let styles = null;
 let handWidth = null;
 let handHeight = null;
@@ -13,8 +13,8 @@ let imageWidth = null;
 let imageHeight = null;
 
 class ExerciseComponent extends React.Component {
-
     state = {
+        playWin: false,
         sequenceStatus: false,
         sentence: [],
         index: 0,
@@ -41,11 +41,32 @@ class ExerciseComponent extends React.Component {
         let tmp = [...sentence];
         tmp[index] = newLetter.toLowerCase();
         let newIndex = index + (tmp[index] === navigation.getParam('name').toLowerCase().split('')[index] ? 1 : 0);
+        
+        if ((tmp[index] === navigation.getParam('name').toLowerCase().split('')[index]) == false) {
 
-        this.setState({
-            sentence: tmp,
-            index: newIndex,
-        });
+            this.setState({
+                playFailure: true
+            }, () => setTimeout(() => {
+                {
+                    this.setState({
+                        playFailure: false
+                    })
+                }
+            }, 400))
+        }
+        
+        if (newIndex === sentence.length && this.state.playWin == false) {
+            this.setState({
+                playWin: true,
+                sentence: tmp,
+                index: newIndex,
+            })
+        } else {
+            this.setState({
+                sentence: tmp,
+                index: newIndex,
+            });
+        }
     }
 
     renderTutoSeqLetters = () => {
@@ -66,6 +87,8 @@ class ExerciseComponent extends React.Component {
             </View>
         );
     }
+
+    // <TextWink key={key} duration={500} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink>
 
     renderExLetters = () => {
         const { sentence, index } = this.state;
@@ -96,6 +119,14 @@ class ExerciseComponent extends React.Component {
 
         return (
             <View style={styles.container}>
+                {
+                    this.state.playWin &&
+                    <MySound source={require('../../assets/sounds/payment-success.mp3')} play={true} loop={false} />
+                }
+                {
+                    this.state.playFailure &&
+                    <MySound source={require('../../assets/sounds/fail.m4a')} play={true} loop={false}/>
+                }
                 <Button
                     icon="arrow-left"
                     color='#1c3956'
