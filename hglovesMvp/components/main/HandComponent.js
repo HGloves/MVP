@@ -1,37 +1,33 @@
 import React from 'react';
-import { Dimensions } from 'react-native'
-import { PanResponder, Button } from 'react-native';
-import { StyleSheet, View, Image, Text } from 'react-native';
-import RecordButton from './RecordButton'
-import { IconButton } from 'react-native-paper';
-import HelpComponent from './HelpComponent';
-import ExerciseListComponent from '../exercise/ExerciseListComponent';
-
-import textToSpeech from '../speaker/speaker';
-import { speak } from 'expo-speech';
-
-const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 90 / 100;
-const imageHeight = Math.round(imageWidth * 2400 / 1920);
+import { PanResponder } from 'react-native';
+import { Image } from 'react-native';
+import PropTypes from 'prop-types';
 
 const DEBUG = true;
 
-class MainComponent extends React.Component {
+/*
+HandComponent:
+
+    Props obligatoirement:
+    - 'updateInput' => Une method du père qui prend en paramètre un charactère.
+    Cette méthode sera appelé a chaque fois que HandComponent détecte
+    une nouvelle lettre validé.
+
+    Props secondaire:
+    - 'style' => style à appliquer.
+*/
+
+class HandComponent extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            helpStatus: false,
-            exerciseStatus: false,
-//            imageHandX: -1,
-//            imageHandY: -1,
             imageHandWidth: -1,
             imageHandHeight: -1,
             lastUsedId: 0,
             direction: 'None',
             input: '',
             lastLetter: '',
-            timeoutId: undefined,
             prevNbOfTouch: -1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
             touchableDetect: [
@@ -274,6 +270,7 @@ class MainComponent extends React.Component {
                                 this._debug("Touching letter: " + this.letterDetect[i].letter)
                                 this.setState({input: this.state.input + this.letterDetect[i].letter})
                                 this.setState({lastLetter: this.letterDetect[i].letter})
+                                this.props.updateInput(this.letterDetect[i].letter)
                                 this._clearTouch();
                             }
                         }
@@ -352,10 +349,6 @@ class MainComponent extends React.Component {
 
     componentDidMount() {
         setTimeout(() => (this.mainComponent.measure((fx, fy, width, height, px, py) => {
-//            if (this.state.imageHandX === -1)
-//                this.setState({ imageHandX: px });
-//            if (this.state.imageHandY === -1)
-//                this.setState({ imageHandY: py });
             if (this.state.imageHandWidth === -1)
                 this.setState({ imageHandWidth: width });
             if (this.state.imageHandHeight === -1)
@@ -363,176 +356,33 @@ class MainComponent extends React.Component {
         })), 0);
     }
 
-    componentWillUnmount() {
-        if (this.state.timeoutId)
-            clearTimeout(this.state.timeoutId);
-    }
-
-    helpStatusHandler = status => {
-        this.setState({
-            helpStatus: status,
-        });
-    }
-
-    exerciseStatusHandler = status => {
-        this.setState({
-            exerciseStatus: status,
-        })
-    }
-
-    handleInputEnd = () => {
-        const { input } = this.state;
-
-        textToSpeech(input.toLowerCase(), 'FR');
-        this.setState({
-            timeoutId: undefined,
-            input: '',
-            lastLetter: '',
-        });
-    }
-
-    updateInput = newInput => {
-        this.setState({
-            input: newInput,
-        }, () => {
-            if (this.state.timeoutId)
-                clearTimeout(this.state.timeoutId);
-            let id = setTimeout(this.handleInputEnd, 4000);
-            this.setState({
-                timeoutId: id,
-            });
-        });
-    }
-
-    inputHandler = status => {
-        this.setState({
-            input: status,
-        })
-    }
-
     render() {
-        const { helpStatus, exerciseStatus, input } = this.state;
-
         return (
-            <View style={styles.container}>
-                <View style={styles.handContainer}>
-                    <Image style={styles.hand} source={require('../../assets/hand.png')}
-                        ref={view => { this.mainComponent = view; }}
-                        {...this._panResponder.panHandlers} />
-                </View>
-                <View style={styles.lormContainer}>
-                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
-                </View>
-                <View style={styles.actionsContainer}>
-                    <RecordButton func={this.inputHandler}/>
-                    <View style={styles.inputContainer}>
-                        <View style={styles.inputView}>
-                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
-                        </View>
-                        <IconButton
-                            style={styles.exButton}
-                            icon="book-open"
-                            color={'#1C3956'}
-                            onPress={() => this.exerciseStatusHandler(true)}
-                        />
-                    </View>
-                </View>
-                <IconButton
-                    style={styles.helpButton}
-                    icon="alphabetical"
-                    color={'#1C3956'}
-                    size={50}
-                    onPress={() => this.helpStatusHandler(true)}
-                />
-                <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
-                <ExerciseListComponent status={exerciseStatus} handleClose={this.exerciseStatusHandler} {...this.props} />
-            </View>
+            <Image style={this.props.style} source={require('../../assets/hand.png')}
+                ref={view => { this.mainComponent = view; }}
+                {...this._panResponder.panHandlers}/>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-    },
-    handContainer: {
-        width: '100%',
-        height: '78%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    hand: {
-        width: imageWidth,
-        height: imageHeight
-    },
-    lormContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '15%'
-    },
-    lormLetter: {
-        color: '#1C3956',
-        fontSize: 50
-    },
-    actionsContainer: {
-        position: 'absolute',
-        flex: 1,
-        flexDirection: 'row',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        height: '7%',
-    },
-    inputContainer: {
-        display: 'flex',
-        height: '100%',
-        width: '70%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    inputView: {
-        marginLeft: '8%',
-        height: '75%',
-        width: '70%',
-        borderTopRightRadius: 50,
-        borderTopLeftRadius: 50,
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
-        backgroundColor: '#F1F0FF',
-        justifyContent: 'space-around',
-    },
-    input: {
-        width: '80%',
-        marginLeft: '10%',
-        color: '#1C3956'
-    },
-    helpButton: {
-        position: 'absolute',
-        right: 6,
-        top: 6,
-    },
-    exButton: {
-        display: 'flex',
-        width: '10%',
-    },
-    rectangle: {
-        position: 'absolute',
-        zIndex: 1,
-    },
-});
+HandComponent.propTypes = {
+    updateInput: PropTypes.func.isRequired,
+    style: PropTypes.any,
+  };
 
-export default MainComponent;
+export default HandComponent;
 
 
 
-{/* <View top={this.state.debugLastY0} left={(ScreenDim.width - imageWidth) / 2 + this.state.debugLastX0}
+{/*
+import { Dimensions } from 'react-native'
+
+const ScreenDim = Dimensions.get("window");
+const imageWidth = ScreenDim.width * 90 / 100;
+const imageHeight = Math.round(imageWidth * 2400 / 1920);
+
+<View top={this.state.debugLastY0} left={(ScreenDim.width - imageWidth) / 2 + this.state.debugLastX0}
 width={this.state.debugLastX1 - this.state.debugLastX0}
 height={this.state.debugLastY1 - this.state.debugLastY0}
-backgroundColor='salmon' style={styles.rectangle}></View> */}
+backgroundColor='salmon' style={styles.rectangle}></View>
+*/}
