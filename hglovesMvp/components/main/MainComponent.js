@@ -9,6 +9,7 @@ import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import Animation from '../annimation/AnnimationComponent'
 
+
 import textToSpeech from '../speaker/speaker';
 import { speak } from 'expo-speech';
 
