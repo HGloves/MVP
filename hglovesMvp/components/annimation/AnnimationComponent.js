@@ -9,7 +9,8 @@ const ScreenDim = Dimensions.get("window");
 export default class AnnimationComponent extends Component  {
     constructor(props) {
         super(props);
-        this.state = {text : "sbab"};
+        console.log("animation");
+        this.state = {text : this.props.text};
         this.lormPos = new Map([
             ["0", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100})}],
             ["a", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100}), animType: this.staticElement, xEnd: 50, yEnd: 100}],
@@ -33,6 +34,10 @@ export default class AnnimationComponent extends Component  {
             outputRangeY.push(move);
         }
         this.try = this.lormPos.get("s").moveAnim.interpolate({ inputRange: inputRangeY, outputRange: outputRangeY });
+    }
+
+    componentDidMount = () => {
+        this.whichLetters();
     }
 
     moveElement = (obj, callback) => {
@@ -80,6 +85,7 @@ export default class AnnimationComponent extends Component  {
     };
 
     circleElement = (obj, callback) => {
+        console.log("circle");
         obj.moveAnim.setValue(0);
         obj.animFade.setValue(0);
         Animated.sequence([
@@ -116,21 +122,16 @@ export default class AnnimationComponent extends Component  {
     render() {
         const transformS = [{ translateY: this.try }, {translateX: this.trx}];
         return (
-            <View style={styles.container}>
-                <Animated.View style={{display: 'flex',
-                            transform: (this.state.text[0] !== "s" ?  [{translateX: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.x}, {translateY: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.y}] : transformS),
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: 'greenyellow',
-                            borderRadius: 200,
-                            width: 100,
-                            height: 100,
-                            opacity: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).animFade}}>
-                </Animated.View>
-                <Button
-                title="Press me"
-                onPress={() => this.whichLetters()} />
-            </View>
+            <Animated.View style={{display: 'flex',
+                        transform: (this.state.text[0] !== "s" ?  [{translateX: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.x}, {translateY: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.y}] : transformS),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'greenyellow',
+                        borderRadius: 200,
+                        width: 100,
+                        height: 100,
+                        opacity: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).animFade}}>
+            </Animated.View>
         );
     }
 }
