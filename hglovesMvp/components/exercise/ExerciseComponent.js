@@ -2,12 +2,15 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
+import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
+
+import TextWink from '../common/TextWink';
 
 import CheckDialogComponent from './CheckDialogComponent';
 
 const ScreenDim = Dimensions.get("window");
-const screenRatio = ScreenDim.width / ScreenDim.height;
+const screenRatio = ScreenDim.width / ScreenDim.height
 let styles = null;
 let handWidth = null;
 let handHeight = null;
@@ -48,8 +51,8 @@ const tutoImages = {
 };
 
 class ExerciseComponent extends React.Component {
-
     state = {
+        playWin: false,
         sequenceStatus: false,
         sentence: [],
         index: 0,
@@ -84,6 +87,7 @@ class ExerciseComponent extends React.Component {
         this.setState({
             sentence: tmp,
             index: 0,
+            playWin: false
         });
     }
 
@@ -96,12 +100,33 @@ class ExerciseComponent extends React.Component {
         let tmp = [...sentence];
         tmp[index] = newLetter.toLowerCase();
         let newIndex = index + (tmp[index] === navigation.getParam('name').toLowerCase().split('')[index] ? 1 : 0);
-        if (newIndex === sentence.length)
+        
+        if ((tmp[index] === navigation.getParam('name').toLowerCase().split('')[index]) == false) {
+
+            this.setState({
+                playFailure: true
+            }, () => setTimeout(() => {
+                {
+                    this.setState({
+                        playFailure: false
+                    })
+                }
+            }, 400))
+        }
+        
+        if (newIndex === sentence.length && this.state.playWin == false) {
+            this.setState({
+                playWin: true,
+                sentence: tmp,
+                index: newIndex,
+            });
             this.handleCheckStatus(true);
-        this.setState({
-            sentence: tmp,
-            index: newIndex,
-        });
+        } else {
+            this.setState({
+                sentence: tmp,
+                index: newIndex,
+            });
+        }
     }
 
     renderTutoSeqLetters = () => {
@@ -123,6 +148,8 @@ class ExerciseComponent extends React.Component {
         );
     }
 
+    // <TextWink key={key} duration={500} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink>
+
     renderExLetters = () => {
         const { sentence, index } = this.state;
         const { navigation } = this.props;
@@ -135,9 +162,11 @@ class ExerciseComponent extends React.Component {
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
-                            {sentence[key] === ' ' && index !== key ?
-                                <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
-                                : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: (index === key && sentence[index] !== ' ') ? '#c62828' : '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>}
+                            {key === index ?
+                            (sentence[key] === ' ' ?
+                            <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</TextWink>
+                            : <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#c62828', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink> )
+                            : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>}
                         </Card>
                     );
                 })}
@@ -157,6 +186,14 @@ class ExerciseComponent extends React.Component {
                         <Text style={styles.imageTutoText}>{navigation.getParam('name').toUpperCase()[index]}</Text>
                     </Card>
                     : null}
+                {
+                    this.state.playWin &&
+                    <MySound source={require('../../assets/sounds/payment-success.mp3')} play={true} loop={false} />
+                }
+                {
+                    this.state.playFailure &&
+                    <MySound source={require('../../assets/sounds/fail.m4a')} play={true} loop={false}/>
+                }
                 <Button
                     icon="arrow-left"
                     color='#1c3956'

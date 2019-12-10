@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native';
 import RecordButton from './RecordButton'
-import { IconButton } from 'react-native-paper';
+import { IconButton, TextInput } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
@@ -71,10 +71,8 @@ class MainComponent extends React.Component {
     };
 
     inputHandler = status => {
-        this.setState({
-            input: status,
-        });
-        this.setState({googleSpeech: true})
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        this.setState({input: result, googleSpeech: true});
     };
 
     stopAnimation = () => {
@@ -101,7 +99,7 @@ class MainComponent extends React.Component {
                     <RecordButton input={input} func={this.inputHandler}/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
-                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
+                            <TextInput value={input} disabled style={{ ...styles.input, fontFamily: 'open-sans-bold', backgroundColor: 'transparent' }} />
                         </View>
                         <IconButton
                             style={styles.exButton}
@@ -187,8 +185,9 @@ if (screenRatio > 0.6) {
             justifyContent: 'space-around',
         },
         input: {
-            width: '80%',
-            marginLeft: '10%',
+            width: '90%',
+            marginLeft: '5%',
+            marginRight: '5%',
             color: '#1C3956'
         },
         helpButton: {
