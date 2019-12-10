@@ -1,20 +1,22 @@
 import React, {Component, useState } from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, TextInput, Animated, Image, Button} from 'react-native';
-import { TouchableWithoutFeedback } from "react-native-web";
-import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-
+import { StyleSheet, Animated, View } from 'react-native';
 const ScreenDim = Dimensions.get("window");
 
 export default class AnnimationComponent extends Component  {
     constructor(props) {
         super(props);
         console.log("animation");
-        this.state = {text : this.props.text};
+        this.state = {text : this.props.text,
+            imageHandX: -1,
+            imageHandY: -1,
+            imageHandWidth: -1,
+            imageHandHeight: -1
+        };
         this.lormPos = new Map([
             ["0", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100})}],
-            ["a", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 100}), animType: this.staticElement, xEnd: 50, yEnd: 100}],
-            ["b", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 150, y: 100}), animType: this.moveElement, xStart: 150, yStart: 100, xEnd: 150, yEnd: 250}],
+            ["a", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 12 , y: 45}), animType: this.staticElement, xEnd: 12, yEnd: 45}],
+            ["b", {animFade: new Animated.Value(0), moveAnim: new Animated.ValueXY({x: 50, y: 150}), animType: this.moveElement, xStart: 150, yStart: 100, xEnd: 150, yEnd: 250}],
             ["s", {animFade: new Animated.Value(0), moveAnim: new Animated.Value(0), animType: this.circleElement, xStart: 150, yStart: 500, xEnd: 200, yEnd: 200}]
         ]);
         let snapshot = 200, radius = 100;
@@ -69,7 +71,7 @@ export default class AnnimationComponent extends Component  {
         if (obj !== undefined) {
             Animated.sequence([
                 Animated.timing(obj.moveAnim, {
-                    toValue: {x: obj.xEnd, y: obj.yEnd},
+                    toValue: {x: (obj.xEnd * ScreenDim.width) / 100, y: (obj.yEnd * ScreenDim.height) / 100},
                     duration: 100
                 }),
                 Animated.timing(obj.animFade, {
@@ -122,6 +124,7 @@ export default class AnnimationComponent extends Component  {
     render() {
         const transformS = [{ translateY: this.try }, {translateX: this.trx}];
         return (
+            <View ref={view => { this.annimationComponent = view; }}>
             <Animated.View style={{display: 'flex',
                         transform: (this.state.text[0] !== "s" ?  [{translateX: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.x}, {translateY: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).moveAnim.y}] : transformS),
                         justifyContent: 'center',
@@ -132,6 +135,7 @@ export default class AnnimationComponent extends Component  {
                         height: 100,
                         opacity: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).animFade}}>
             </Animated.View>
+            </View>
         );
     }
 }
