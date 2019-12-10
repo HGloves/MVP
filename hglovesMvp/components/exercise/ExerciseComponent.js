@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
+import HandComponent from '../main/HandComponent';
 
 const ScreenDim = Dimensions.get("window");
 const handWidth = ScreenDim.width * 90 / 100;
@@ -11,6 +12,10 @@ const imageWidth = ScreenDim.width * 30 / 100;
 const imageHeight = Math.round(imageWidth * 487 / 579);
 
 class ExerciseComponent extends React.Component {
+
+    updateInput = newLetter => {
+        console.log(newLetter)
+    }
 
     render() {
         const { navigation } = this.props;
@@ -25,7 +30,7 @@ class ExerciseComponent extends React.Component {
                     Retour
                 </Button>
                 <View style={styles.handContainer}>
-                    <Image style={styles.hand} source={require('../../assets/hand.png')} />
+                    <HandComponent style={styles.hand} updateInput={this.updateInput}/>
                 </View>
                 <View style={styles.footerContainer}>
                     <View style={styles.footerImageContainer}>
