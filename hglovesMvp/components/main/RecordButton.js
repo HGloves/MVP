@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av'
 import * as Permissions from 'expo-permissions'
 import * as FileSystem from 'expo-file-system';
-import apiKey from '../../apiKey.json'
+//import apiKey from '../../apiKey.json'
 
 const recordingOptions = {
     android: {
