@@ -1,7 +1,12 @@
 import React from 'react';
 import { PanResponder } from 'react-native';
-import { Image } from 'react-native';
+import { StyleSheet, Image, View} from 'react-native';
 import PropTypes from 'prop-types';
+import { Dimensions } from 'react-native'
+
+const ScreenDim2 = Dimensions.get("window");
+const imageWidth2 = ScreenDim2.width * 90 / 100;
+const imageHeight2 = Math.round(imageWidth2 * 2400 / 1920);
 
 const DEBUG = true;
 
@@ -183,6 +188,7 @@ class HandComponent extends React.Component {
                         gestureState.numberActiveTouches === 5) {
                         this.setState({input: this.state.input + ' '})
                         this.setState({lastLetter: ' '})
+                        this.props.updateInput(' ')
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
                     }
@@ -348,7 +354,7 @@ class HandComponent extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => (this.mainComponent.measure((fx, fy, width, height, px, py) => {
+        setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
             if (this.state.imageHandWidth === -1)
                 this.setState({ imageHandWidth: width });
             if (this.state.imageHandHeight === -1)
@@ -358,12 +364,21 @@ class HandComponent extends React.Component {
 
     render() {
         return (
-            <Image style={this.props.style} source={require('../../assets/hand.png')}
-                ref={view => { this.mainComponent = view; }}
-                {...this._panResponder.panHandlers}/>
+            <View width='100%' height='100%'>
+                <Image style={this.props.style} source={require('../../assets/hand.png')}
+                    ref={view => { this.handComponent = view; }}
+                    {...this._panResponder.panHandlers}/>
+            </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    rectangle: {
+        position: 'absolute',
+        zIndex: 1,
+    },
+});
 
 HandComponent.propTypes = {
     updateInput: PropTypes.func.isRequired,
@@ -377,12 +392,13 @@ export default HandComponent;
 {/*
 import { Dimensions } from 'react-native'
 
-const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 90 / 100;
-const imageHeight = Math.round(imageWidth * 2400 / 1920);
+const ScreenDim2 = Dimensions.get("window");
+const imageWidth2 = ScreenDim2.width * 90 / 100;
+const imageHeight2 = Math.round(imageWidth2 * 2400 / 1920);
 
-<View top={this.state.debugLastY0} left={(ScreenDim.width - imageWidth) / 2 + this.state.debugLastX0}
-width={this.state.debugLastX1 - this.state.debugLastX0}
-height={this.state.debugLastY1 - this.state.debugLastY0}
-backgroundColor='salmon' style={styles.rectangle}></View>
+                <View top={this.state.debugLastY0} left={this.state.debugLastX0}
+                width={this.state.debugLastX1 - this.state.debugLastX0}
+                height={this.state.debugLastY1 - this.state.debugLastY0}
+                backgroundColor='salmon' style={styles.rectangle}></View>
+
 */}

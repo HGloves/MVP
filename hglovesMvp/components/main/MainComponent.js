@@ -6,18 +6,19 @@ import { IconButton } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
-
 import textToSpeech from '../speaker/speaker';
 import { speak } from 'expo-speech';
 
 const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 90 / 100;
-const imageHeight = Math.round(imageWidth * 2400 / 1920);
+const screenRatio = ScreenDim.width / ScreenDim.height;
+let styles = null;
+let imageWidth = null;
+let imageHeight = null;
 
 class MainComponent extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             helpStatus: false,
             exerciseStatus: false,
@@ -36,13 +37,13 @@ class MainComponent extends React.Component {
         this.setState({
             helpStatus: status,
         });
-    }
+    };
 
     exerciseStatusHandler = status => {
         this.setState({
             exerciseStatus: status,
         })
-    }
+    };
 
     handleInputEnd = () => {
         const { input } = this.state;
@@ -53,7 +54,7 @@ class MainComponent extends React.Component {
             input: '',
             lastLetter: '',
         });
-    }
+    };
 
     updateInput = newLetter => {
         this.setState({
@@ -67,18 +68,16 @@ class MainComponent extends React.Component {
                 timeoutId: id,
             });
         });
-    }
+    };
 
     inputHandler = status => {
-        this.setState({
-            input: status,
-        })
-        this.setState({googleSpeech: true})
-    }
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        this.setState({input: result, googleSpeech: true});
+    };
 
     stopAnimation = () => {
         this.setState({googleSpeech: false, input: ''})
-    }
+    };
 
     render() {
         const { helpStatus, exerciseStatus, input } = this.state;
@@ -124,82 +123,170 @@ class MainComponent extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-    },
-    handContainer: {
-        width: '100%',
-        height: '78%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    hand: {
-        width: imageWidth,
-        height: imageHeight
-    },
-    lormContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '15%'
-    },
-    lormLetter: {
-        color: '#1C3956',
-        fontSize: 50
-    },
-    actionsContainer: {
-        position: 'absolute',
-        flex: 1,
-        flexDirection: 'row',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        height: '7%',
-    },
-    inputContainer: {
-        display: 'flex',
-        height: '100%',
-        width: '70%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    inputView: {
-        marginLeft: '8%',
-        height: '75%',
-        width: '70%',
-        borderTopRightRadius: 50,
-        borderTopLeftRadius: 50,
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
-        backgroundColor: '#F1F0FF',
-        justifyContent: 'space-around',
-    },
-    input: {
-        width: '80%',
-        marginLeft: '10%',
-        color: '#1C3956'
-    },
-    helpButton: {
-        position: 'absolute',
-        right: 6,
-        top: 6,
-    },
-    exButton: {
-        display: 'flex',
-        width: '10%',
-    },
-    rectangle: {
-        position: 'absolute',
-        zIndex: 1,
-    },
-});
+if (screenRatio > 0.6) {
+    console.log("TABLET");
+    imageWidth = ScreenDim.width * 90 / 100;
+    imageHeight = Math.round(imageWidth * 2400 / 1920);
+    styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+        },
+        handContainer: {
+            width: '100%',
+            height: '78%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center'
+        },
+        hand: {
+            width: imageWidth,
+            height: imageHeight
+        },
+        lormContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '15%'
+        },
+        lormLetter: {
+            color: '#1C3956',
+            fontSize: 50
+        },
+        actionsContainer: {
+            position: 'absolute',
+            flex: 1,
+            flexDirection: 'row',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '7%',
+        },
+        inputContainer: {
+            display: 'flex',
+            height: '100%',
+            width: '70%',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        inputView: {
+            marginLeft: '8%',
+            height: '75%',
+            width: '70%',
+            borderTopRightRadius: 50,
+            borderTopLeftRadius: 50,
+            borderBottomLeftRadius: 50,
+            borderBottomRightRadius: 50,
+            backgroundColor: '#F1F0FF',
+            justifyContent: 'space-around',
+        },
+        input: {
+            width: '80%',
+            marginLeft: '10%',
+            color: '#1C3956'
+        },
+        helpButton: {
+            position: 'absolute',
+            right: 6,
+            top: 6,
+        },
+        exButton: {
+            display: 'flex',
+            width: '10%',
+        },
+        rectangle: {
+            position: 'absolute',
+            zIndex: 1,
+        },
+    });
+} else {
+    console.log("MOBILE");
+    imageWidth = ScreenDim.width;
+    imageHeight = Math.round(imageWidth * 2400 / 1920);
+    styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+        },
+        handContainer: {
+            width: '100%',
+            height: '78%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+            paddingTop: '25%',
+        },
+        hand: {
+            width: imageWidth,
+            height: imageHeight,
+        },
+        lormContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '15%'
+        },
+        lormLetter: {
+            color: '#1C3956',
+            fontSize: 50
+        },
+        actionsContainer: {
+            position: 'absolute',
+            flex: 1,
+            flexDirection: 'row',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '7%',
+        },
+        inputContainer: {
+            display: 'flex',
+            height: '100%',
+            width: '70%',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        inputView: {
+            marginLeft: '8%',
+            height: '75%',
+            width: '70%',
+            borderTopRightRadius: 50,
+            borderTopLeftRadius: 50,
+            borderBottomLeftRadius: 50,
+            borderBottomRightRadius: 50,
+            backgroundColor: '#F1F0FF',
+            justifyContent: 'space-around',
+        },
+        input: {
+            width: '80%',
+            marginLeft: '10%',
+            color: '#1C3956'
+        },
+        helpButton: {
+            position: 'absolute',
+            right: 6,
+            top: 6,
+        },
+        exButton: {
+            display: 'flex',
+            width: '10%',
+        },
+        rectangle: {
+            position: 'absolute',
+            zIndex: 1,
+        },
+    });
+}
 
 export default MainComponent;
 
