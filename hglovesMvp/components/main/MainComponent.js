@@ -140,7 +140,7 @@ if (screenRatio > 0.6) {
             height: '78%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'center'
         },
         hand: {
             width: imageWidth,
@@ -223,6 +223,7 @@ if (screenRatio > 0.6) {
             justifyContent: 'center',
             alignContent: 'center',
             alignItems: 'center',
+            paddingTop: '25%',
         },
         hand: {
             width: imageWidth,
