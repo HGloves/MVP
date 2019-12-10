@@ -2,6 +2,8 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
+import TextWink from "../common/TextWink";
+import MySound from '../common/MySound';
 
 const ScreenDim = Dimensions.get("window");
 const handWidth = ScreenDim.width * 90 / 100;
@@ -11,12 +13,16 @@ const imageWidth = ScreenDim.width * 30 / 100;
 const imageHeight = Math.round(imageWidth * 487 / 579);
 
 class ExerciseComponent extends React.Component {
+    state = {
+        playWin: false
+    }
 
     render() {
         const { navigation } = this.props;
 
         return (
             <View style={styles.container}>
+                <MySound source={require('../../assets/sounds/payment-success.mp3')} play={this.state.playWin} loop={false} />
                 <Button
                     icon="arrow-left"
                     color='#1c3956'
@@ -44,7 +50,7 @@ class ExerciseComponent extends React.Component {
                                 return (
                                     <Card style={{ ...styles.letterCard, width: width }}
                                         key={key}>
-                                        <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>
+                                        <TextWink key={key} duration={500} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink>
                                     </Card>
                                 );
                             })}
