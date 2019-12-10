@@ -39,6 +39,7 @@ class HelpComponent extends React.Component {
             { name: 'X', image: require('../../assets/images/letters/X.png') },
             { name: 'Y', image: require('../../assets/images/letters/Y.png') },
             { name: 'Z', image: require('../../assets/images/letters/Z.png') },
+            { name: 'Espace', image: require('../../assets/images/letters/SPACE.png') },
         ],
         legends: [
             { image: require('../../assets/images/legend/1Touch.png'), description: 'Toucher 1x' },
