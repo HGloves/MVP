@@ -13,12 +13,85 @@ const imageHeight = Math.round(imageWidth * 487 / 579);
 
 class ExerciseComponent extends React.Component {
 
+    state = {
+        sequenceStatus: false,
+        sentence: [],
+        index: 0,
+    }
+
+    componentDidMount() {
+        const { navigation } = this.props;
+
+        const seq = navigation.getParam('name').toLowerCase().split('');
+        let tmp = [...seq];
+        for (let i = 0; i !== seq.length; i += 1)
+            tmp[i] = ' ';
+        this.setState({
+            sentence: tmp,
+        });
+    }
+
     updateInput = newLetter => {
-        console.log(newLetter)
+        const { sentence, index } = this.state;
+        const { navigation } = this.props;
+
+        if (index === sentence.length || newLetter === ' ')
+            return;
+        let tmp = [...sentence];
+        tmp[index] = newLetter.toLowerCase();
+        let newIndex = index + (tmp[index] === navigation.getParam('name').toLowerCase().split('')[index] ? 1 : 0);
+
+        this.setState({
+            sentence: tmp,
+            index: newIndex,
+        });
+    }
+
+    renderTutoSeqLetters = () => {
+        const { navigation } = this.props;
+
+        return (
+            <View style={styles.lettersContainer}>
+                {navigation.getParam('name').split('').map((letter, key) => {
+                    let width = (100 / navigation.getParam('name').split('').length - 2).toString() + '%';
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
+                    return (
+                        <Card style={{ ...styles.letterCard, width: width }}
+                            key={key}>
+                            <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>
+                        </Card>
+                    );
+                })}
+            </View>
+        );
+    }
+
+    renderExLetters = () => {
+        const { sentence, index } = this.state;
+        const { navigation } = this.props;
+        console.log(sentence);
+
+        return (
+            <View style={styles.lettersContainer}>
+                {sentence.map((letter, key) => {
+                    let width = (100 / sentence.length - 2).toString() + '%';
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / sentence.length - 2) * 0.01, 35);
+                    return (
+                        <Card style={{ ...styles.letterCard, width: width }}
+                            key={key}>
+                            {sentence[key] === ' ' && index !== key ?
+                                <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
+                                : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: (index === key && sentence[index] !== ' ') ? '#c62828' : '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>}
+                        </Card>
+                    );
+                })}
+            </View>
+        );
     }
 
     render() {
         const { navigation } = this.props;
+        const { sequenceStatus, index, sentence } = this.state;
 
         return (
             <View style={styles.container}>
@@ -30,7 +103,7 @@ class ExerciseComponent extends React.Component {
                     Retour
                 </Button>
                 <View style={styles.handContainer}>
-                    <HandComponent style={styles.hand} updateInput={this.updateInput}/>
+                    <HandComponent style={styles.hand} updateInput={this.updateInput} />
                 </View>
                 <View style={styles.footerContainer}>
                     <View style={styles.footerImageContainer}>
@@ -42,29 +115,18 @@ class ExerciseComponent extends React.Component {
                         </View>
                     </View>
                     <View style={styles.footerRightContainer}>
-                        <View style={styles.lettersContainer}>
-                            {navigation.getParam('name').split('').map((letter, key) => {
-                                let width = (100 / navigation.getParam('name').split('').length - 2).toString() + '%';
-                                let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
-                                return (
-                                    <Card style={{ ...styles.letterCard, width: width }}
-                                        key={key}>
-                                        <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>
-                                    </Card>
-                                );
-                            })}
-                        </View>
+                        {sequenceStatus ? this.renderTutoSeqLetters() : this.renderExLetters()}
                         <View style={styles.gameButtonContainer}>
                             <IconButton
                                 icon="refresh"
                                 color={'#1C3956'}
-                                onPress={() => {}}
+                                onPress={() => { }}
                             />
                             <IconButton
                                 icon="check"
-                                disabled
+                                disabled={index !== sentence.length}
                                 color={'#1C3956'}
-                                onPress={() => {}}
+                                onPress={navigation.getParam('callback')}
                             />
                         </View>
                     </View>
