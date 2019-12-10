@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native';
 import { Audio } from 'expo-av'
 import * as Permissions from 'expo-permissions'
 import * as FileSystem from 'expo-file-system';
-//import apiKey from '../../apiKey.json'
+// import apiKey from '../../apiKey.json'
 
 const recordingOptions = {
     android: {
@@ -48,20 +48,39 @@ class RecordButton extends React.Component {
                     this.fileEncoded = res
                 })
 
-            const response = await fetch("https://speech.googleapis.com/v1/speech:recognize?key=" + apiKey.key, {
-                method: "POST",
-                contentType: "application/json",
-                body: JSON.stringify({
-                    config: {
-                        encoding: "AMR_WB",
-                        sampleRateHertz: 16000,
-                        languageCode: "fr-FR"
-                    },
-                    audio: {
-                        content: this.fileEncoded
-                    }
+            var response = null;
+
+            if (Platform.OS == 'ios') {
+                response = await fetch("https://speech.googleapis.com/v1/speech:recognize?key=" + apiKey.key, {
+                    method: "POST",
+                    contentType: "application/json",
+                    body: JSON.stringify({
+                        config: {
+                            encoding: "LINEAR16",
+                            sampleRateHertz: 16000,
+                            languageCode: "fr-FR"
+                        },
+                        audio: {
+                            content: this.fileEncoded
+                        }
+                    })
                 })
-            })
+            } else {
+                response = await fetch("https://speech.googleapis.com/v1/speech:recognize?key=" + apiKey.key, {
+                    method: "POST",
+                    contentType: "application/json",
+                    body: JSON.stringify({
+                        config: {
+                            encoding: "AMR_WB",
+                            sampleRateHertz: 16000,
+                            languageCode: "fr-FR"
+                        },
+                        audio: {
+                            content: this.fileEncoded
+                        }
+                    })
+                })
+            }
 
             const data = await response.json()
             if (data.results != undefined && data.results[0].alternatives[0] != undefined) {
@@ -70,6 +89,7 @@ class RecordButton extends React.Component {
         } catch (err) {
             console.log(err)
         }
+        this.resetRecording()
         this.setState({ isFetching: false })
     }
 
@@ -84,22 +104,37 @@ class RecordButton extends React.Component {
             interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
             playsInSilentModeIOS: true,
             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        color: '#FFFFFF',
-        playThroughEarpieceAndroid: true,
+            playThroughEarpieceAndroid: true,
+            shouldDuckAndroid: true,
+            staysActiveInBackground: false
         }).catch(() => {
             return
         })
         const recording = new Audio.Recording()
 
         try {
-            await recording.prepareToRecordAsync(recordingOptions)
-            await recording.startAsync()
+            await recording.prepareToRecordAsync(recordingOptions).catch((err) => { console.log(err); console.log("On est bien ici") })
+            await recording.startAsync().catch((err) => { console.log(err) })
         } catch (error) {
             console.log(error)
             this.stopRecording()
         }
 
         this.recorder = recording
+    }
+
+    deleteRecordingFile = async () => {
+        try {
+            const info = await FileSystem.getInfoAsync(this.recorder.getURI())
+            await FileSystem.deleteAsync(info.uri)
+        } catch (error) {
+            console.log('There was an error deleting recorded file', error)
+        }
+    }
+
+    resetRecording = () => {
+        this.deleteRecordingFile()
+        this.recorder = null
     }
 
     stopRecording = async () => {
