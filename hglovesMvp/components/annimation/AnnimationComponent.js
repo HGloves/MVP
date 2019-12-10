@@ -149,23 +149,29 @@ export default class AnnimationComponent extends Component  {
     };
 
     whichLetters = () => {
-        console.log("Before annimation : " + this.state.text[0]);
+        if (this.state.text[0] === undefined || this.lormPos.has(this.state.text[0]) == false) {
+            this.setState({text : this.state.text.substr(1)}, () => {
+                if (this.state.text === "")
+                    return;
+                this.whichLetters();
+            });
+            return;
+        }
         obj = this.lormPos.get(this.state.text[0]);
         obj.animType(obj , () => {
             this.setState({text : this.state.text.substr(1)}, () => {
                 if (this.state.text === "") {
-                    console.log("QUIT\n");
                     return;
                 }
-                console.log (this.state.text + " After\n");
                 this.whichLetters();
             });
         });
     };
 
     getLetter = (nbr) => {
-        console.log(this.state.text[0])
-        if (nbr == 1 && this.state.text[0] != undefined)
+        if (this.state.text[0] === undefined || this.lormPos.has(this.state.text[0]) == false)
+            return "0";
+        if (nbr == 1)
             return this.state.text[0];
         if (nbr == 2 && (this.state.text[0] == "k" || this.state.text[0] == "ç" || this.state.text[0] == "f" || this.state.text[0] == "w" || this.state.text[0] == " "))
             return this.state.text[0];
@@ -181,7 +187,7 @@ export default class AnnimationComponent extends Component  {
         return (
             <View>
                 <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ?  [{translateX: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).anim1.x}, {translateY: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).anim1.y}] : transformS),
+                    transform: (this.state.text[0] !== "s" ? [{translateX: this.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: 'greenyellow',
