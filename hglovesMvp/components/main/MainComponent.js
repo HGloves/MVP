@@ -9,6 +9,7 @@ import HandComponent from './HandComponent';
 import textToSpeech from '../speaker/speaker';
 import { speak } from 'expo-speech';
 import TextBeat from '../common/TextBeat';
+import Animation from '../annimation/AnnimationComponent'
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
@@ -86,7 +87,7 @@ class MainComponent extends React.Component {
         return (
             <View style={styles.container}>
                 {this.state.googleSpeech === true ?
-                    <Animation text={this.state.input} index={this.state.index} stopAnimation={this.stopAnimation}/>
+                    <Animation text={this.state.input} stopAnimation={this.stopAnimation}/>
                     :
                     null
                 }
