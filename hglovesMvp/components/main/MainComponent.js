@@ -58,6 +58,7 @@ class MainComponent extends React.Component {
     updateInput = newLetter => {
         this.setState({
             input: this.state.input + newLetter,
+            lastLetter: newLetter,
         }, () => {
             if (this.state.timeoutId)
                 clearTimeout(this.state.timeoutId);
