@@ -466,7 +466,7 @@ class MainComponent extends React.Component {
                     <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</Text>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton func={this.inputHandler}/>
+                    <RecordButton input={input} func={this.inputHandler}/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
                             <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
