@@ -4,21 +4,19 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 60 / 100;
-const imageHeight = Math.round(imageWidth * 363 / 293);
-
-console.log(ScreenDim.width / ScreenDim.height);
-
-const iconWidth = ScreenDim.width * 5 / 100;
-const iconHeight = iconWidth;
-
-const fontSize = ScreenDim.width * 40 / 100 * (100 / 11) * 0.01;
+const screenRatio = ScreenDim.width / ScreenDim.height;
+let imageWidth = null;
+let imageHeight = null;
+let iconWidth = null;
+let iconHeight = null;
+let fontSize = null;
+let style = null;
 
 class HomeComponent extends React.Component {
 
     handleNavigation = () => {
         this.props.navigation.navigate('Main')
-    }
+    };
 
     render() {
         return (
@@ -50,54 +48,116 @@ class HomeComponent extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#1c3956',
-    },
-    headerContainer: {
-        display: 'flex',
-        width: '80%',
-        height: '25%',
-        marginLeft: '10%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerText: {
-        textAlign: 'center',
-        color: 'white'
-    },
-    logoContainer: {
-        display: 'flex',
-        width: '90%',
-        marginLeft: '10%',
-        height: '67%',
-    },
-    footerContainer: {
-        display: 'flex',
-        width: '100%',
-        height: '8%',
-        flexDirection: 'row-reverse',
-    },
-    footerButton: {
-        display: 'flex',
-        width: '40%',
-        height: '100%',
-        backgroundColor: 'white',
-        borderTopLeftRadius: 30,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    footerText: {
-        textAlign: 'center',
-        color: '#1c3956',
-        fontFamily: 'open-sans-bold',
-        fontSize: fontSize,
-    },
-});
+if (screenRatio > 0.6) {
+    console.log("TABLET");
+    imageWidth = ScreenDim.width * 60 / 100;
+    imageHeight = Math.round(imageWidth * 363 / 293);
+    iconWidth = ScreenDim.width * 5 / 100;
+    iconHeight = ScreenDim.width * 5 / 100;
+    fontSize = ScreenDim.width * 40 / 100 * (100 / 11) * 0.01;
+    styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+        },
+        headerContainer: {
+            display: 'flex',
+            width: '80%',
+            height: '25%',
+            marginLeft: '10%',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        headerText: {
+            textAlign: 'center',
+            color: 'white'
+        },
+        logoContainer: {
+            display: 'flex',
+            width: '90%',
+            marginLeft: '10%',
+            height: '67%',
+        },
+        footerContainer: {
+            display: 'flex',
+            width: '100%',
+            height: '8%',
+            flexDirection: 'row-reverse',
+        },
+        footerButton: {
+            display: 'flex',
+            width: '40%',
+            height: '100%',
+            backgroundColor: 'white',
+            borderTopLeftRadius: 30,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        footerText: {
+            textAlign: 'center',
+            color: '#1c3956',
+            fontFamily: 'open-sans-bold',
+            fontSize: fontSize,
+        },
+    });
+} else {
+    console.log("MOBILE");
+    imageWidth = ScreenDim.width * 81 / 100;
+    imageHeight = Math.round(imageWidth * 363 / 293);
+    iconWidth = ScreenDim.width * 5 / 100;
+    iconHeight = ScreenDim.width * 5 / 100;
+    fontSize = ScreenDim.width * 40 / 100 * (100 / 11) * 0.01;
+    styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+        },
+        headerContainer: {
+            display: 'flex',
+            width: '80%',
+            height: '25%',
+            marginLeft: '10%',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        headerText: {
+            textAlign: 'center',
+            color: 'white'
+        },
+        logoContainer: {
+            display: 'flex',
+            width: '90%',
+            marginLeft: '10%',
+            height: '67%',
+        },
+        footerContainer: {
+            display: 'flex',
+            width: '100%',
+            height: '8%',
+            flexDirection: 'row-reverse',
+        },
+        footerButton: {
+            display: 'flex',
+            width: '40%',
+            height: '100%',
+            backgroundColor: 'white',
+            borderTopLeftRadius: 30,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        footerText: {
+            textAlign: 'center',
+            color: '#1c3956',
+            fontFamily: 'open-sans-bold',
+            fontSize: fontSize,
+        },
+    });
+}
 
 export default HomeComponent;

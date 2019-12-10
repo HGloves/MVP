@@ -1,10 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, Platform, Dimensions} from 'react-native';
 import { Audio } from 'expo-av'
 import * as Permissions from 'expo-permissions'
 import * as FileSystem from 'expo-file-system';
 // import apiKey from '../../apiKey.json'
 
+const ScreenDim = Dimensions.get("window");
+const screenRatio = ScreenDim.width / ScreenDim.height;
+let styles = null;
 const recordingOptions = {
     android: {
         extension: '.m4a',
@@ -24,13 +27,13 @@ const recordingOptions = {
         linearPCMIsBigEndian: false,
         linearPCMIsFloat: false,
     },
-}
+};
 
 class RecordButton extends React.Component {
     constructor(props) {
         super(props);
-        this.recorder = null
-        this.fileEncoded = null
+        this.recorder = null;
+        this.fileEncoded = null;
         this.state = {
             onRecord: false,
             isFetching: false,
@@ -189,28 +192,56 @@ class RecordButton extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    recordContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#1C3956',
-        borderTopRightRadius: 30,
-        height: '100%',
-        width: '30%',
-    },
-    recordText: {
-        color: '#FFFFFF',
-        fontSize: 20,
-    },
-    buttonActionContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonAction: {
-        width: 32,
-        height: 32,
-    },
-});
+if (screenRatio > 0.6) {
+    console.log("TABLET");
+    styles = StyleSheet.create({
+        recordContainer: {
+            flex: 1,
+            flexDirection: 'row',
+            backgroundColor: '#1C3956',
+            borderTopRightRadius: 30,
+            height: '100%',
+            width: '30%',
+        },
+        recordText: {
+            color: '#FFFFFF',
+            fontSize: 20,
+        },
+        buttonActionContainer: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        buttonAction: {
+            width: 32,
+            height: 32,
+        },
+    });
+} else {
+    console.log("MOBILE");
+    styles = StyleSheet.create({
+        recordContainer: {
+            flex: 1,
+            flexDirection: 'row',
+            backgroundColor: '#1C3956',
+            borderTopRightRadius: 30,
+            height: '100%',
+            width: '30%',
+        },
+        recordText: {
+            color: '#FFFFFF',
+            fontSize: 15,
+        },
+        buttonActionContainer: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        buttonAction: {
+            width: 28,
+            height: 28,
+        },
+    });
+}
 
 export default RecordButton;
