@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';

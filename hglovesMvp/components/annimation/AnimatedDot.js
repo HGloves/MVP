@@ -32,7 +32,7 @@ export default class AnimatedDot extends Component  {
             // }),
             Animated.timing(this.state.animFade, {
                 toValue: 0,
-                duration: 400,
+                duration: 1000,
             }).start(this.animatedCallback)
         ])
     }
@@ -44,7 +44,7 @@ export default class AnimatedDot extends Component  {
                         transform: [{translateY: this.props.posY - this.radius / 2}, {translateX: this.props.posX - this.radius / 2}],
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: 'grey',
+                        backgroundColor: '#1C3956',
                         borderRadius: 200,
                         width: this.radius,
                         height: this.radius,
