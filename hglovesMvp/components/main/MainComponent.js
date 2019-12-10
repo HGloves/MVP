@@ -71,10 +71,8 @@ class MainComponent extends React.Component {
     };
 
     inputHandler = status => {
-        this.setState({
-            input: status,
-        });
-        this.setState({googleSpeech: true})
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        this.setState({input: result, googleSpeech: true});
     };
 
     stopAnimation = () => {
