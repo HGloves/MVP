@@ -84,7 +84,8 @@ class RecordButton extends React.Component {
             interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
             playsInSilentModeIOS: true,
             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-            playThroughEarpieceAndroid: true,
+        color: '#FFFFFF',
+        playThroughEarpieceAndroid: true,
         }).catch(() => {
             return
         })
@@ -119,21 +120,23 @@ class RecordButton extends React.Component {
         } else {
             this.stopRecording()
             // this.getAudio()
-            this.props.func("bab")
+            this.props.func("sbab")
         }
     };
 
     render() {
+        const { input } = this.props;
+
         return (
-            <TouchableOpacity style={styles.recordContainer}
+            <TouchableOpacity disabled={input !== ''} style={(input !== '') ? { ...styles.recordContainer, backgroundColor: '#D7D7D7' } : styles.recordContainer}
                 onPress={() => this.handleRecord()}>
                 {!this.state.onRecord ?
                     <>
                         <View style={{ ...styles.buttonActionContainer, width: '70%' }}>
-                            <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold' }}>Parler</Text>
+                            <Text style={{ ...styles.recordText, fontFamily: 'open-sans-bold', color: (input !== '') ? '#B2B2B2' : 'white' }}>Parler</Text>
                         </View>
                         <View style={{ ...styles.buttonActionContainer, width: '30%' }}>
-                            <Image style={styles.buttonAction} source={require('../../assets/microphone.png')} />
+                            <Image style={styles.buttonAction} source={(input !== '') ?require('../../assets/microphoneDisabled.png') : require('../../assets/microphone.png')} />
                         </View>
                     </>
                     :
