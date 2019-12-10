@@ -120,7 +120,7 @@ class RecordButton extends React.Component {
         } else {
             this.stopRecording()
             // this.getAudio()
-            this.props.func("sbab")
+            this.props.func("bab")
         }
     };
 
