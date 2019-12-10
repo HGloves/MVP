@@ -7,6 +7,8 @@ const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 60 / 100;
 const imageHeight = Math.round(imageWidth * 363 / 293);
 
+console.log(ScreenDim.width / ScreenDim.height);
+
 const iconWidth = ScreenDim.width * 5 / 100;
 const iconHeight = iconWidth;
 
