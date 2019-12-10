@@ -72,6 +72,11 @@ class MainComponent extends React.Component {
         this.setState({
             input: status,
         })
+        this.setState({googleSpeech: true})
+    }
+
+    stopAnimation = () => {
+        this.setState({googleSpeech: false, input: ''})
     }
 
     render() {
@@ -79,14 +84,19 @@ class MainComponent extends React.Component {
 
         return (
             <View style={styles.container}>
+                {this.state.googleSpeech === true ?
+                    <Animation text={this.state.input} index={this.state.index} stopAnimation={this.stopAnimation}/>
+                    :
+                    null
+                }
                 <View style={styles.handContainer}>
                     <HandComponent style={styles.hand} updateInput={this.updateInput}/>
                 </View>
                 <View style={styles.lormContainer}>
-                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{this.state.lastLetter}</Text>
+                    <Text style={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</Text>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton func={this.inputHandler}/>
+                    <RecordButton input={input} func={this.inputHandler}/>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
                             <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
