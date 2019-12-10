@@ -57,15 +57,15 @@ export default class AnnimationComponent extends Component  {
                 })
             ]).start(callback)
         }
-    };
+    }
 
     staticElement = (obj, callback) => {
-        console.log("fade");
+        console.log("fade")
         if (obj !== undefined) {
             Animated.sequence([
                 Animated.timing(obj.moveAnim, {
                     toValue: {x: obj.xEnd, y: obj.yEnd},
-                    duration: 200
+                    duration: 100
                 }),
                 Animated.timing(obj.animFade, {
                     toValue: 1,
@@ -73,7 +73,7 @@ export default class AnnimationComponent extends Component  {
                 }),
                 Animated.timing(obj.animFade, {
                     toValue: 0,
-                    duration: 200
+                    duration: 1000
                 })
             ]).start(callback)
         }
@@ -128,8 +128,8 @@ export default class AnnimationComponent extends Component  {
                             opacity: this.lormPos.get(this.state.text[0] === undefined ? "0" : this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Button
-          title="Press me"
-          onPress={() => this.whichLetters()} />
+                title="Press me"
+                onPress={() => this.whichLetters()} />
             </View>
         );
     }

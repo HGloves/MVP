@@ -9,6 +9,24 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+report*
 
 # macOS
 .DS_Store
+
+
+
+            touchableDetect = [
+                {letter: 'A', px0: 5, py0: 40, px1: 20, py1: 45},
+            ],
+
+                            <Image style={styles.handImage} source={require('../../assets/hand.png')}
+                {...this._panResponder.panHandlers}
+                ref={img => { this.setState({handComponent: img}); }}/>
+
+                this.setState({
+                    lastTouchOnTouchable: true,
+                    touchableDetect: update(this.state.touchableDetect, {[i]: {touched: {$set: true}, touchId: {$set: this.state.lastUsedId},
+                    maxSimultaneousTouchOnZone: {$set: gestureState.numberActiveTouches}}
+                    })
+                })
