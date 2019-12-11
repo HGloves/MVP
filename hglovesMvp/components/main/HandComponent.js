@@ -23,6 +23,9 @@ HandComponent:
     - 'style' => style à appliquer.
 */
 
+const classicHand = require('../../assets/hand.png');
+const SchemaHand = require('../../assets/handSchema.png');
+
 class HandComponent extends React.Component {
 
     constructor(props) {
@@ -406,6 +409,8 @@ class HandComponent extends React.Component {
     }
 
     render() {
+        const { schemaStatus } = this.props;
+
         return (
             <View width='100%' height='100%'>
                 {console.log("animatedDot.lenght = " + this.state.animatedDot.length)}
@@ -413,7 +418,7 @@ class HandComponent extends React.Component {
                     <AnimatedDot key={i} posX={component.posX} posY={component.posY}
                     endAnimation={this._removeAnimatedDot} id={component.id}/>
                 )}
-                <Image style={this.props.style} source={require('../../assets/hand.png')}
+                <Image style={this.props.style} source={schemaStatus ? SchemaHand : classicHand}
                     ref={view => { this.handComponent = view; }}
                     {...this._panResponder.panHandlers}/>
             </View>
