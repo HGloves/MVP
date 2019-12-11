@@ -396,9 +396,12 @@ class HandComponent extends React.Component {
             if (this.state.imagePosX === -1)
                 this.setState({ imagePosX: fx });
             if (this.state.imageHandWidth === -1)
-                this.setState({ imageHandWidth: width });
-            if (this.state.imageHandHeight === -1)
-                this.setState({ imageHandHeight: height });
+                this.setState({ imageHandWidth: width }, () => {
+                    if (this.state.imageHandHeight === -1)
+                        this.setState({ imageHandHeight: height }, () =>{
+                            this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight)
+                        });
+                })
         })), 0);
     }
 

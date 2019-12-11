@@ -27,6 +27,7 @@ class MainComponent extends React.Component {
             input: '',
             lastLetter: '',
             timeoutId: undefined,
+            imageSize: undefined,
         }
     }
 
@@ -81,18 +82,22 @@ class MainComponent extends React.Component {
         this.setState({googleSpeech: false, input: ''})
     };
 
+    recupImageSize = (imageWidth, imageHeigth) => {
+        this.setState({imageSize: {width: imageWidth, height: imageHeigth}})
+    }
+
     render() {
         const { helpStatus, exerciseStatus, input } = this.state;
 
         return (
             <View style={styles.container}>
-                {this.state.googleSpeech === true ?
-                    <Animation text={this.state.input} stopAnimation={this.stopAnimation}/>
-                    :
-                    null
-                }
                 <View style={styles.handContainer}>
-                    <HandComponent style={styles.hand} updateInput={this.updateInput}/>
+                    {this.state.googleSpeech === true ?
+                        <Animation text={this.state.input} stopAnimation={this.stopAnimation} imageSize={this.state.imageSize} style={styles.hand}/>
+                        :
+                        null
+                    }
+                    <HandComponent style={styles.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize}/>
                 </View>
                 <View style={styles.lormContainer}>
                     <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</TextBeat>
@@ -140,11 +145,13 @@ if (screenRatio > 0.6) {
             height: '78%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            zIndex: 1
         },
         hand: {
             width: imageWidth,
-            height: imageHeight
+            height: imageHeight,
+            zIndex: 1
         },
         lormContainer: {
             display: 'flex',

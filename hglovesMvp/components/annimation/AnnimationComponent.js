@@ -2,47 +2,46 @@ import React, {Component } from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, Animated, View } from 'react-native';
 const ScreenDim = Dimensions.get("window");
-const imageWidth = ScreenDim.width * 90 / 100;
-const imageHeight = Math.round(imageWidth * 2400 / 1920);
 
 export default class AnnimationComponent extends Component  {
     constructor(props) {
         super(props);
         console.log("animation");
         this.state = {text : this.props.text};
+        console.log(this.props);
         this.lormPos = new Map([
             ["0", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 50, y: 100 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), anim3: new Animated.ValueXY({ x: 50, y: 100 }), anim4: new Animated.ValueXY({ x: 50, y: 100 }), anim5: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement}],
-            ["a", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (8.5 * imageWidth) / 100, y: (45 * imageHeight) / 100 }), animType: this.staticElement }],
-            ["b", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (30 * imageWidth) / 100, y: (15 * imageHeight) / 100 }), animType: this.moveElement, xStart: (30 * imageWidth) / 100, yStart: (15 * imageHeight) / 100, xEnd: (35 * imageWidth) / 100, yEnd: (45 * imageHeight) / 100 }],
-            ["c", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (55 * imageWidth) / 100, y: (90 * imageHeight) / 100 }), animType: this.staticElement }],
+            ["a", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (8.5 * this.props.imageSize.width) / 100, y: (45 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
+            ["b", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (30 * this.props.imageSize.width) / 100, y: (15 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (30 * this.props.imageSize.width) / 100, yStart: (15 * this.props.imageSize.height) / 100, xEnd: (35 * this.props.imageSize.width) / 100, yEnd: (45 * this.props.imageSize.height) / 100 }],
+            ["c", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (55 * this.props.imageSize.width) / 100, y: (90 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["ç", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 10, y: 10 }), anim2: new Animated.ValueXY({ x: 50, y: 50 }), animType: this.staticElement }],
-            ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * imageWidth) / 100, y: (10 * imageHeight) / 100 }), animType: this.moveElement, xStart: (48 * imageWidth) / 100, yStart: (10 * imageHeight) / 100, xEnd: (48 * imageWidth) / 100, yEnd: (45 * imageHeight) / 100 }],
-            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (30 * imageWidth) / 100, y: (15 * imageHeight) / 100 }), animType: this.staticElement}],
+            ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * this.props.imageSize.width) / 100, y: (10 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (48 * this.props.imageSize.width) / 100, yStart: (10 * this.props.imageSize.height) / 100, xEnd: (48 * this.props.imageSize.width) / 100, yEnd: (45 * this.props.imageSize.height) / 100 }],
+            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (30 * this.props.imageSize.width) / 100, y: (15 * this.props.imageSize.height) / 100 }), animType: this.staticElement}],
             ["fTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 50 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement }],
-            ["i", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * imageWidth) / 100, y: (10 * imageHeight) / 100 }), animType: this.staticElement }],
+            ["i", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * this.props.imageSize.width) / 100, y: (10 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["jTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 35 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement}],
             ["kTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 35 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), anim3: new Animated.ValueXY({ x: 50, y: 100 }), anim4: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement }],
-            ["m", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (75 * imageWidth) / 100, y: (50 * imageHeight) / 100 }), animType: this.staticElement }],
-            ["n", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (35 * imageWidth) / 100, y: (45 * imageHeight) / 100 }), animType: this.staticElement }],
-            ["o", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (68 * imageWidth) / 100, y: (13 * imageHeight) / 100 }), animType: this.staticElement }],
+            ["m", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (75 * this.props.imageSize.width) / 100, y: (50 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
+            ["n", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (35 * this.props.imageSize.width) / 100, y: (45 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
+            ["o", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (68 * this.props.imageSize.width) / 100, y: (13 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["r", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 5, y: 100 }), animType: this.rLetterMove, xFirst: 30, yFirst: 100, xSecond: 70, ySecond: 100, xThird: 100, yThird: 100, xEnd: 140, yEnd: 100 }],//RRR
-            ["u", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (85 * imageWidth) / 100, y: (30 * imageHeight) / 100 }), animType: this.staticElement }],
-            ["v", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (25 * imageWidth) / 100, y: (80 * imageHeight) / 100 }), animType: this.staticElement }],
+            ["u", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (85 * this.props.imageSize.width) / 100, y: (30 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
+            ["v", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (25 * this.props.imageSize.width) / 100, y: (80 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["wTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 230, y: 570 }), anim2: new Animated.ValueXY({ x: 230, y: 570 }), animType: this.staticElement }],
             [" ", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 50, y: 100 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), anim3: new Animated.ValueXY({ x: 50, y: 100 }), anim4: new Animated.ValueXY({ x: 50, y: 100 }), anim5: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement}],
-            ["g", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (68 * imageWidth) / 100, y: (13 * imageHeight) / 100 }), animType: this.moveElement, xStart: (68 * imageWidth) / 100, yStart: (13 * imageHeight) / 100, xEnd: (62 * imageWidth) / 100, yEnd: (45 * imageHeight) / 100  }],
-            ["h", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (85 * imageWidth) / 100, y: (30 * imageHeight) / 100 }), animType: this.moveElement, xStart: (85 * imageWidth) / 100, yStart: (30 * imageHeight) / 100, xEnd: (75 * imageWidth) / 100, yEnd: (50 * imageHeight) / 100 }],
-            ["l", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * imageWidth) / 100, y: (10 * imageHeight) / 100 }), animType: this.moveElement, xStart: (48 * imageWidth) / 100, yStart: (10 * imageHeight) / 100, xEnd: (50 * imageWidth) / 100, yEnd: (90 * imageHeight) / 100 }],
-            ["p", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (25 * imageWidth) / 100, y: (45 * imageHeight) / 100 }), animType: this.moveElement, xStart: (25 * imageWidth) / 100, yStart: (45 * imageHeight) / 100, xEnd: (20 * imageWidth) / 100, yEnd: (15 * imageHeight) / 100 }],
-            ["q", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (72 * imageWidth) / 100, y: (92 * imageHeight) / 100 }), animType: this.moveElement, xStart: (72 * imageWidth) / 100, yStart: (92 * imageHeight) / 100, xEnd: (66 * imageHeight) / 100, yEnd: (60 * imageHeight) / 100 }],
+            ["g", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (68 * this.props.imageSize.width) / 100, y: (13 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (68 * this.props.imageSize.width) / 100, yStart: (13 * this.props.imageSize.height) / 100, xEnd: (62 * this.props.imageSize.width) / 100, yEnd: (45 * this.props.imageSize.height) / 100  }],
+            ["h", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (85 * this.props.imageSize.width) / 100, y: (30 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (85 * this.props.imageSize.width) / 100, yStart: (30 * this.props.imageSize.height) / 100, xEnd: (75 * this.props.imageSize.width) / 100, yEnd: (50 * this.props.imageSize.height) / 100 }],
+            ["l", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * this.props.imageSize.width) / 100, y: (10 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (48 * this.props.imageSize.width) / 100, yStart: (10 * this.props.imageSize.height) / 100, xEnd: (50 * this.props.imageSize.width) / 100, yEnd: (90 * this.props.imageSize.height) / 100 }],
+            ["p", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (25 * this.props.imageSize.width) / 100, y: (45 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (25 * this.props.imageSize.width) / 100, yStart: (45 * this.props.imageSize.height) / 100, xEnd: (20 * this.props.imageSize.width) / 100, yEnd: (15 * this.props.imageSize.height) / 100 }],
+            ["q", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (72 * this.props.imageSize.width) / 100, y: (92 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (72 * this.props.imageSize.width) / 100, yStart: (92 * this.props.imageSize.height) / 100, xEnd: (66 * this.props.imageSize.height) / 100, yEnd: (60 * this.props.imageSize.height) / 100 }],
             ["rTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 555, y: 590 }), animType: this.moveElement, xStart: 555, yStart: 590, xEnd: 555, yEnd: 350 }],
-            ["s", {animFade: new Animated.Value(0), anim1: new Animated.Value(0), animType: this.circleElement, xStart:(50 * imageWidth) / 100, yStart: (70 * imageHeight) / 100, xEnd: (50 * imageWidth) / 100, yEnd: (70 * imageHeight) / 100}],
-            ["t", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (17 * imageWidth) / 100, y: (60 * imageHeight) / 100 }), animType: this.moveElement, xStart: (17 * imageWidth) / 100, yStart: (60 * imageHeight) / 100, xEnd: (6 * imageWidth) / 100, yEnd: (45 * imageHeight) / 100 }],
-            ["x", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (38 * imageWidth) / 100, y: (90 * imageHeight) / 100 }), animType: this.moveElement, xStart: (38 * imageWidth) / 100, yStart: (90 * imageHeight) / 100, xEnd: (67 * imageWidth) / 100, yEnd: (90 * imageHeight) / 100 }],
-            ["y", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (35 * imageWidth) / 100, y: (45 * imageHeight) / 100 }), animType: this.moveElement, xStart: (35 * imageWidth) / 100, yStart: (45 * imageHeight) / 100, xEnd: (75 * imageWidth) / 100, yEnd: (50 * imageHeight) / 100 }],
-            ["z", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (50 * imageWidth) / 100, y: (80 * imageHeight) / 100 }), animType: this.moveElement, xStart: (50 * imageWidth) / 100, yStart: (80 * imageHeight) / 100, xEnd: (70 * imageWidth) / 100, yEnd: (65 * imageHeight) / 100 }]
+            ["s", {animFade: new Animated.Value(0), anim1: new Animated.Value(0), animType: this.circleElement, xStart:(50 * this.props.imageSize.width) / 100, yStart: (70 * this.props.imageSize.height) / 100, xEnd: (50 * this.props.imageSize.width) / 100, yEnd: (70 * this.props.imageSize.height) / 100}],
+            ["t", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (17 * this.props.imageSize.width) / 100, y: (60 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (17 * this.props.imageSize.width) / 100, yStart: (60 * this.props.imageSize.height) / 100, xEnd: (6 * this.props.imageSize.width) / 100, yEnd: (45 * this.props.imageSize.height) / 100 }],
+            ["x", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (38 * this.props.imageSize.width) / 100, y: (90 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (38 * this.props.imageSize.width) / 100, yStart: (90 * this.props.imageSize.height) / 100, xEnd: (67 * this.props.imageSize.width) / 100, yEnd: (90 * this.props.imageSize.height) / 100 }],
+            ["y", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (35 * this.props.imageSize.width) / 100, y: (45 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (35 * this.props.imageSize.width) / 100, yStart: (45 * this.props.imageSize.height) / 100, xEnd: (75 * this.props.imageSize.width) / 100, yEnd: (50 * this.props.imageSize.height) / 100 }],
+            ["z", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (50 * this.props.imageSize.width) / 100, y: (80 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (50 * this.props.imageSize.width) / 100, yStart: (80 * this.props.imageSize.height) / 100, xEnd: (70 * this.props.imageSize.width) / 100, yEnd: (65 * this.props.imageSize.height) / 100 }]
         ]);
-        let snapshot = 200, radius = (17 * imageWidth) / 100;
+        let snapshot = 200, radius = (17 * this.props.imageSize.width) / 100;
         let inputRangeX = [], outputRangeX = [];
         for (let i=0; i<=snapshot; ++i) {
             let value = i/snapshot;
@@ -61,7 +60,7 @@ export default class AnnimationComponent extends Component  {
         this.try = this.lormPos.get("s").anim1.interpolate({ inputRange: inputRangeY, outputRange: outputRangeY });
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.whichLetters();
     }
 
@@ -187,17 +186,17 @@ export default class AnnimationComponent extends Component  {
     render() {
         const transformS = [{ translateY: this.try }, {translateX: this.trx}];
         return (
-            <View>
+            <View style={[this.props.style, {position: "absolute"}]}>
                 <Animated.View style={{display: 'flex',
                     transform: (this.state.text[0] !== "s" ? [{translateX: this.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
-                    borderRadius: 20 * imageWidth / 100,
-                    width: 10 * imageWidth / 100,
-                    height: 10 * imageWidth / 100,
+                    borderRadius: 20 * this.props.imageSize.width / 100,
+                    width: 10 * this.props.imageSize.width / 100,
+                    height: 10 * this.props.imageSize.width / 100,
                     position: "absolute",
-                    zIndex : 2,
+                    zIndex : 20,
                     opacity: this.getLetter(1) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -205,11 +204,11 @@ export default class AnnimationComponent extends Component  {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
-                    borderRadius: 20 * imageWidth / 100,
-                    width: 10 * imageWidth / 100,
-                    height: 10 * imageWidth / 100,
+                    borderRadius: 20 * this.props.imageSize.width / 100,
+                    width: 10 * this.props.imageSize.width / 100,
+                    height: 10 * this.props.imageSize.width / 100,
                     position: "absolute",
-                    zIndex : 2,
+                    zIndex : 20,
                     opacity: this.getLetter(2) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -217,11 +216,11 @@ export default class AnnimationComponent extends Component  {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
-                    borderRadius: 20 * imageWidth / 100,
-                    width: 10 * imageWidth / 100,
-                    height: 10 * imageWidth / 100,
+                    borderRadius: 20 * this.props.imageSize.width / 100,
+                    width: 10 * this.props.imageSize.width / 100,
+                    height: 10 * this.props.imageSize.width / 100,
                     position: "absolute",
-                    zIndex : 2,
+                    zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -229,11 +228,11 @@ export default class AnnimationComponent extends Component  {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
-                    borderRadius: 20 * imageWidth / 100,
-                    width: 10 * imageWidth / 100,
-                    height: 10 * imageWidth / 100,
+                    borderRadius: 20 * this.props.imageSize.width / 100,
+                    width: 10 * this.props.imageSize.width / 100,
+                    height: 10 * this.props.imageSize.width / 100,
                     position: "absolute",
-                    zIndex : 2,
+                    zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -241,11 +240,11 @@ export default class AnnimationComponent extends Component  {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
-                    borderRadius: 20 * imageWidth / 100,
-                    width: 10 * imageWidth / 100,
-                    height: 10 * imageWidth / 100,
+                    borderRadius: 20 * this.props.imageSize.width / 100,
+                    width: 10 * this.props.imageSize.width / 100,
+                    height: 10 * this.props.imageSize.width / 100,
                     position: "absolute",
-                    zIndex : 2,
+                    zIndex : 20,
                     opacity: this.getLetter(5) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
         </View>
