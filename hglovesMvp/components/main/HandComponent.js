@@ -35,6 +35,7 @@ class HandComponent extends React.Component {
             imageHandHeight: -1,
             imagePosY: -1,
             imagePosX: -1,
+            imageMeasureUpdate: false,
             lastUsedId: 0,
             direction: 'None',
             input: '',
@@ -394,17 +395,34 @@ class HandComponent extends React.Component {
 
     componentDidMount() {
         setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
-            if (this.state.imagePosY === -1)
+            console.log("width = " + width)
+            console.log("width = " + height)
+            console.log("ScreenDim2.width = " + ScreenDim2.width)
+            console.log("fx = " + fx)
+            console.log("fy = " + fy)
+            console.log("px = " + px)
+            console.log("py = " + py)
+            if (this.state.imageMeasureUpdate === false) {
                 this.setState({ imagePosY: py });
-            if (this.state.imagePosX === -1)
                 this.setState({ imagePosX: fx });
-            if (this.state.imageHandWidth === -1)
-                this.setState({ imageHandWidth: width }, () => {
-                    if (this.state.imageHandHeight === -1)
-                        this.setState({ imageHandHeight: height }, () =>{
-                            this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight)
-                        });
+                this.setState({ imageHandWidth: width });
+                this.setState({ imageHandHeight: height });
+                this.setState({ imageMeasureUpdate: true}, () => {
+                    this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight,
+                        this.state.imagePosX, this.state.imagePosY);
                 })
+        }
+            // if (this.state.imagePosY === -1)
+            //     this.setState({ imagePosY: py });
+            // if (this.state.imagePosX === -1)
+            //     this.setState({ imagePosX: fx });
+            // if (this.state.imageHandWidth === -1)
+            //     this.setState({ imageHandWidth: width }, () => {
+            //         if (this.state.imageHandHeight === -1)
+            //             this.setState({ imageHandHeight: height }, () => {
+            //                 this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight)
+            //             });
+            //     })
         })), 0);
     }
 
@@ -436,6 +454,7 @@ const styles = StyleSheet.create({
 HandComponent.propTypes = {
     updateInput: PropTypes.func.isRequired,
     style: PropTypes.any,
+    recupImageSize: PropTypes.func.isRequired,
   };
 
 export default HandComponent;

@@ -28,6 +28,7 @@ class MainComponent extends React.Component {
             lastLetter: '',
             timeoutId: undefined,
             imageSize: undefined,
+            imagePos: undefined,
             schemaStatus: false,
         }
     }
@@ -89,8 +90,9 @@ class MainComponent extends React.Component {
         this.setState({ googleSpeech: false, input: '' })
     };
 
-    recupImageSize = (imageWidth, imageHeigth) => {
-        this.setState({ imageSize: { width: imageWidth, height: imageHeigth } })
+    recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
+        this.setState({imageSize: {width: imageWidth, height: imageHeigth},
+        imagePos: {x: imagePosX, y: imagePosY}})
     }
 
     render() {
@@ -100,7 +102,8 @@ class MainComponent extends React.Component {
             <View style={styles.container}>
                 <View style={styles.handContainer}>
                     {this.state.googleSpeech === true ?
-                        <Animation text={this.state.input} stopAnimation={this.stopAnimation} imageSize={this.state.imageSize} style={styles.hand} />
+                        <Animation text={this.state.input} stopAnimation={this.stopAnimation}
+                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand}/>
                         :
                         null
                     }
@@ -159,12 +162,11 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-            zIndex: 1
         },
         hand: {
             width: imageWidth,
             height: imageHeight,
-            zIndex: 1
+            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
@@ -219,7 +221,7 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            zIndex: 1,
+            zIndex: 2,
         },
         exButton: {
             display: 'flex',
@@ -253,6 +255,7 @@ if (screenRatio > 0.6) {
         hand: {
             width: imageWidth,
             height: imageHeight,
+            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
@@ -306,7 +309,7 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            zIndex: 1,
+            zIndex: 2,
         },
         exButton: {
             display: 'flex',
