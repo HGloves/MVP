@@ -3,12 +3,13 @@ import { PanResponder } from 'react-native';
 import { StyleSheet, Image, View} from 'react-native';
 import PropTypes from 'prop-types';
 import { Dimensions } from 'react-native'
+import AnimatedDot from '../annimation/AnimatedDot';
 
 const ScreenDim2 = Dimensions.get("window");
 const imageWidth2 = ScreenDim2.width * 90 / 100;
 const imageHeight2 = Math.round(imageWidth2 * 2400 / 1920);
 
-const DEBUG = true;
+const DEBUG = false;
 
 /*
 HandComponent:
@@ -22,6 +23,9 @@ HandComponent:
     - 'style' => style à appliquer.
 */
 
+const classicHand = require('../../assets/hand.png');
+const SchemaHand = require('../../assets/handSchema.png');
+
 class HandComponent extends React.Component {
 
     constructor(props) {
@@ -29,11 +33,17 @@ class HandComponent extends React.Component {
         this.state = {
             imageHandWidth: -1,
             imageHandHeight: -1,
+            imagePosY: -1,
+            imagePosX: -1,
+            imageMeasureUpdate: false,
             lastUsedId: 0,
             direction: 'None',
             input: '',
             lastLetter: '',
             prevNbOfTouch: -1,
+            animatedDot: [],
+            lastAnimatedDotId: 1,
+            updateAnimVariatble: 1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
             touchableDetect: [
                 {id: 'A', px0: 5, px1: 20, py0: 40, py1: 45, touchId: -1, touched: false,
@@ -56,7 +66,7 @@ class HandComponent extends React.Component {
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'N', px0: 30, px1: 45, py0: 35, py1: 47.5, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'K', px0: 40, px1: 70, py0: 50, py1: 75, touchId: -1, touched: false,
+                {id: 'K', px0: 30, px1: 85, py0: 45, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'I/J', px0: 45, px1: 60, py0: 5, py1: 10, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -139,6 +149,7 @@ class HandComponent extends React.Component {
             debugLastY1: 10,
         };
 
+        this.maxAnimatedDot = 45
         this.letterDetect = [
             {letter: 'S', zones: ['S0', 'S1', 'S2', 'S3'], type: 'slideTouch'},
             {letter: 'A', zones: ['A'], type: 'simultaneousTouch', nbOfTouch: 1},
@@ -146,12 +157,14 @@ class HandComponent extends React.Component {
             {letter: 'P', zones: ['F0', 'P2'], type: 'slideTouch', direction: 'Bottom to Top'},
             {letter: 'O', zones: ['O'], type: 'simultaneousTouch', nbOfTouch: 1},
             {letter: 'U', zones: ['U'], type: 'simultaneousTouch', nbOfTouch: 1},
-            {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y1', 'Q0']},
-            {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y0', 'P2', 'B2']},
+            {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y1', 'Q0', 'K']},
+            {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y0', 'P2', 'B2', 'K']},
             {letter: 'X', zones: ['X0', 'C', 'X2'], type: 'slideTouch', direction: 'Left to Right'},
             {letter: 'C', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['X0', 'X2']},
             {letter: 'Ç', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 2, toleratedZones: ['X0', 'X2']},
-            {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4, toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'Z2', 'S0', 'S1', 'S2', 'S3', 'Q0', 'Q1']},
+            {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4,
+            toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'S0', 'S1', 'S2', 'S3', 'Q0', 'Q1', 'Y0', 'N', 'L0',
+            'Y1', 'M', 'Q0', 'Q1', 'Q2', 'R0', 'R1', 'R2', 'R3', 'R3+V/W']},
             {letter: 'I', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 1},
             {letter: 'J', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 2},
             {letter: 'R', zones: ['R0', 'R1', 'R2', 'R3+V/W'], type: 'alternateTouch'},
@@ -173,22 +186,27 @@ class HandComponent extends React.Component {
             {
                 onStartShouldSetPanResponder: (evt, gestureState) => true,
                 onPanResponderMove: (evt, gestureState) => {
-                if (this.state.prevNbOfTouch !== -1 &&
-                this.state.prevNbOfTouch !== gestureState.numberActiveTouches)
-                    this.setState({lastUsedId: this.state.lastUsedId + 1})
-                this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
-//              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
-//                    this._debug("locationX: " + evt.nativeEvent.locationX)
-//                    this._debug("locationY: " + evt.nativeEvent.locationY)
+                    if (this.state.prevNbOfTouch !== -1 &&
+                    this.state.prevNbOfTouch !== gestureState.numberActiveTouches)
+                        this.setState({lastUsedId: this.state.lastUsedId + 1})
+                    this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
+    //              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
+    //                    this._debug("locationX: " + evt.nativeEvent.locationX)
+    //                    this._debug("locationY: " + evt.nativeEvent.locationY)
                     this._computeHandTouch(evt, gestureState)
                     this._computeDirection(evt, gestureState)
+                    //this._addAnimatedDot()
                 },
                 onPanResponderStart: (evt, gestureState) => {
-                    if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches &&
-                        gestureState.numberActiveTouches === 5) {
-                        this.setState({input: this.state.input + ' '})
-                        this.setState({lastLetter: ' '})
-                        this.props.updateInput(' ')
+                    this._debug(gestureState)
+                    this._debug("locationX: " + evt.nativeEvent.locationX)
+                    this._debug("locationY: " + evt.nativeEvent.locationY)
+                    if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches) {
+                        if (gestureState.numberActiveTouches === 5) {
+                            this.setState({input: this.state.input + ' '})
+                            this.setState({lastLetter: ' '})
+                            this.props.updateInput(' ')
+                        }
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
                     }
@@ -317,6 +335,24 @@ class HandComponent extends React.Component {
         this.setState({ touchableDetect: tmp });
     }
 
+    _addAnimatedDot(px, py) {
+        console.log('Add animatedDot')
+        if (this.state.animatedDot.length < this.maxAnimatedDot) {
+            let tmp = [...this.state.animatedDot];
+            tmp.push({id: this.state.lastAnimatedDotId, posX: px, posY: py})
+            this.setState({lastAnimatedDotId: this.state.lastAnimatedDotId + 1, animatedDot: tmp})
+        }
+    }
+
+    _removeAnimatedDot = (id) => {
+        let index = this.state.touchableDetect.findIndex(x => x.id === id);
+        let tmp = [...this.state.animatedDot];
+        tmp.splice(index, 1)
+        // if (tmp === undefined)
+        //     tmp = []
+        this.setState({animatedDot: tmp})
+    }
+
     _computeDirection(evt, gestureState) {
         absDx = Math.abs(gestureState.dx)
         absDy = Math.abs(gestureState.dy)
@@ -344,9 +380,14 @@ class HandComponent extends React.Component {
                 tmp[i].touchId = this.state.lastUsedId
                 tmp[i].maxSimultaneousTouchOnZone = gestureState.numberActiveTouches
                 this._debug("Touch zone : " + touchableDetect[i].id);
-                this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
+                // this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
+                // this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
+                // this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
+                // this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
+                this._addAnimatedDot(evt.nativeEvent.locationX - this.state.imagePosX, evt.nativeEvent.locationY)
+                this.setState({debugLastX0: evt.nativeEvent.locationX - this.state.imagePosX})
                 this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
-                this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
+                this.setState({debugLastY0: evt.nativeEvent.locationY})
                 this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
             }
         }
@@ -355,17 +396,48 @@ class HandComponent extends React.Component {
 
     componentDidMount() {
         setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
-            if (this.state.imageHandWidth === -1)
+            console.log("width = " + width)
+            console.log("width = " + height)
+            console.log("ScreenDim2.width = " + ScreenDim2.width)
+            console.log("fx = " + fx)
+            console.log("fy = " + fy)
+            console.log("px = " + px)
+            console.log("py = " + py)
+            if (this.state.imageMeasureUpdate === false) {
+                this.setState({ imagePosY: py });
+                this.setState({ imagePosX: fx });
                 this.setState({ imageHandWidth: width });
-            if (this.state.imageHandHeight === -1)
                 this.setState({ imageHandHeight: height });
+                this.setState({ imageMeasureUpdate: true}, () => {
+                    this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight,
+                        this.state.imagePosX, this.state.imagePosY);
+                })
+        }
+            // if (this.state.imagePosY === -1)
+            //     this.setState({ imagePosY: py });
+            // if (this.state.imagePosX === -1)
+            //     this.setState({ imagePosX: fx });
+            // if (this.state.imageHandWidth === -1)
+            //     this.setState({ imageHandWidth: width }, () => {
+            //         if (this.state.imageHandHeight === -1)
+            //             this.setState({ imageHandHeight: height }, () => {
+            //                 this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight)
+            //             });
+            //     })
         })), 0);
     }
 
     render() {
+        const { schemaStatus } = this.props;
+
         return (
             <View width='100%' height='100%'>
-                <Image style={this.props.style} source={require('../../assets/hand.png')}
+                {console.log("animatedDot.lenght = " + this.state.animatedDot.length)}
+                {this.state.animatedDot.map((component, i) =>
+                    <AnimatedDot key={i} posX={component.posX} posY={component.posY}
+                    endAnimation={this._removeAnimatedDot} id={component.id}/>
+                )}
+                <Image style={this.props.style} source={schemaStatus ? SchemaHand : classicHand}
                     ref={view => { this.handComponent = view; }}
                     {...this._panResponder.panHandlers}/>
             </View>
@@ -376,13 +448,14 @@ class HandComponent extends React.Component {
 const styles = StyleSheet.create({
     rectangle: {
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 3,
     },
 });
 
 HandComponent.propTypes = {
     updateInput: PropTypes.func.isRequired,
     style: PropTypes.any,
+    recupImageSize: PropTypes.func.isRequired,
   };
 
 export default HandComponent;
