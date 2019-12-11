@@ -141,7 +141,7 @@ class ExerciseComponent extends React.Component {
             <View style={styles.lettersContainer}>
                 {navigation.getParam('name').split('').map((letter, key) => {
                     let width = (100 / navigation.getParam('name').split('').length - 2).toString() + '%';
-                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, (screenRatio > 0.6) ? 35 : 25);
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
@@ -163,7 +163,7 @@ class ExerciseComponent extends React.Component {
             <View style={styles.lettersContainer}>
                 {sentence.map((letter, key) => {
                     let width = (100 / sentence.length - 2).toString() + '%';
-                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / sentence.length - 2) * 0.01, 35);
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / sentence.length - 2) * 0.01, (screenRatio > 0.6) ? 35 : 25);
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
@@ -417,6 +417,29 @@ if (screenRatio > 0.6) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
+        },
+        imageTutoContainer: {
+            display: 'flex',
+            width: imageTutoWidth,
+            position: 'absolute',
+            zIndex: 2,
+            top: imageTutoTop / 4,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+        imageTuto: {
+            width: imageTutoWidth,
+            height: imageTutoHeight,
+            zIndex: 2,
+        },
+        imageTutoText: {
+            display: 'flex',
+            width: '100%',
+            fontFamily: 'open-sans-bold',
+            color: '#1C3956',
+            fontSize: 20,
+            textAlign: 'center',
         },
     });
 }
