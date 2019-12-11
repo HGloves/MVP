@@ -57,6 +57,7 @@ class ExerciseComponent extends React.Component {
         sentence: [],
         index: 0,
         checkStatus: false,
+        imageSize: undefined,
     }
 
     componentDidMount() {
@@ -69,6 +70,10 @@ class ExerciseComponent extends React.Component {
         this.setState({
             sentence: tmp,
         });
+    }
+
+    recupImageSize = (imageWidth, imageHeigth) => {
+        this.setState({ imageSize: { width: imageWidth, height: imageHeigth } })
     }
 
     handleCheckStatus = status => {
@@ -204,7 +209,7 @@ class ExerciseComponent extends React.Component {
                     Retour
                 </Button>
                 <View style={styles.handContainer}>
-                    <HandComponent style={styles.hand} updateInput={this.updateInput} />
+                    <HandComponent style={styles.hand} updateInput={this.updateInput} schemaStatus={false} recupImageSize={this.recupImageSize} />
                 </View>
                 <View style={styles.footerContainer}>
                     <View style={styles.footerImageContainer}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native';
 import RecordButton from './RecordButton'
-import { IconButton, TextInput } from 'react-native-paper';
+import { IconButton, TextInput, Switch } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
@@ -29,6 +29,7 @@ class MainComponent extends React.Component {
             timeoutId: undefined,
             imageSize: undefined,
             imagePos: undefined,
+            schemaStatus: false,
         }
     }
 
@@ -48,6 +49,12 @@ class MainComponent extends React.Component {
             exerciseStatus: status,
         })
     };
+
+    handleSchemaStatus = () => {
+        this.setState({
+            schemaStatus: !this.state.schemaStatus
+        });
+    }
 
     handleInputEnd = () => {
         const { input } = this.state;
@@ -75,12 +82,12 @@ class MainComponent extends React.Component {
     };
 
     inputHandler = status => {
-        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        this.setState({input: result, googleSpeech: true});
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, " ").replace(/\s{2,}/g, " ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        this.setState({ input: result, googleSpeech: true });
     };
 
     stopAnimation = () => {
-        this.setState({googleSpeech: false, input: ''})
+        this.setState({ googleSpeech: false, input: '' })
     };
 
     recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
@@ -89,7 +96,7 @@ class MainComponent extends React.Component {
     }
 
     render() {
-        const { helpStatus, exerciseStatus, input } = this.state;
+        const { helpStatus, exerciseStatus, input, schemaStatus } = this.state;
 
         return (
             <View style={styles.container}>
@@ -100,13 +107,13 @@ class MainComponent extends React.Component {
                         :
                         null
                     }
-                    <HandComponent style={styles.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize}/>
+                    <HandComponent style={styles.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize} schemaStatus={schemaStatus} />
                 </View>
                 <View style={styles.lormContainer}>
-                    <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</TextBeat>
+                    <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter}</TextBeat>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton input={input} func={this.inputHandler}/>
+                    <RecordButton input={input} func={this.inputHandler} />
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
                             <TextInput value={input} disabled style={{ ...styles.input, fontFamily: 'open-sans-bold', backgroundColor: 'transparent' }} />
@@ -119,13 +126,19 @@ class MainComponent extends React.Component {
                         />
                     </View>
                 </View>
-                <IconButton
-                    style={styles.helpButton}
-                    icon="alphabetical"
-                    color={'#1C3956'}
-                    size={50}
-                    onPress={() => this.helpStatusHandler(true)}
-                />
+                <View style={styles.helpButtonContainer}>
+                    <IconButton
+                        icon="alphabetical"
+                        color={'#1C3956'}
+                        size={50}
+                        onPress={() => this.helpStatusHandler(true)}
+                    />
+                    <Switch
+                        value={schemaStatus}
+                        onValueChange={this.handleSchemaStatus}
+                        color='#1c3956'
+                    />
+                </View>
                 <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
                 <ExerciseListComponent status={exerciseStatus} handleClose={this.exerciseStatusHandler} {...this.props} />
             </View>
@@ -201,10 +214,13 @@ if (screenRatio > 0.6) {
             marginRight: '5%',
             color: '#1C3956'
         },
-        helpButton: {
+        helpButtonContainer: {
             position: 'absolute',
             right: 6,
             top: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             zIndex: 2,
         },
         exButton: {
@@ -286,10 +302,13 @@ if (screenRatio > 0.6) {
             marginLeft: '10%',
             color: '#1C3956'
         },
-        helpButton: {
+        helpButtonContainer: {
             position: 'absolute',
             right: 6,
             top: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             zIndex: 2,
         },
         exButton: {
