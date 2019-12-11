@@ -3,12 +3,13 @@ import { PanResponder } from 'react-native';
 import { StyleSheet, Image, View} from 'react-native';
 import PropTypes from 'prop-types';
 import { Dimensions } from 'react-native'
+import AnimatedDot from '../annimation/AnimatedDot';
 
 const ScreenDim2 = Dimensions.get("window");
 const imageWidth2 = ScreenDim2.width * 90 / 100;
 const imageHeight2 = Math.round(imageWidth2 * 2400 / 1920);
 
-const DEBUG = true;
+const DEBUG = false;
 
 /*
 HandComponent:
@@ -29,11 +30,15 @@ class HandComponent extends React.Component {
         this.state = {
             imageHandWidth: -1,
             imageHandHeight: -1,
+            imagePosY: -1,
+            imagePosX: -1,
             lastUsedId: 0,
             direction: 'None',
             input: '',
             lastLetter: '',
             prevNbOfTouch: -1,
+            animatedDot: [],
+            lastAnimatedDotId: 1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
             touchableDetect: [
                 {id: 'A', px0: 5, px1: 20, py0: 40, py1: 45, touchId: -1, touched: false,
@@ -173,17 +178,21 @@ class HandComponent extends React.Component {
             {
                 onStartShouldSetPanResponder: (evt, gestureState) => true,
                 onPanResponderMove: (evt, gestureState) => {
-                if (this.state.prevNbOfTouch !== -1 &&
-                this.state.prevNbOfTouch !== gestureState.numberActiveTouches)
-                    this.setState({lastUsedId: this.state.lastUsedId + 1})
-                this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
-//              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
-//                    this._debug("locationX: " + evt.nativeEvent.locationX)
-//                    this._debug("locationY: " + evt.nativeEvent.locationY)
+                    if (this.state.prevNbOfTouch !== -1 &&
+                    this.state.prevNbOfTouch !== gestureState.numberActiveTouches)
+                        this.setState({lastUsedId: this.state.lastUsedId + 1})
+                    this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
+    //              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
+    //                    this._debug("locationX: " + evt.nativeEvent.locationX)
+    //                    this._debug("locationY: " + evt.nativeEvent.locationY)
                     this._computeHandTouch(evt, gestureState)
                     this._computeDirection(evt, gestureState)
+                    this._addAnimatedDot()
                 },
                 onPanResponderStart: (evt, gestureState) => {
+                    this._debug(gestureState)
+                    this._debug("locationX: " + evt.nativeEvent.locationX)
+                    this._debug("locationY: " + evt.nativeEvent.locationY)
                     if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches &&
                         gestureState.numberActiveTouches === 5) {
                         this.setState({input: this.state.input + ' '})
@@ -192,6 +201,7 @@ class HandComponent extends React.Component {
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
                     }
+                    //this._addAnimatedDot()
                     this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
                 },
                 onPanResponderRelease: (evt, gestureState) => {
@@ -317,6 +327,23 @@ class HandComponent extends React.Component {
         this.setState({ touchableDetect: tmp });
     }
 
+    _addAnimatedDot() {
+        console.log('Add animatedDot')
+        let tmp = [...this.state.animatedDot];
+        tmp.push({id: this.state.lastAnimatedDotId, posX: this.state.debugLastX0, posY: this.state.debugLastY0})
+//        tmp.push({id: this.state.lastAnimatedDotId, posX: 0, posY: 0})
+        this.setState({lastAnimatedDotId: this.state.lastAnimatedDotId + 1, animatedDot: tmp})
+    }
+
+    _removeAnimatedDot = (id) => {
+        let index = this.state.touchableDetect.findIndex(x => x.id === id);
+        let tmp = [...this.state.animatedDot];
+        tmp.splice(index, 1)
+        // if (tmp === undefined)
+        //     tmp = []
+        this.setState({animatedDot: tmp})
+    }
+
     _computeDirection(evt, gestureState) {
         absDx = Math.abs(gestureState.dx)
         absDy = Math.abs(gestureState.dy)
@@ -344,9 +371,13 @@ class HandComponent extends React.Component {
                 tmp[i].touchId = this.state.lastUsedId
                 tmp[i].maxSimultaneousTouchOnZone = gestureState.numberActiveTouches
                 this._debug("Touch zone : " + touchableDetect[i].id);
-                this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
+                // this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
+                // this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
+                // this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
+                // this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
+                this.setState({debugLastX0: evt.nativeEvent.locationX - this.state.imagePosX})
                 this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
-                this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
+                this.setState({debugLastY0: evt.nativeEvent.locationY})
                 this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
             }
         }
@@ -355,6 +386,10 @@ class HandComponent extends React.Component {
 
     componentDidMount() {
         setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
+            if (this.state.imagePosY === -1)
+                this.setState({ imagePosY: py });
+            if (this.state.imagePosX === -1)
+                this.setState({ imagePosX: fx });
             if (this.state.imageHandWidth === -1)
                 this.setState({ imageHandWidth: width }, () => {
                     if (this.state.imageHandHeight === -1)
@@ -368,6 +403,10 @@ class HandComponent extends React.Component {
     render() {
         return (
             <View width='100%' height='100%'>
+                {this.state.animatedDot.map((component, i) =>
+                    <AnimatedDot key={i} posX={component.posX} posY={component.posY}
+                    endAnimation={this._removeAnimatedDot} id={component.id}/>
+                )}
                 <Image style={this.props.style} source={require('../../assets/hand.png')}
                     ref={view => { this.handComponent = view; }}
                     {...this._panResponder.panHandlers}/>
@@ -379,7 +418,7 @@ class HandComponent extends React.Component {
 const styles = StyleSheet.create({
     rectangle: {
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 3,
     },
 });
 

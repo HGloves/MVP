@@ -46,7 +46,6 @@ class HelpComponent extends React.Component {
             { image: require('../../assets/images/legend/2Touch.png'), description: 'Toucher 2x' },
             { image: require('../../assets/images/legend/4Touch.png'), description: 'Toucher 4x' },
             { image: require('../../assets/images/legend/arrow.png'), description: 'Appuyer avec l\'index dans le sens des flèches' },
-            { image: require('../../assets/images/legend/tamb.png'), description: 'Tambouriner' }
         ],
     }
 
