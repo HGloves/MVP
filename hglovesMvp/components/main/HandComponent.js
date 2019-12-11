@@ -62,7 +62,7 @@ class HandComponent extends React.Component {
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'N', px0: 30, px1: 45, py0: 35, py1: 47.5, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
-                {id: 'K', px0: 40, px1: 70, py0: 50, py1: 75, touchId: -1, touched: false,
+                {id: 'K', px0: 30, px1: 85, py0: 45, py1: 80, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
                 {id: 'I/J', px0: 45, px1: 60, py0: 5, py1: 10, touchId: -1, touched: false,
                     maxSimultaneousTouchOnZone: -1},
@@ -152,12 +152,14 @@ class HandComponent extends React.Component {
             {letter: 'P', zones: ['F0', 'P2'], type: 'slideTouch', direction: 'Bottom to Top'},
             {letter: 'O', zones: ['O'], type: 'simultaneousTouch', nbOfTouch: 1},
             {letter: 'U', zones: ['U'], type: 'simultaneousTouch', nbOfTouch: 1},
-            {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y1', 'Q0']},
-            {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y0', 'P2', 'B2']},
+            {letter: 'M', zones: ['M'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y1', 'Q0', 'K']},
+            {letter: 'N', zones: ['N'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['Y0', 'P2', 'B2', 'K']},
             {letter: 'X', zones: ['X0', 'C', 'X2'], type: 'slideTouch', direction: 'Left to Right'},
             {letter: 'C', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 1, toleratedZones: ['X0', 'X2']},
             {letter: 'Ç', zones: ['C'], type: 'simultaneousTouch', nbOfTouch: 2, toleratedZones: ['X0', 'X2']},
-            {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4, toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'Z2', 'S0', 'S1', 'S2', 'S3', 'Q0', 'Q1']},
+            {letter: 'K', zones: ['K'], type: 'simultaneousTouch', nbOfTouch: 4,
+            toleratedZones: ['L1', 'L2', 'Z0', 'Z1', 'S0', 'S1', 'S2', 'S3', 'Q0', 'Q1', 'Y0', 'N', 'L0',
+            'Y1', 'M', 'Q0', 'Q1', 'Q2', 'R0', 'R1', 'R2', 'R3', 'R3+V/W']},
             {letter: 'I', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 1},
             {letter: 'J', zones: ['I/J'], type: 'simultaneousTouch', nbOfTouch: 2},
             {letter: 'R', zones: ['R0', 'R1', 'R2', 'R3+V/W'], type: 'alternateTouch'},
@@ -199,8 +201,6 @@ class HandComponent extends React.Component {
                             this.setState({input: this.state.input + ' '})
                             this.setState({lastLetter: ' '})
                             this.props.updateInput(' ')
-                        } else if (gestureState.numberActiveTouches === 4) { 
-                            this.props.updateInput('K')
                         }
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
