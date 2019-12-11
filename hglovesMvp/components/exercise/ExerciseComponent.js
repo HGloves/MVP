@@ -188,7 +188,7 @@ class ExerciseComponent extends React.Component {
                     : null}
                 {
                     this.state.playWin &&
-                    <MySound source={require('../../assets/sounds/payment-success.mp3')} play={true} loop={false} />
+                    <MySound source={require('../../assets/sounds/ding-sound-effect.mp3')} play={true} loop={false} />
                 }
                 {
                     this.state.playFailure &&
