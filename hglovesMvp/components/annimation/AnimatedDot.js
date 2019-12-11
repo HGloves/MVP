@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Animated} from 'react-native';
+import { Dimensions } from 'react-native'
+import { StyleSheet, Animated, } from 'react-native';
 
 export default class AnimatedDot extends Component  {
 
@@ -10,7 +11,7 @@ export default class AnimatedDot extends Component  {
             moveAnim: new Animated.ValueXY({ x: 0, y: 0 }),
             updateAnimVariatble: 1,
         }
-        this.radius = 40
+        this.radius = Dimensions.get("window").width / 20;
     }
 
     componentDidMount() {
@@ -27,10 +28,6 @@ export default class AnimatedDot extends Component  {
     staticElement = () => {
         console.log("fade")
         Animated.sequence([
-            // Animated.timing(this.state.moveAnim, {
-            //     toValue: {x: this.state.moveAnim.x, y: this.state.moveAnim.y},
-            //     duration: 100
-            // }),
             Animated.timing(this.state.animFade, {
                 toValue: 0,
                 duration: 500,

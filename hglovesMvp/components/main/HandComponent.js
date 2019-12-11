@@ -149,6 +149,7 @@ class HandComponent extends React.Component {
             debugLastY1: 10,
         };
 
+        this.maxAnimatedDot = 45
         this.letterDetect = [
             {letter: 'S', zones: ['S0', 'S1', 'S2', 'S3'], type: 'slideTouch'},
             {letter: 'A', zones: ['A'], type: 'simultaneousTouch', nbOfTouch: 1},
@@ -336,7 +337,7 @@ class HandComponent extends React.Component {
 
     _addAnimatedDot(px, py) {
         console.log('Add animatedDot')
-        if (this.state.animatedDot.length < 50) {
+        if (this.state.animatedDot.length < this.maxAnimatedDot) {
             let tmp = [...this.state.animatedDot];
             tmp.push({id: this.state.lastAnimatedDotId, posX: px, posY: py})
             this.setState({lastAnimatedDotId: this.state.lastAnimatedDotId + 1, animatedDot: tmp})
