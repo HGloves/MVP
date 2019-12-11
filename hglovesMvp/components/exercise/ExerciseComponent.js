@@ -166,7 +166,9 @@ class ExerciseComponent extends React.Component {
                             (sentence[key] === ' ' ?
                             <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</TextWink>
                             : <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#c62828', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink> )
-                            : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>}
+                            : (key < index ?
+                            <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
+                            : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text> )}
                         </Card>
                     );
                 })}
