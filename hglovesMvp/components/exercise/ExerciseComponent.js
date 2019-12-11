@@ -1,9 +1,14 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
+
+import TextWink from '../common/TextWink';
+
+import CheckDialogComponent from './CheckDialogComponent';
+
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height
 let styles = null;
@@ -12,12 +17,46 @@ let handHeight = null;
 let imageWidth = null;
 let imageHeight = null;
 
+let imageTutoWidth = ScreenDim.width * 15 / 100;
+let imageTutoHeight = Math.round(imageTutoWidth * 683 / 546);
+let imageTutoTop = ScreenDim.height / 3;
+
+const tutoImages = {
+    'a': require('../../assets/images/letters/A.png'),
+    'b': require('../../assets/images/letters/B.png'),
+    'c': require('../../assets/images/letters/C.png'),
+    'd': require('../../assets/images/letters/D.png'),
+    'e': require('../../assets/images/letters/E.png'),
+    'f': require('../../assets/images/letters/F.png'),
+    'g': require('../../assets/images/letters/G.png'),
+    'h': require('../../assets/images/letters/H.png'),
+    'i': require('../../assets/images/letters/I.png'),
+    'j': require('../../assets/images/letters/J.png'),
+    'k': require('../../assets/images/letters/K.png'),
+    'l': require('../../assets/images/letters/L.png'),
+    'm': require('../../assets/images/letters/M.png'),
+    'n': require('../../assets/images/letters/N.png'),
+    'o': require('../../assets/images/letters/O.png'),
+    'p': require('../../assets/images/letters/P.png'),
+    'q': require('../../assets/images/letters/Q.png'),
+    'r': require('../../assets/images/letters/R.png'),
+    's': require('../../assets/images/letters/S.png'),
+    't': require('../../assets/images/letters/T.png'),
+    'u': require('../../assets/images/letters/U.png'),
+    'v': require('../../assets/images/letters/V.png'),
+    'w': require('../../assets/images/letters/W.png'),
+    'x': require('../../assets/images/letters/X.png'),
+    'y': require('../../assets/images/letters/Y.png'),
+    'z': require('../../assets/images/letters/Z.png'),
+};
+
 class ExerciseComponent extends React.Component {
     state = {
         playWin: false,
         sequenceStatus: false,
         sentence: [],
         index: 0,
+        checkStatus: false,
     }
 
     componentDidMount() {
@@ -29,6 +68,26 @@ class ExerciseComponent extends React.Component {
             tmp[i] = ' ';
         this.setState({
             sentence: tmp,
+        });
+    }
+
+    handleCheckStatus = status => {
+        this.setState({
+            checkStatus: status
+        });
+    }
+
+    handleReset = () => {
+        const { navigation } = this.props;
+
+        const seq = navigation.getParam('name').toLowerCase().split('');
+        let tmp = [...seq];
+        for (let i = 0; i !== seq.length; i += 1)
+            tmp[i] = ' ';
+        this.setState({
+            sentence: tmp,
+            index: 0,
+            playWin: false
         });
     }
 
@@ -60,7 +119,8 @@ class ExerciseComponent extends React.Component {
                 playWin: true,
                 sentence: tmp,
                 index: newIndex,
-            })
+            });
+            this.handleCheckStatus(true);
         } else {
             this.setState({
                 sentence: tmp,
@@ -93,7 +153,6 @@ class ExerciseComponent extends React.Component {
     renderExLetters = () => {
         const { sentence, index } = this.state;
         const { navigation } = this.props;
-        console.log(sentence);
 
         return (
             <View style={styles.lettersContainer}>
@@ -103,9 +162,11 @@ class ExerciseComponent extends React.Component {
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
-                            {sentence[key] === ' ' && index !== key ?
-                                <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
-                                : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: (index === key && sentence[index] !== ' ') ? '#c62828' : '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</Text>}
+                            {key === index ?
+                            (sentence[key] === ' ' ?
+                            <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</TextWink>
+                            : <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#c62828', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink> )
+                            : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>}
                         </Card>
                     );
                 })}
@@ -115,10 +176,16 @@ class ExerciseComponent extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const { sequenceStatus, index, sentence } = this.state;
+        const { sequenceStatus, index, sentence, checkStatus } = this.state;
 
         return (
             <View style={styles.container}>
+                {(!sequenceStatus && index !== sentence.length) ?
+                    <Card style={styles.imageTutoContainer}>
+                        <Image style={styles.imageTuto} source={tutoImages[navigation.getParam('name').toLowerCase()[index]]} />
+                        <Text style={styles.imageTutoText}>{navigation.getParam('name').toUpperCase()[index]}</Text>
+                    </Card>
+                    : null}
                 {
                     this.state.playWin &&
                     <MySound source={require('../../assets/sounds/payment-success.mp3')} play={true} loop={false} />
@@ -152,7 +219,7 @@ class ExerciseComponent extends React.Component {
                             <IconButton
                                 icon="refresh"
                                 color={'#1C3956'}
-                                onPress={() => { }}
+                                onPress={this.handleReset}
                             />
                             <IconButton
                                 icon="check"
@@ -163,6 +230,7 @@ class ExerciseComponent extends React.Component {
                         </View>
                     </View>
                 </View>
+                <CheckDialogComponent status={checkStatus} handleClose={this.handleCheckStatus} />
             </View>
         );
     }
@@ -241,6 +309,29 @@ if (screenRatio > 0.6) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
+        },
+        imageTutoContainer: {
+            display: 'flex',
+            width: imageTutoWidth,
+            position: 'absolute',
+            zIndex: 2,
+            top: imageTutoTop,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+        imageTuto: {
+            width: imageTutoWidth,
+            height: imageTutoHeight,
+            zIndex: 2,
+        },
+        imageTutoText: {
+            display: 'flex',
+            width: '100%',
+            fontFamily: 'open-sans-bold',
+            color: '#1C3956',
+            fontSize: 20,
+            textAlign: 'center',
         },
     });
 } else {

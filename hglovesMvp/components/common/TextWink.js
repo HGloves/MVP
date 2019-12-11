@@ -39,7 +39,7 @@ class TextWink extends React.Component {
                         opacity: this.animatedText,
 						textAlign: this.position,
 						color: this.props.fontColor},
-						this.props.textStyle
+						{...this.props.textStyle}
 					]}>
 					{this.props.children}
 				</Animated.Text>
