@@ -8,6 +8,7 @@ export default class AnimatedDot extends Component  {
         this.state = {
             animFade: new Animated.Value(1),
             moveAnim: new Animated.ValueXY({ x: 0, y: 0 }),
+            updateAnimVariatble: 1,
         }
         this.radius = 40
     }
@@ -15,7 +16,7 @@ export default class AnimatedDot extends Component  {
     componentDidMount() {
         console.log("Mount a AnimatedDot")
         this.staticElement()
-//        this.interval = setInterval(this.staticElement, 1000);
+
     }
 
     animatedCallback = () => {
@@ -32,7 +33,7 @@ export default class AnimatedDot extends Component  {
             // }),
             Animated.timing(this.state.animFade, {
                 toValue: 0,
-                duration: 400,
+                duration: 500,
             }).start(this.animatedCallback)
         ])
     }

@@ -39,6 +39,7 @@ class HandComponent extends React.Component {
             prevNbOfTouch: -1,
             animatedDot: [],
             lastAnimatedDotId: 1,
+            updateAnimVariatble: 1,
             alwaysTolerated: ['F0', 'F1', 'R0', 'R1', 'R2', 'R3'],
             touchableDetect: [
                 {id: 'A', px0: 5, px1: 20, py0: 40, py1: 45, touchId: -1, touched: false,
@@ -187,21 +188,23 @@ class HandComponent extends React.Component {
     //                    this._debug("locationY: " + evt.nativeEvent.locationY)
                     this._computeHandTouch(evt, gestureState)
                     this._computeDirection(evt, gestureState)
-                    this._addAnimatedDot()
+                    //this._addAnimatedDot()
                 },
                 onPanResponderStart: (evt, gestureState) => {
                     this._debug(gestureState)
                     this._debug("locationX: " + evt.nativeEvent.locationX)
                     this._debug("locationY: " + evt.nativeEvent.locationY)
-                    if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches &&
-                        gestureState.numberActiveTouches === 5) {
-                        this.setState({input: this.state.input + ' '})
-                        this.setState({lastLetter: ' '})
-                        this.props.updateInput(' ')
+                    if (this.state.prevNbOfTouch !== gestureState.numberActiveTouches) {
+                        if (gestureState.numberActiveTouches === 5) {
+                            this.setState({input: this.state.input + ' '})
+                            this.setState({lastLetter: ' '})
+                            this.props.updateInput(' ')
+                        } else if (gestureState.numberActiveTouches === 4) { 
+                            this.props.updateInput('K')
+                        }
                     } else {                    
                         this._computeHandTouch(evt, gestureState)
                     }
-                    //this._addAnimatedDot()
                     this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
                 },
                 onPanResponderRelease: (evt, gestureState) => {
@@ -327,12 +330,13 @@ class HandComponent extends React.Component {
         this.setState({ touchableDetect: tmp });
     }
 
-    _addAnimatedDot() {
+    _addAnimatedDot(px, py) {
         console.log('Add animatedDot')
-        let tmp = [...this.state.animatedDot];
-        tmp.push({id: this.state.lastAnimatedDotId, posX: this.state.debugLastX0, posY: this.state.debugLastY0})
-//        tmp.push({id: this.state.lastAnimatedDotId, posX: 0, posY: 0})
-        this.setState({lastAnimatedDotId: this.state.lastAnimatedDotId + 1, animatedDot: tmp})
+        if (this.state.animatedDot.length < 50) {
+            let tmp = [...this.state.animatedDot];
+            tmp.push({id: this.state.lastAnimatedDotId, posX: px, posY: py})
+            this.setState({lastAnimatedDotId: this.state.lastAnimatedDotId + 1, animatedDot: tmp})
+        }
     }
 
     _removeAnimatedDot = (id) => {
@@ -375,6 +379,7 @@ class HandComponent extends React.Component {
                 // this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
                 // this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
                 // this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
+                this._addAnimatedDot(evt.nativeEvent.locationX - this.state.imagePosX, evt.nativeEvent.locationY)
                 this.setState({debugLastX0: evt.nativeEvent.locationX - this.state.imagePosX})
                 this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
                 this.setState({debugLastY0: evt.nativeEvent.locationY})
@@ -400,6 +405,7 @@ class HandComponent extends React.Component {
     render() {
         return (
             <View width='100%' height='100%'>
+                {console.log("animatedDot.lenght = " + this.state.animatedDot.length)}
                 {this.state.animatedDot.map((component, i) =>
                     <AnimatedDot key={i} posX={component.posX} posY={component.posY}
                     endAnimation={this._removeAnimatedDot} id={component.id}/>
