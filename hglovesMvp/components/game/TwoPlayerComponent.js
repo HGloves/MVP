@@ -16,7 +16,7 @@ const screenRatio = ScreenDim.width / ScreenDim.height;
 
 let imageTutoWidth = ScreenDim.width * 15 / 100;
 let imageTutoHeight = Math.round(imageTutoWidth * 683 / 546);
-let imageTutoTop = ScreenDim.height / 3;
+let imageTutoTop = ScreenDim.height * 10 / 100;
 
 const tutoImages = {
     'a': require('../../assets/images/letters/A.png'),
@@ -319,7 +319,7 @@ let styles = (screenRatio > 0.6 ?
             position: 'absolute',
             zIndex: 2,
             top: imageTutoTop,
-            right: 0,
+            left: 0,
             flexDirection: 'row',
             justifyContent: 'center',
         },
@@ -403,8 +403,8 @@ let styles = (screenRatio > 0.6 ?
             width: imageTutoWidth,
             position: 'absolute',
             zIndex: 2,
-            top: imageTutoTop / 4,
-            right: 0,
+            top: imageTutoTop,
+            left: 0,
             flexDirection: 'row',
             justifyContent: 'center',
         },
