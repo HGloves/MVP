@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
-import MyChrono from '../common/MyChrono';
 import AppearSide from '../common/Appear';
 import ComponentZoom from '../common/Zoom';
 import MoveComponent from '../common/Move';

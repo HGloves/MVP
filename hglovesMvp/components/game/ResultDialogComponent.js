@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import MoveComponent from '../common/Move';
 
 const ScreenDim = Dimensions.get("window");
 const imageWidth = ScreenDim.width * 60 / 100;
@@ -35,7 +36,7 @@ class ResultDialogComponent extends React.Component {
                         onDismiss={() => handleClose(false)}>
                         <ImageBackground source={backgroundImage} resizeMode='cover' style={styles.container}>
                             <View style={styles.firstPlayerContainer}>
-                                <View style={styles.nameContainer}>
+                                <View style={{ ...styles.nameContainer, marginBottom: '10%' }}>
                                     <Image source={playerOneImage} style={styles.playerImage} />
                                     <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                                         <Text style={{ ...styles.whiteText, marginLeft: '5%' }}>Joueur 1</Text>
@@ -48,31 +49,33 @@ class ResultDialogComponent extends React.Component {
                                         <Text style={styles.nameStatText}>Secondes</Text>
                                     </View>
                                     <View style={styles.statTextContainer}>
-                                        <Text style={styles.numberStatText}>{(accuracy[0] / 27).toFixed(2).toString() + '%'}</Text>
+                                        <Text style={styles.numberStatText}>{(27 / accuracy[0] * 100).toFixed(2).toString() + '%'}</Text>
                                         <Text style={styles.nameStatText}>Précision</Text>
                                     </View>
                                 </View>
                             </View>
                             <View style={styles.secondPlayerContainer}>
-                                <View style={styles.nameContainer}>
-                                    <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                                        <Text style={{ ...styles.whiteText, marginRight: '5%' }}>Joueur 2</Text>
-                                        <Text style={{ ...styles.whiteText, fontSize: 15 }}>{time[0] > time[1] ? 'Gagnant' : 'Perdant'}</Text>
-                                    </View>
-                                    <Image source={playerTwoImage} style={styles.playerImage} />
-                                </View>
                                 <View style={styles.statsContainer}>
                                     <View style={styles.statTextContainer}>
                                         <Text style={styles.numberStatText}>{time[1]}</Text>
                                         <Text style={styles.nameStatText}>Secondes</Text>
                                     </View>
                                     <View style={styles.statTextContainer}>
-                                        <Text style={styles.numberStatText}>{(accuracy[1] / 27).toFixed(2).toString() + '%'}</Text>
+                                        <Text style={styles.numberStatText}>{(27 / accuracy[1] * 100).toFixed(2).toString() + '%'}</Text>
                                         <Text style={styles.nameStatText}>Précision</Text>
                                     </View>
                                 </View>
+                                <View style={{ ...styles.nameContainer, marginTop: '10%' }}>
+                                    <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                        <Text style={{ ...styles.whiteText, marginRight: '5%' }}>Joueur 2</Text>
+                                        <Text style={{ ...styles.whiteText, fontSize: 15 }}>{time[0] > time[1] ? 'Gagnant' : 'Perdant'}</Text>
+                                    </View>
+                                    <Image source={playerTwoImage} style={styles.playerImage} />
+                                </View>
                             </View>
-                            <Image source={trophyImage} style={styles.trophyImage} />
+                            <MoveComponent play={true} style={{ position: 'absolute', left: trophyImageLeft, top: trophyImageTop }} dest={{ x: 0, y: ScreenDim.height * 40 / 100 / 3.5 * (time[0] < time[1] ? -1 : 1)}}>
+                                <Image source={trophyImage} style={styles.trophyImage} />
+                            </MoveComponent>
                         </ImageBackground>
                     </Dialog>
                 </Portal>
@@ -109,7 +112,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'center',
-        marginBottom: '10%',
     },
     playerImage: {
         width: playerImageWidth,
@@ -148,11 +150,11 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     trophyImage: {
-        position: 'absolute',
+        // position: 'absolute',
         width: trophyImageWidth,
         height: trophyImageHeight,
-        top: trophyImageTop,
-        left: trophyImageLeft,
+        // top: trophyImageTop,
+        // left: trophyImageLeft,
     },
 });
 
