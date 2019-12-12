@@ -50,7 +50,7 @@ export default class AnnimationComponent extends Component  {
             ["c", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.55), y: this.getCoordonateY(.88) }), animType: this.staticElement }],
             ["ç", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.50), y: this.getCoordonateY(.89) }), anim2: new Animated.ValueXY({ x: this.getCoordonateX(.60), y: this.getCoordonateY(.89) }), animType: this.staticElement }],
             ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.54), y: this.getCoordonateY(.10) }), animType: this.moveElement, xStart: .54, yStart: .10, xEnd: .53, yEnd: .35 }],
-            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(0.36), y: this.getCoordonateY(0.11) }), animType: this.staticElement}],
+            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(0.36), y: this.getCoordonateY(0.11) }), animType: this.staticElement}],        
             ["f", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(0.32), y: this.getCoordonateY(0.23) }), anim2: new Animated.ValueXY({ x: this.getCoordonateX(0.58), y: this.getCoordonateY(0.21) }), animType: this.staticElement }],
             ["i", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.54), y: this.getCoordonateY(.08) }), animType: this.staticElement }],
             ["j", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.49), y: this.getCoordonateY(.10) }), anim2: new Animated.ValueXY({ x: this.getCoordonateX(.56), y: this.getCoordonateY(.10) }), animType: this.staticElement}],
@@ -210,6 +210,8 @@ export default class AnnimationComponent extends Component  {
             {top: this.props.imagePos.y}, {left: this.props.imagePos.x}]}
             ref={ref => { this.animComponent = ref; }}
             >
+                {console.log("this.props.imagePos.y = " +  this.props.imagePos.y)}
+                {console.log("this.props.imagePos.x = " +  this.props.imagePos.x)}
                 <Animated.View 
                 style={{display: 'flex',
                   transform: (this.state.text[0] !== "s" ? [{translateX: this.state.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.state.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),

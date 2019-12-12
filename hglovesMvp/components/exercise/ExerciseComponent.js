@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
@@ -219,11 +219,11 @@ class ExerciseComponent extends React.Component {
                 <View style={styles.handContainer}>
                     {sequenceStatus === true ?
                         <Animation text={navigation.getParam('name').toLowerCase()} stopAnimation={this.stopAnimation}
-                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand}/>
+                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={stylesHand.hand}/>
                         :
                         null
                     }
-                    <HandComponent style={styles.hand} updateInput={this.updateInput} schemaStatus={false} recupImageSize={this.recupImageSize} />
+                    <HandComponent style={stylesHand.hand} updateInput={this.updateInput} schemaStatus={false} recupImageSize={this.recupImageSize} />
                 </View>
                 <View style={styles.footerContainer}>
                     <View style={styles.footerImageContainer}>
@@ -263,6 +263,22 @@ if (screenRatio > 0.6) {
     handHeight = Math.round(handWidth * 2400 / 1920);
     imageWidth = ScreenDim.width * 30 / 100;
     imageHeight = Math.round(imageWidth * 487 / 579);
+    if (Platform.OS == 'ios') {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: handWidth,
+                height: handHeight,
+                zIndex: 1,
+            }
+        });
+    } else {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: handWidth,
+                height: handHeight,
+            }
+        });
+    }
     styles = StyleSheet.create({
         container: {
             display: 'flex',
@@ -281,10 +297,6 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-        },
-        hand: {
-            width: handWidth,
-            height: handHeight,
         },
         footerContainer: {
             display: 'flex',
@@ -361,6 +373,22 @@ if (screenRatio > 0.6) {
     handHeight = Math.round(handWidth * 2400 / 1920);
     imageWidth = ScreenDim.width * 30 / 100;
     imageHeight = Math.round(imageWidth * 487 / 579);
+    if (Platform.OS == 'ios') {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: handWidth,
+                height: handHeight,
+                zIndex: 1,
+            }
+        });
+    } else {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: handWidth,
+                height: handHeight,
+            }
+        });
+    }
     styles = StyleSheet.create({
         container: {
             display: 'flex',
@@ -382,10 +410,6 @@ if (screenRatio > 0.6) {
             alignContent: 'center',
             alignItems: 'center',
             paddingTop: '25%',
-        },
-        hand: {
-            width: handWidth,
-            height: handHeight,
         },
         footerContainer: {
             display: 'flex',

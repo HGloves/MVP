@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native'
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import RecordButton from './RecordButton'
 import { IconButton, TextInput, Switch } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
@@ -110,11 +110,11 @@ class MainComponent extends React.Component {
                 <View style={styles.handContainer}>
                     {this.state.googleSpeech === true ?
                         <Animation text={this.state.input} stopAnimation={this.stopAnimation}
-                            imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand} />
+                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={stylesHand.hand}/>
                         :
                         null
                     }
-                    <HandComponent style={styles.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize} schemaStatus={schemaStatus} />
+                    <HandComponent style={stylesHand.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize} schemaStatus={schemaStatus} />
                 </View>
                 <View style={styles.lormContainer}>
                     <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter}</TextBeat>
@@ -164,6 +164,22 @@ if (screenRatio > 0.6) {
     console.log("TABLET");
     imageWidth = ScreenDim.width * 90 / 100;
     imageHeight = Math.round(imageWidth * 2400 / 1920);
+    if (Platform.OS == 'ios') {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: imageWidth,
+                height: imageHeight,
+                zIndex: 1,
+            }
+        });
+    } else {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: imageWidth,
+                height: imageHeight,
+            }
+        });
+    }
     styles = StyleSheet.create({
         container: {
             display: 'flex',
@@ -176,11 +192,6 @@ if (screenRatio > 0.6) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-        },
-        hand: {
-            width: imageWidth,
-            height: imageHeight,
-            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
@@ -254,6 +265,22 @@ if (screenRatio > 0.6) {
     console.log("MOBILE");
     imageWidth = ScreenDim.width;
     imageHeight = Math.round(imageWidth * 2400 / 1920);
+    if (Platform.OS == 'ios') {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: imageWidth,
+                height: imageHeight,
+                zIndex: 1,
+            }
+        });
+    } else {
+        stylesHand = StyleSheet.create({
+            hand: {
+                width: imageWidth,
+                height: imageHeight,
+            }
+        });
+    }
     styles = StyleSheet.create({
         container: {
             display: 'flex',
@@ -269,11 +296,6 @@ if (screenRatio > 0.6) {
             alignContent: 'center',
             alignItems: 'center',
             paddingTop: '25%',
-        },
-        hand: {
-            width: imageWidth,
-            height: imageHeight,
-            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
