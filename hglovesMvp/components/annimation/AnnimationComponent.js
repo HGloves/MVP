@@ -21,7 +21,6 @@ export default class AnnimationComponent extends Component  {
             outputRangeX.push(move);
         }
         this.trx = this.state.lormPos.get("s").anim1.interpolate({ inputRange: inputRangeX, outputRange: outputRangeX });
-
         let inputRangeY = [], outputRangeY = [];
         for (let i=0; i<=snapshot; ++i) {
             let value = i/snapshot;
@@ -47,7 +46,7 @@ export default class AnnimationComponent extends Component  {
             ["b", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({x: this.getCoordonateX(0.36), y: this.getCoordonateY(0.13) }), animType: this.moveElement, xStart: 0.36, yStart: 0.13, xEnd: 0.38, yEnd: 0.40 }],
             ["c", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.55), y: this.getCoordonateY(.88) }), animType: this.staticElement }],
             ["ç", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.50), y: this.getCoordonateY(.89) }), anim2: new Animated.ValueXY({ x: this.getCoordonateX(.60), y: this.getCoordonateY(.89) }), animType: this.staticElement }],
-            ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.54), y: this.getCoordonateY(.10) }), animType: this.moveElement, xStart: .54, yStart: .10, xEnd: .53, yEnd: .35}],
+            ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.54), y: this.getCoordonateY(.10) }), animType: this.moveElement, xStart: .54, yStart: .10, xEnd: .53, yEnd: .35 }],
             ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(0.36), y: this.getCoordonateY(0.11) }), animType: this.staticElement}],
             ["f", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(0.32), y: this.getCoordonateY(0.23) }), anim2: new Animated.ValueXY({ x: this.getCoordonateX(0.58), y: this.getCoordonateY(0.21) }), animType: this.staticElement }],
             ["i", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.54), y: this.getCoordonateY(.08) }), animType: this.staticElement }],
@@ -116,8 +115,8 @@ export default class AnnimationComponent extends Component  {
 
     circleElement = (obj, callback) => {
         console.log("circle");
-        obj.anim1.setValue(0)
-        console.log({...obj});
+        obj.anim1.setValue(0);
+        obj.animFade.setValue(0);
         Animated.sequence([
             Animated.timing(obj.animFade, {
                 toValue: 1,
@@ -204,10 +203,13 @@ export default class AnnimationComponent extends Component  {
     render() {
         const transformS = [{ translateY: this.try}, {translateX: this.trx}];
         return (
-            <View style={[this.props.style, {position: "absolute"}]}>
-                <Animated.View
+            <View style={[this.props.style, {position: "absolute"},
+            {top: this.props.imagePos.y}, {left: this.props.imagePos.x}]}
+            ref={ref => { this.animComponent = ref; }}
+            >
+                <Animated.View 
                 style={{display: 'flex',
-                  transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(1)).anim1.x }, { translateY: this.state.lormPos.get(this.getLetter(1)).anim1.y }] : transformS),
+                  transform: (this.state.text[0] !== "s" ? [{translateX: this.state.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.state.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
@@ -215,7 +217,7 @@ export default class AnnimationComponent extends Component  {
                     width: this.dotSize,
                     height: this.dotSize,
                     position: "absolute",
-                    zIndex : 5,
+                    zIndex : 20,
                     opacity: this.getLetter(1) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -227,7 +229,7 @@ export default class AnnimationComponent extends Component  {
                     width: this.dotSize,
                     height: this.dotSize,
                     position: "absolute",
-                    zIndex : 5,
+                    zIndex : 20,
                     opacity: this.getLetter(2) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -239,7 +241,7 @@ export default class AnnimationComponent extends Component  {
                     width: this.dotSize,
                     height: this.dotSize,
                     position: "absolute",
-                    zIndex : 5,
+                    zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -251,7 +253,7 @@ export default class AnnimationComponent extends Component  {
                     width: this.dotSize,
                     height: this.dotSize,
                     position: "absolute",
-                    zIndex : 5,
+                    zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
@@ -263,7 +265,7 @@ export default class AnnimationComponent extends Component  {
                     width: this.dotSize,
                     height: this.dotSize,
                     position: "absolute",
-                    zIndex : 5,
+                    zIndex : 20,
                     opacity: this.getLetter(5) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
         </View>
@@ -281,8 +283,7 @@ const styles = StyleSheet.create({
         height: '78%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        zIndex: 0
+        justifyContent: 'center'
     },
     tennisBall: {
         display: 'flex',
@@ -292,7 +293,6 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: 100,
         height: 100,
-        zIndex: 5,
     },
     button: {
         paddingTop: 24,
