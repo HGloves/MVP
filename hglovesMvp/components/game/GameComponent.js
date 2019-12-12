@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
+import AppearSide from '../common/Appear';
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
@@ -12,9 +13,20 @@ let imageGameWidth = ScreenDim.width * 50 / 100;
 let imageGameHeight = Math.round(imageGameWidth * 894 / 1260);
 
 class GameComponent extends React.Component {
+    state = {
+        anim: false
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                anim: true
+            })
+        }, 200)
+    }
 
     render() {
         const { navigation } = this.props;
+
 
         return (
             <View style={styles.container}>
@@ -25,6 +37,7 @@ class GameComponent extends React.Component {
                     style={styles.backButton}>
                     Retour
                 </Button>
+                <AppearSide start={"left"} play={this.state.anim}>
                 <TouchableOpacity
                 style={{ ...styles.gameImageContainer, marginBottom: '5%' }}
                 onPress={() => navigation.navigate('OnePlayer')}
@@ -35,7 +48,9 @@ class GameComponent extends React.Component {
                     </View>
                     <Image source={onePlayer} style={styles.gameImage} />
                 </TouchableOpacity>
+                </AppearSide>
                 <Divider style={{ marginBottom: '5%', width: '90%' }} />
+                <AppearSide play={this.state.anim}>
                 <TouchableOpacity
                 style={styles.gameImageContainer}
                 onPress={() => navigation.navigate('TwoPlayer')}
@@ -46,6 +61,7 @@ class GameComponent extends React.Component {
                         <Text style={{ ...styles.gamePlayerText, color: '#561c1c' }}>Joueurs</Text>
                     </View>
                 </TouchableOpacity>
+                </AppearSide>
             </View>
         );
     }
