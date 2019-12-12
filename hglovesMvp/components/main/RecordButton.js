@@ -157,8 +157,8 @@ class RecordButton extends React.Component {
             this.startRecording()
         } else {
             this.stopRecording()
-            //this.getAudio()
-            this.props.func("eeeeee")
+            // this.getAudio()
+            this.props.func("aeioussssss")
         }
     };
 
