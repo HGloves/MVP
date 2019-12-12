@@ -24,7 +24,7 @@ HandComponent:
 */
 
 const classicHand = require('../../assets/hand.png');
-const SchemaHand = require('../../assets/handSchema.png');
+const SchemaHand = require('../../assets/hand_shema_clean.png');
 
 class HandComponent extends React.Component {
 

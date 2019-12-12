@@ -134,6 +134,7 @@ class MainComponent extends React.Component {
                         onPress={() => this.helpStatusHandler(true)}
                     />
                     <Switch
+                        style={{marginTop: '40%'}}
                         value={schemaStatus}
                         onValueChange={this.handleSchemaStatus}
                         color='#1c3956'
