@@ -9,6 +9,7 @@ export default class AnnimationComponent extends Component  {
         console.log("animation");
         this.state = {text : this.props.text};
         console.log(this.props);
+        this.dotSize = 15 * this.props.imageSize.width / 100;
         this.lormPos = new Map([
             ["0", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 50, y: 100 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), anim3: new Animated.ValueXY({ x: 50, y: 100 }), anim4: new Animated.ValueXY({ x: 50, y: 100 }), anim5: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement}],
             ["a", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (8.5 * this.props.imageSize.width) / 100, y: (45 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
@@ -16,8 +17,10 @@ export default class AnnimationComponent extends Component  {
             ["c", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (55 * this.props.imageSize.width) / 100, y: (90 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["ç", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 10, y: 10 }), anim2: new Animated.ValueXY({ x: 50, y: 50 }), animType: this.staticElement }],
             ["d", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * this.props.imageSize.width) / 100, y: (10 * this.props.imageSize.height) / 100 }), animType: this.moveElement, xStart: (48 * this.props.imageSize.width) / 100, yStart: (10 * this.props.imageSize.height) / 100, xEnd: (48 * this.props.imageSize.width) / 100, yEnd: (45 * this.props.imageSize.height) / 100 }],
-            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (30 * this.props.imageSize.width) / 100, y: (15 * this.props.imageSize.height) / 100 }), animType: this.staticElement}],
-            ["f", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 0, y: 0 }), anim2: new Animated.ValueXY({ x: 0, y: 0 }), animType: this.staticElement }],
+
+            ["e", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 0.35 * this.props.imageSize.width - this.dotSize / 2, y: 0.10 * this.props.imageSize.height - this.dotSize / 2}), animType: this.staticElement}],
+
+            ["fTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 50 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement }],
             ["i", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: (48 * this.props.imageSize.width) / 100, y: (10 * this.props.imageSize.height) / 100 }), animType: this.staticElement }],
             ["jTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 35 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement}],
             ["kTODO", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: 360, y: 35 }), anim2: new Animated.ValueXY({ x: 50, y: 100 }), anim3: new Animated.ValueXY({ x: 50, y: 100 }), anim4: new Animated.ValueXY({ x: 50, y: 100 }), animType: this.staticElement }],
@@ -62,12 +65,31 @@ export default class AnnimationComponent extends Component  {
 
     componentDidMount() {
         this.whichLetters();
+        setTimeout(() => (this.animComponent.measure((fx, fy, width, height, px, py) => {
+            console.log("PUTE width = " + width)
+            console.log("PUTE width = " + height)
+            console.log("PUTE fx = " + fx)
+            console.log("PUTE fy = " + fy)
+            console.log("PUTE px = " + px)
+            console.log("PUTE py = " + py)
+        })), 0);
+    }
+
+    componentDidUpdate() {
+        setTimeout(() => (this.animComponent.measure((fx, fy, width, height, px, py) => {
+            console.log("PUTE width = " + width)
+            console.log("PUTE width = " + height)
+            console.log("PUTE fx = " + fx)
+            console.log("PUTE fy = " + fy)
+            console.log("PUTE px = " + px)
+            console.log("PUTE py = " + py)
+        })), 0);
     }
 
     fadeElement = (obj, fade) => {
         return (Animated.timing(obj.animFade, {
             toValue: fade,
-            duration: 400
+            duration: 400,
         }));
     };
 
@@ -184,17 +206,21 @@ export default class AnnimationComponent extends Component  {
     };
 
     render() {
-        const transformS = [{ translateY: this.try }, {translateX: this.trx}];
+        const transformS = [{ translateY: this.try - this.dotSize / 2}, {translateX: this.trx - this.dotSize / 2}];
         return (
-            <View style={[this.props.style, {position: "absolute"}]}>
-                <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ? [{translateX: this.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),
+            <View style={[this.props.style, {position: "absolute"},
+            {top: this.props.imagePos.y}, {left: this.props.imagePos.x}]}
+            ref={ref => { this.animComponent = ref; }}
+            >
+                <Animated.View
+                style={{display: 'flex',
+                  transform: (this.state.text[0] !== "s" ? [{translateX: this.lormPos.get(this.getLetter(1)).anim1.x}, {translateY: this.lormPos.get(this.getLetter(1)).anim1.y}] : transformS),
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
                     borderRadius: 20 * this.props.imageSize.width / 100,
-                    width: 10 * this.props.imageSize.width / 100,
-                    height: 10 * this.props.imageSize.width / 100,
+                    width: this.dotSize,
+                    height: this.dotSize,
                     position: "absolute",
                     zIndex : 20,
                     opacity: this.getLetter(1) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
@@ -205,8 +231,8 @@ export default class AnnimationComponent extends Component  {
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
                     borderRadius: 20 * this.props.imageSize.width / 100,
-                    width: 10 * this.props.imageSize.width / 100,
-                    height: 10 * this.props.imageSize.width / 100,
+                    width: this.dotSize,
+                    height: this.dotSize,
                     position: "absolute",
                     zIndex : 20,
                     opacity: this.getLetter(2) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
@@ -217,8 +243,8 @@ export default class AnnimationComponent extends Component  {
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
                     borderRadius: 20 * this.props.imageSize.width / 100,
-                    width: 10 * this.props.imageSize.width / 100,
-                    height: 10 * this.props.imageSize.width / 100,
+                    width: this.dotSize,
+                    height: this.dotSize,
                     position: "absolute",
                     zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
@@ -229,8 +255,8 @@ export default class AnnimationComponent extends Component  {
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
                     borderRadius: 20 * this.props.imageSize.width / 100,
-                    width: 10 * this.props.imageSize.width / 100,
-                    height: 10 * this.props.imageSize.width / 100,
+                    width: this.dotSize,
+                    height: this.dotSize,
                     position: "absolute",
                     zIndex : 20,
                     opacity: this.getLetter(4) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
@@ -241,8 +267,8 @@ export default class AnnimationComponent extends Component  {
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
                     borderRadius: 20 * this.props.imageSize.width / 100,
-                    width: 10 * this.props.imageSize.width / 100,
-                    height: 10 * this.props.imageSize.width / 100,
+                    width: this.dotSize,
+                    height: this.dotSize,
                     position: "absolute",
                     zIndex : 20,
                     opacity: this.getLetter(5) === "0" ? 0 : this.lormPos.get(this.state.text[0]).animFade}}>
