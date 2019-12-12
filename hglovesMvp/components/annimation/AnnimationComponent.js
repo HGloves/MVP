@@ -166,8 +166,10 @@ export default class AnnimationComponent extends Component  {
     whichLetters = () => {
         if (this.state.text[0] === undefined || this.state.lormPos.has(this.state.text[0]) == false) {
             this.setState({text : this.state.text.substr(1)}, () => {
-                if (this.state.text === "")
+                if (this.state.text === "") {
+                    this.props.stopAnimation();
                     return;
+                }
                 this.whichLetters();
             });
             return;
@@ -176,6 +178,7 @@ export default class AnnimationComponent extends Component  {
         obj.animType(obj , () => {
             this.setState({text : this.state.text.substr(1)}, () => {
                 if (this.state.text === "") {
+                    this.props.stopAnimation();
                     return;
                 }
                 this.whichLetters();
