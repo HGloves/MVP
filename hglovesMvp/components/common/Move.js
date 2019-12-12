@@ -8,7 +8,7 @@ class MoveComponent extends React.Component {
 		this.position = (this.props.position == 'left' || this.props.position == 'right' ? this.props.position : 'center')
 		this.animatedText = {y: (this.props.startPos ? new Animated.Value(this.props.startPos.y): new Animated.Value(0)), x: (this.props.startPos ? new Animated.Value(this.props.startPos.x) : new Animated.Value(0))}
 		this.state = {
-			opacity: 0
+			opacity: 1
 		}
 	}
 
@@ -21,19 +21,21 @@ class MoveComponent extends React.Component {
 	}
 
 	Side() {
-		if (this.props.play == true) {
+        const { dest, play, timeout } = this.props;
+
+		if (play == true) {
 			setTimeout(() => {
 				if (this.state.opacity === 0)
 					this.setState({opacity: 1})
                 Animated.timing(this.animatedText.x, {
-                    toValue: 100,
+                    toValue: dest.x,
                     duration: this.duration,
                 }).start()
-                // Animated.timing(this.animatedText.y, {
-                //     toValue: this.props.dest.y,
-                //     duration: this.duration,
-                // }).start()
-			}, this.props.timeout)
+                Animated.timing(this.animatedText.y, {
+                    toValue: dest.y,
+                    duration: this.duration,
+                }).start()
+			}, timeout)
 		}
 	}
 

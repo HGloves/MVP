@@ -195,7 +195,7 @@ class TwoPlayerComponent extends React.Component {
     }
 
     renderGame() {
-        const { gameEnd, index, alphabet, playWin, playFailure, checkStatus, stopWatchValue, playerIndex } = this.state;
+        const { gameEnd, index, alphabet, playWin, playFailure, checkStatus, stopWatchValue, playerIndex, hitNumber } = this.state;
         let percent = (gameEnd) ? 1 : (index / alphabet.length)
 
         return (
@@ -220,7 +220,7 @@ class TwoPlayerComponent extends React.Component {
                 <View style={styles.footerContainer}>
                     <Text style={styles.secondText}>{stopWatchValue[playerIndex].toString() + 's'}</Text>
                 </View>
-                <ResultDialogComponent status={checkStatus} handleClose={this.handleCheckStatus} value={Math.min(stopWatchValue[0], stopWatchValue[1]).toString()} />
+                <ResultDialogComponent status={checkStatus} handleClose={this.handleCheckStatus} value={Math.min(stopWatchValue[0], stopWatchValue[1]).toString()} time={[...stopWatchValue]} accuracy={[...hitNumber]} />
                 <View style={styles.progressContainer}>
                     <ProgressBar style={styles.progress} color='#1C3956' progress={percent} />
                 </View>
