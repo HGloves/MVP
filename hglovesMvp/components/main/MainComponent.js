@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native';
 import RecordButton from './RecordButton'
-import { IconButton } from 'react-native-paper';
+import { IconButton, TextInput, Switch } from 'react-native-paper';
 import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
@@ -27,6 +27,9 @@ class MainComponent extends React.Component {
             input: '',
             lastLetter: '',
             timeoutId: undefined,
+            imageSize: undefined,
+            imagePos: undefined,
+            schemaStatus: false,
         }
     }
 
@@ -47,6 +50,12 @@ class MainComponent extends React.Component {
         })
     };
 
+    handleSchemaStatus = () => {
+        this.setState({
+            schemaStatus: !this.state.schemaStatus
+        });
+    }
+
     handleInputEnd = () => {
         const { input } = this.state;
 
@@ -57,6 +66,11 @@ class MainComponent extends React.Component {
             lastLetter: '',
         });
     };
+
+    handleGame = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Game');
+    }
 
     updateInput = newLetter => {
         this.setState({
@@ -73,35 +87,43 @@ class MainComponent extends React.Component {
     };
 
     inputHandler = status => {
-        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        this.setState({input: result, googleSpeech: true});
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").replace('ç', '.').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('.', 'ç')
+        this.setState({ input: result, googleSpeech: true });
     };
 
     stopAnimation = () => {
-        this.setState({googleSpeech: false, input: ''})
+        this.setState({ googleSpeech: false, input: '' })
     };
 
+    recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
+        this.setState({
+            imageSize: { width: imageWidth, height: imageHeigth },
+            imagePos: { x: imagePosX, y: imagePosY }
+        })
+    }
+
     render() {
-        const { helpStatus, exerciseStatus, input } = this.state;
+        const { helpStatus, exerciseStatus, input, schemaStatus } = this.state;
 
         return (
             <View style={styles.container}>
-                {this.state.googleSpeech === true ?
-                    <Animation text={this.state.input} stopAnimation={this.stopAnimation}/>
-                    :
-                    null
-                }
                 <View style={styles.handContainer}>
-                    <HandComponent style={styles.hand} updateInput={this.updateInput}/>
+                    {this.state.googleSpeech === true ?
+                        <Animation text={this.state.input} stopAnimation={this.stopAnimation}
+                            imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand} />
+                        :
+                        null
+                    }
+                    <HandComponent style={styles.hand} updateInput={this.updateInput} recupImageSize={this.recupImageSize} schemaStatus={schemaStatus} />
                 </View>
                 <View style={styles.lormContainer}>
-                    <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter }</TextBeat>
+                    <TextBeat beat={500} size={2} textStyle={{ ...styles.lormLetter, fontFamily: 'open-sans-bold' }}>{(this.state.lastLetter === ' ') ? 'ESPACE' : this.state.lastLetter}</TextBeat>
                 </View>
                 <View style={styles.actionsContainer}>
-                    <RecordButton input={input} func={this.inputHandler}/>
+                    <RecordButton input={input} func={this.inputHandler} />
                     <View style={styles.inputContainer}>
                         <View style={styles.inputView}>
-                            <Text style={{ ...styles.input, fontFamily: 'open-sans-bold' }}>{input}</Text>
+                            <TextInput value={input} disabled style={{ ...styles.input, fontFamily: 'open-sans-bold', backgroundColor: 'transparent' }} />
                         </View>
                         <IconButton
                             style={styles.exButton}
@@ -109,15 +131,28 @@ class MainComponent extends React.Component {
                             color={'#1C3956'}
                             onPress={() => this.exerciseStatusHandler(true)}
                         />
+                        <IconButton
+                            style={styles.vsButton}
+                            icon="timer"
+                            color={'#1C3956'}
+                            onPress={this.handleGame}
+                        />
                     </View>
                 </View>
-                <IconButton
-                    style={styles.helpButton}
-                    icon="alphabetical"
-                    color={'#1C3956'}
-                    size={50}
-                    onPress={() => this.helpStatusHandler(true)}
-                />
+                <View style={styles.helpButtonContainer}>
+                    <IconButton
+                        icon="alphabetical"
+                        color={'#1C3956'}
+                        size={50}
+                        onPress={() => this.helpStatusHandler(true)}
+                    />
+                    <Switch
+                        style={{marginTop: '40%'}}
+                        value={schemaStatus}
+                        onValueChange={this.handleSchemaStatus}
+                        color='#1c3956'
+                    />
+                </View>
                 <HelpComponent status={helpStatus} handleClose={this.helpStatusHandler} />
                 <ExerciseListComponent status={exerciseStatus} handleClose={this.exerciseStatusHandler} {...this.props} />
             </View>
@@ -140,11 +175,12 @@ if (screenRatio > 0.6) {
             height: '78%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
         },
         hand: {
             width: imageWidth,
-            height: imageHeight
+            height: imageHeight,
+            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
@@ -187,18 +223,27 @@ if (screenRatio > 0.6) {
             justifyContent: 'space-around',
         },
         input: {
-            width: '80%',
-            marginLeft: '10%',
+            width: '90%',
+            marginLeft: '5%',
+            marginRight: '5%',
             color: '#1C3956'
         },
-        helpButton: {
+        helpButtonContainer: {
             position: 'absolute',
             right: 6,
             top: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            zIndex: 2,
         },
         exButton: {
             display: 'flex',
-            width: '10%',
+            width: '5%',
+        },
+        vsButton: {
+            display: 'flex',
+            width: '5%',
         },
         rectangle: {
             position: 'absolute',
@@ -228,6 +273,7 @@ if (screenRatio > 0.6) {
         hand: {
             width: imageWidth,
             height: imageHeight,
+            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
@@ -274,14 +320,22 @@ if (screenRatio > 0.6) {
             marginLeft: '10%',
             color: '#1C3956'
         },
-        helpButton: {
+        helpButtonContainer: {
             position: 'absolute',
             right: 6,
             top: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            zIndex: 2,
         },
         exButton: {
             display: 'flex',
-            width: '10%',
+            width: '5%',
+        },
+        vsButton: {
+            display: 'flex',
+            width: '5%',
         },
         rectangle: {
             position: 'absolute',
