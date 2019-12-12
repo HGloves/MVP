@@ -10,7 +10,7 @@ export default class AnnimationComponent extends Component  {
         this.dotSize = 8 * this.props.imageSize.width / 100;
         this.state = {text : this.props.text, lormPos : new Map([
             ["0", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY(0), anim2: new Animated.ValueXY(0), anim3: new Animated.ValueXY(0), anim4: new Animated.ValueXY(0), anim5: new Animated.ValueXY(0), animType: this.staticElement}],
-            ["s", {animFade: new Animated.Value(0), anim1: new Animated.Value(0), animType: this.circleElement, xStart: (.50 * this.props.imageSize.width) - (this.dotSize / 2), yStart: (.70 * this.props.imageSize.height) -( this.dotSize / 2), xEnd: (.50 * this.props.imageSize.width) - (this.dotSize / 2), yEnd: (.70 * this.props.imageSize.height) - (this.dotSize / 2) }]
+            ["s", {animFade: new Animated.Value(0), anim1: new Animated.Value(0), animType: this.circleElement, xStart: (.55 * this.props.imageSize.width) - (this.dotSize / 2), yStart: (.60 * this.props.imageSize.height) -( this.dotSize / 2), xEnd: (.55 * this.props.imageSize.width) - (this.dotSize / 2), yEnd: (.60 * this.props.imageSize.height) - (this.dotSize / 2) }]
         ])};
         let snapshot = 200, radius = .17 * this.props.imageSize.width - (this.dotSize / 2);
         let inputRangeX = [], outputRangeX = [];
@@ -65,7 +65,7 @@ export default class AnnimationComponent extends Component  {
             ["l", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.55), y: this.getCoordonateY(.10) }), animType: this.moveElement, xStart: .55, yStart: .10, xEnd: .60, yEnd: .75 }],
             ["p", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.32), y: this.getCoordonateY(.45) }), animType: this.moveElement, xStart: .32, yStart: .45, xEnd: .28, yEnd: .15 }],
             ["q", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.80), y: this.getCoordonateY(.70) }), animType: this.moveElement, xStart: .80, yStart: .70, xEnd: .80, yEnd: .53 }],
-            ["s", { animFade: this.state.lormPos.get("s").animFade, anim1: this.state.lormPos.get("s").anim1, animType: this.circleElement, xStart: (.50 * this.props.imageSize.width) - (this.dotSize / 2), yStart: (.70 * this.props.imageSize.height )- (this.dotSize / 2), xEnd: (.50 * this.props.imageSize.width) - (this.dotSize / 2), yEnd: (.70 * this.props.imageSize.height) - (this.dotSize / 2) }],
+            ["s", { animFade: this.state.lormPos.get("s").animFade, anim1: this.state.lormPos.get("s").anim1, animType: this.circleElement, xStart: (.55 * this.props.imageSize.width) - (this.dotSize / 2), yStart: (.60 * this.props.imageSize.height )- (this.dotSize / 2), xEnd: (.55 * this.props.imageSize.width) - (this.dotSize / 2), yEnd: (.60 * this.props.imageSize.height) - (this.dotSize / 2) }],
             ["t", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.14), y: this.getCoordonateY(.49) }), animType: this.moveElement, xStart: .14, yStart: .49, xEnd: .22, yEnd: .58 }],
             ["x", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.45), y: this.getCoordonateY(.88) }), animType: this.moveElement, xStart: .45, yStart: .88, xEnd: .67, yEnd: .88 }],
             ["y", { animFade: new Animated.Value(0), anim1: new Animated.ValueXY({ x: this.getCoordonateX(.40), y: this.getCoordonateY(.42) }), animType: this.moveElement, xStart: .40, yStart: .42, xEnd: .75, yEnd: .50 }],
