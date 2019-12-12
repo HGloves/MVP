@@ -25,11 +25,6 @@
         ],
         "ios": {
             "supportsTablet": true
-        },
-        "android": {
-            "permission": [
-                "VIBRATE"
-            ]
         }
     }
 }

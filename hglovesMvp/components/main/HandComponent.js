@@ -24,7 +24,7 @@ HandComponent:
 */
 
 const classicHand = require('../../assets/hand.png');
-const SchemaHand = require('../../assets/handSchema.png');
+const SchemaHand = require('../../assets/hand_shema_clean.png');
 
 class HandComponent extends React.Component {
 
@@ -190,12 +190,8 @@ class HandComponent extends React.Component {
                     this.state.prevNbOfTouch !== gestureState.numberActiveTouches)
                         this.setState({lastUsedId: this.state.lastUsedId + 1})
                     this.setState({prevNbOfTouch: gestureState.numberActiveTouches})
-    //              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
-    //                    this._debug("locationX: " + evt.nativeEvent.locationX)
-    //                    this._debug("locationY: " + evt.nativeEvent.locationY)
                     this._computeHandTouch(evt, gestureState)
                     this._computeDirection(evt, gestureState)
-                    //this._addAnimatedDot()
                 },
                 onPanResponderStart: (evt, gestureState) => {
                     this._debug(gestureState)
@@ -222,7 +218,6 @@ class HandComponent extends React.Component {
                             let index = this.state.touchableDetect.findIndex(x => x.id ===
                                 this.letterDetect[i].zones[j]);
                             if (index >= 0 && this.state.touchableDetect[index].touched === false) {
-//                                this._debug(this.letterDetect[i].letter + ': missing ' + this.state.touchableDetect[index].id);
                                 allTouched = false;
                             }
                         }
@@ -336,7 +331,6 @@ class HandComponent extends React.Component {
     }
 
     _addAnimatedDot(px, py) {
-        console.log('Add animatedDot')
         if (this.state.animatedDot.length < this.maxAnimatedDot) {
             let tmp = [...this.state.animatedDot];
             tmp.push({id: this.state.lastAnimatedDotId, posX: px, posY: py})
@@ -348,8 +342,6 @@ class HandComponent extends React.Component {
         let index = this.state.touchableDetect.findIndex(x => x.id === id);
         let tmp = [...this.state.animatedDot];
         tmp.splice(index, 1)
-        // if (tmp === undefined)
-        //     tmp = []
         this.setState({animatedDot: tmp})
     }
 
@@ -380,43 +372,38 @@ class HandComponent extends React.Component {
                 tmp[i].touchId = this.state.lastUsedId
                 tmp[i].maxSimultaneousTouchOnZone = gestureState.numberActiveTouches
                 this._debug("Touch zone : " + touchableDetect[i].id);
-                // this.setState({debugLastX0: (touchableDetect[i].px0 * imageHandWidth) / 100})
-                // this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
-                // this.setState({debugLastY0: (touchableDetect[i].py0 * imageHandHeight) / 100})
-                // this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
                 this._addAnimatedDot(evt.nativeEvent.locationX - this.state.imagePosX, evt.nativeEvent.locationY)
-                this.setState({debugLastX0: evt.nativeEvent.locationX - this.state.imagePosX})
-                this.setState({debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100})
-                this.setState({debugLastY0: evt.nativeEvent.locationY})
-                this.setState({debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100})
+                this.setState({debugLastX0: evt.nativeEvent.locationX - this.state.imagePosX,
+                    debugLastX1: (touchableDetect[i].px1 * imageHandWidth) / 100,
+                    debugLastY0: evt.nativeEvent.locationY,
+                    debugLastY1: (touchableDetect[i].py1 * imageHandHeight) / 100,
+                })
             }
         }
         this.setState({touchableDetect: tmp});
     }
 
-    componentDidMount() {
-        setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
-            if (this.state.imageMeasureUpdate === false) {
-                this.setState({ imagePosY: py });
-                this.setState({ imagePosX: fx });
-                this.setState({ imageHandWidth: width });
-                this.setState({ imageHandHeight: height });
-                this.setState({ imageMeasureUpdate: true}, () => {
+    componentDidUpdate() {
+        if (this.state.imageMeasureUpdate === false) {
+            setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
+                this.setState({ imagePosY: py, imagePosX: fx, imageHandWidth: width,
+                imageHandHeight: height, imageMeasureUpdate: true}, () => {
                     this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight,
                         this.state.imagePosX, this.state.imagePosY);
                 })
+            })), 0);
         }
-            // if (this.state.imagePosY === -1)
-            //     this.setState({ imagePosY: py });
-            // if (this.state.imagePosX === -1)
-            //     this.setState({ imagePosX: fx });
-            // if (this.state.imageHandWidth === -1)
-            //     this.setState({ imageHandWidth: width }, () => {
-            //         if (this.state.imageHandHeight === -1)
-            //             this.setState({ imageHandHeight: height }, () => {
-            //                 this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight)
-            //             });
-            //     })
+    }
+
+    componentDidMount() {
+            setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
+                if (this.state.imageMeasureUpdate === false) {
+                    this.setState({ imagePosY: py, imagePosX: fx, imageHandWidth: width,
+                    imageHandHeight: height}, () => {
+                        this.props.recupImageSize(this.state.imageHandWidth, this.state.imageHandHeight,
+                            this.state.imagePosX, this.state.imagePosY);
+                    });
+                }
         })), 0);
     }
 
@@ -436,13 +423,6 @@ class HandComponent extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    rectangle: {
-        position: 'absolute',
-        zIndex: 3,
-    },
-});
 
 HandComponent.propTypes = {
     updateInput: PropTypes.func.isRequired,
@@ -465,5 +445,9 @@ const imageHeight2 = Math.round(imageWidth2 * 2400 / 1920);
                 width={this.state.debugLastX1 - this.state.debugLastX0}
                 height={this.state.debugLastY1 - this.state.debugLastY0}
                 backgroundColor='salmon' style={styles.rectangle}></View>
+
+    //              On Android I have to use evt.nativeEvent.locationY + gestureState.dy
+    //                    this._debug("locationX: " + evt.nativeEvent.locationX)
+    //                    this._debug("locationY: " + evt.nativeEvent.locationY)
 
 */}
