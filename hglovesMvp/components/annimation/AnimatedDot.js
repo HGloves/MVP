@@ -15,18 +15,15 @@ export default class AnimatedDot extends Component  {
     }
 
     componentDidMount() {
-        console.log("Mount a AnimatedDot")
         this.staticElement()
 
     }
 
     animatedCallback = () => {
-        console.log("Animation done");
         this.props.endAnimation(this.props.id)
     }
 
     staticElement = () => {
-        console.log("fade")
         Animated.sequence([
             Animated.timing(this.state.animFade, {
                 toValue: 0,
