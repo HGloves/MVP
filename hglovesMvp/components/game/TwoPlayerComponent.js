@@ -8,6 +8,8 @@ import HandComponent from '../main/HandComponent';
 import textToSpeech from '../speaker/speaker';
 
 import ResultDialogComponent from './ResultDialogComponent';
+import AppearSide from '../common/Appear';
+import ComponentZoom from '../common/Zoom';
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
@@ -60,7 +62,7 @@ class TwoPlayerComponent extends React.Component {
         playerIndex: 0,
         index: 0,
         letter: '',
-        checkStatus: true,
+        checkStatus: false,
         imageSize: undefined,
         transitionScreen: false,
         gradientValues: [['#1c3956', '#153f67', '#0c4579', '#034b8b', '#03509d'], ['#561d1d', '#a63635']],
@@ -156,7 +158,11 @@ class TwoPlayerComponent extends React.Component {
                 if (playerIndex === 0) {
                     this.setState({
                         transitionScreen: true,
-                    })
+                    }, () => setTimeout(() => {
+                        this.setState({
+                            go: true
+                        })
+                    }, 500))
                 } else {
                     this.setState({
                         playWin: true,
@@ -229,11 +235,17 @@ class TwoPlayerComponent extends React.Component {
             <LinearGradient
                 colors={gradientValues[1]}
                 style={styles.container}>
-                <Text style={{ ...styles.basicText, fontSize: 50 }}>{'Votre adversaire a mis ' + stopWatchValue[0].toString() + 's'}</Text>
-                <Text style={{ ...styles.basicText, fontSize: 70 }}>Arrivez-vous à le battre ?</Text>
+                    <AppearSide play start={"left"} duration={500}>
+                        <Text style={{ ...styles.basicText, fontSize: 50 }}>{'Votre adversaire a mis ' + stopWatchValue[0].toString() + 's'}</Text>
+                    </AppearSide>
+                    <AppearSide play duration={500}>
+                    <Text style={{ ...styles.basicText, fontSize: 70 }}>Arrivez-vous à le battre ?</Text>
+                    </AppearSide>
+                    <ComponentZoom initZoom={10} finalZoom={1} duration={500} play={this.state.go}>
                 <TouchableOpacity onPress={this.handleTransitionScreenClose}>
                     <Text style={{ ...styles.basicText, fontSize: 120 }}>GO</Text>
                 </TouchableOpacity>
+                    </ComponentZoom>
             </LinearGradient>
         )
     }
