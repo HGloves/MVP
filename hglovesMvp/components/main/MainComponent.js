@@ -82,7 +82,7 @@ class MainComponent extends React.Component {
     };
 
     inputHandler = status => {
-        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").replace('ç', '\001').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('\001', 'ç')
+        var result = status.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/\s{2,}/g," ").replace('ç', '.').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('.', 'ç')
         this.setState({ input: result, googleSpeech: true });
     };
 
