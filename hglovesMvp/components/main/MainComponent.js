@@ -251,12 +251,12 @@ if (screenRatio > 0.6) {
             alignContent: 'center',
             alignItems: 'center',
             paddingTop: '25%',
-            zIndex: 0,
+            zIndex: 1,
         },
         hand: {
             width: imageWidth,
             height: imageHeight,
-            zIndex: 0,
+            zIndex: 1,
         },
         lormContainer: {
             display: 'flex',
