@@ -207,7 +207,7 @@ export default class AnnimationComponent extends Component  {
             <View style={[this.props.style, {position: "absolute"}]}>
                 <Animated.View
                 style={{display: 'flex',
-                  transform: transformS,
+                  transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(1)).anim1.x }, { translateY: this.state.lormPos.get(this.getLetter(1)).anim1.y }] : transformS),
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
@@ -219,7 +219,7 @@ export default class AnnimationComponent extends Component  {
                     opacity: this.getLetter(1) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(2)).anim2.x }, { translateY: this.state.lormPos.get(this.getLetter(2)).anim2.y }] : transformS),
+                    transform: [{ translateX: this.state.lormPos.get(this.getLetter(2)).anim2.x }, { translateY: this.state.lormPos.get(this.getLetter(2)).anim2.y }],
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
@@ -231,7 +231,7 @@ export default class AnnimationComponent extends Component  {
                     opacity: this.getLetter(2) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(4)).anim3.x }, { translateY: this.state.lormPos.get(this.getLetter(4)).anim3.y }]: transformS),
+                    transform: [{ translateX: this.state.lormPos.get(this.getLetter(4)).anim3.x }, { translateY: this.state.lormPos.get(this.getLetter(4)).anim3.y }],
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
@@ -243,7 +243,7 @@ export default class AnnimationComponent extends Component  {
                     opacity: this.getLetter(4) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(4)).anim4.x }, { translateY: this.state.lormPos.get(this.getLetter(4)).anim4.y }] : transformS),
+                    transform: [{ translateX: this.state.lormPos.get(this.getLetter(4)).anim4.x }, { translateY: this.state.lormPos.get(this.getLetter(4)).anim4.y }],
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
@@ -255,7 +255,7 @@ export default class AnnimationComponent extends Component  {
                     opacity: this.getLetter(4) === "0" ? 0 : this.state.lormPos.get(this.state.text[0]).animFade}}>
                 </Animated.View>
                 <Animated.View style={{display: 'flex',
-                    transform: (this.state.text[0] !== "s" ?[{ translateX: this.state.lormPos.get(this.getLetter(5)).anim5.x }, { translateY: this.state.lormPos.get(this.getLetter(5)).anim5.y }] : transformS),
+                    transform: [{ translateX: this.state.lormPos.get(this.getLetter(5)).anim5.x }, { translateY: this.state.lormPos.get(this.getLetter(5)).anim5.y }],
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#1C3956',
