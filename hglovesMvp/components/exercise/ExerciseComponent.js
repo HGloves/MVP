@@ -4,6 +4,10 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'reac
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
+import MyChrono from '../common/MyChrono';
+import AppearSide from '../common/Appear';
+import ComponentZoom from '../common/Zoom';
+import MoveComponent from '../common/Move';
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height
 let styles = null;
@@ -116,7 +120,6 @@ class ExerciseComponent extends React.Component {
     render() {
         const { navigation } = this.props;
         const { sequenceStatus, index, sentence } = this.state;
-
         return (
             <View style={styles.container}>
                 {
@@ -149,11 +152,14 @@ class ExerciseComponent extends React.Component {
                     <View style={styles.footerRightContainer}>
                         {sequenceStatus ? this.renderTutoSeqLetters() : this.renderExLetters()}
                         <View style={styles.gameButtonContainer}>
+                            <MoveComponent play={true} startPos={{x: 0, y: 0}} dest={{x: 100, y: 100}}>
+
                             <IconButton
                                 icon="refresh"
                                 color={'#1C3956'}
                                 onPress={() => { }}
-                            />
+                                />
+                                </MoveComponent>
                             <IconButton
                                 icon="check"
                                 disabled={index !== sentence.length}
