@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton, Button, Card } from 'react-native-paper';
 import MySound from '../common/MySound';
 import HandComponent from '../main/HandComponent';
+import Animation from '../annimation/AnnimationComponent'
 
 import TextWink from '../common/TextWink';
 
@@ -58,6 +59,7 @@ class ExerciseComponent extends React.Component {
         index: 0,
         checkStatus: false,
         imageSize: undefined,
+        imagePos: undefined
     }
 
     componentDidMount() {
@@ -72,8 +74,13 @@ class ExerciseComponent extends React.Component {
         });
     }
 
-    recupImageSize = (imageWidth, imageHeigth) => {
-        this.setState({ imageSize: { width: imageWidth, height: imageHeigth } })
+    stopAnimation = () => {
+        this.setState({ sequenceStatus: false, input: '' })
+    };
+
+    recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
+        this.setState({imageSize: {width: imageWidth, height: imageHeigth},
+        imagePos: {x: imagePosX, y: imagePosY}, sequenceStatus: true})
     }
 
     handleCheckStatus = status => {
@@ -90,6 +97,7 @@ class ExerciseComponent extends React.Component {
         for (let i = 0; i !== seq.length; i += 1)
             tmp[i] = ' ';
         this.setState({
+            sequenceStatus: true,
             sentence: tmp,
             index: 0,
             playWin: false
@@ -141,7 +149,7 @@ class ExerciseComponent extends React.Component {
             <View style={styles.lettersContainer}>
                 {navigation.getParam('name').split('').map((letter, key) => {
                     let width = (100 / navigation.getParam('name').split('').length - 2).toString() + '%';
-                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, 35);
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / navigation.getParam('name').split('').length - 2) * 0.01, (screenRatio > 0.6) ? 35 : 25);
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
@@ -153,8 +161,6 @@ class ExerciseComponent extends React.Component {
         );
     }
 
-    // <TextWink key={key} duration={500} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink>
-
     renderExLetters = () => {
         const { sentence, index } = this.state;
         const { navigation } = this.props;
@@ -163,7 +169,7 @@ class ExerciseComponent extends React.Component {
             <View style={styles.lettersContainer}>
                 {sentence.map((letter, key) => {
                     let width = (100 / sentence.length - 2).toString() + '%';
-                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / sentence.length - 2) * 0.01, 35);
+                    let fontSize = Math.min(ScreenDim.width * 55 / 100 * (100 / sentence.length - 2) * 0.01, (screenRatio > 0.6) ? 35 : 25);
                     return (
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
@@ -209,6 +215,12 @@ class ExerciseComponent extends React.Component {
                     Retour
                 </Button>
                 <View style={styles.handContainer}>
+                    {sequenceStatus === true ?
+                        <Animation text={navigation.getParam('name').toLowerCase()} stopAnimation={this.stopAnimation}
+                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand}/>
+                        :
+                        null
+                    }
                     <HandComponent style={styles.hand} updateInput={this.updateInput} schemaStatus={false} recupImageSize={this.recupImageSize} />
                 </View>
                 <View style={styles.footerContainer}>
@@ -417,6 +429,29 @@ if (screenRatio > 0.6) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
+        },
+        imageTutoContainer: {
+            display: 'flex',
+            width: imageTutoWidth,
+            position: 'absolute',
+            zIndex: 2,
+            top: imageTutoTop / 4,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+        imageTuto: {
+            width: imageTutoWidth,
+            height: imageTutoHeight,
+            zIndex: 2,
+        },
+        imageTutoText: {
+            display: 'flex',
+            width: '100%',
+            fontFamily: 'open-sans-bold',
+            color: '#1C3956',
+            fontSize: 20,
+            textAlign: 'center',
         },
     });
 }
