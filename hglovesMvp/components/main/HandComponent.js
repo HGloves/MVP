@@ -335,7 +335,6 @@ class HandComponent extends React.Component {
     }
 
     _addAnimatedDot(px, py) {
-        console.log('Add animatedDot')
         if (this.state.animatedDot.length < 50) {
             let tmp = [...this.state.animatedDot];
             tmp.push({id: this.state.lastAnimatedDotId, posX: px, posY: py})
@@ -395,13 +394,6 @@ class HandComponent extends React.Component {
 
     componentDidMount() {
         setTimeout(() => (this.handComponent.measure((fx, fy, width, height, px, py) => {
-            console.log("width = " + width)
-            console.log("width = " + height)
-            console.log("ScreenDim2.width = " + ScreenDim2.width)
-            console.log("fx = " + fx)
-            console.log("fy = " + fy)
-            console.log("px = " + px)
-            console.log("py = " + py)
             if (this.state.imageMeasureUpdate === false) {
                 this.setState({ imagePosY: py });
                 this.setState({ imagePosX: fx });
@@ -431,7 +423,6 @@ class HandComponent extends React.Component {
 
         return (
             <View width='100%' height='100%'>
-                {console.log("animatedDot.lenght = " + this.state.animatedDot.length)}
                 {this.state.animatedDot.map((component, i) =>
                     <AnimatedDot key={i} posX={component.posX} posY={component.posY}
                     endAnimation={this._removeAnimatedDot} id={component.id}/>

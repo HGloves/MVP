@@ -67,6 +67,11 @@ class MainComponent extends React.Component {
         });
     };
 
+    handleGame = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Game');
+    }
+
     updateInput = newLetter => {
         this.setState({
             input: this.state.input + newLetter,
@@ -91,8 +96,10 @@ class MainComponent extends React.Component {
     };
 
     recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
-        this.setState({imageSize: {width: imageWidth, height: imageHeigth},
-        imagePos: {x: imagePosX, y: imagePosY}})
+        this.setState({
+            imageSize: { width: imageWidth, height: imageHeigth },
+            imagePos: { x: imagePosX, y: imagePosY }
+        })
     }
 
     render() {
@@ -103,7 +110,7 @@ class MainComponent extends React.Component {
                 <View style={styles.handContainer}>
                     {this.state.googleSpeech === true ?
                         <Animation text={this.state.input} stopAnimation={this.stopAnimation}
-                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand}/>
+                            imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={styles.hand} />
                         :
                         null
                     }
@@ -123,6 +130,12 @@ class MainComponent extends React.Component {
                             icon="book-open"
                             color={'#1C3956'}
                             onPress={() => this.exerciseStatusHandler(true)}
+                        />
+                        <IconButton
+                            style={styles.vsButton}
+                            icon="timer"
+                            color={'#1C3956'}
+                            onPress={this.handleGame}
                         />
                     </View>
                 </View>
@@ -225,7 +238,11 @@ if (screenRatio > 0.6) {
         },
         exButton: {
             display: 'flex',
-            width: '10%',
+            width: '5%',
+        },
+        vsButton: {
+            display: 'flex',
+            width: '5%',
         },
         rectangle: {
             position: 'absolute',
@@ -313,7 +330,11 @@ if (screenRatio > 0.6) {
         },
         exButton: {
             display: 'flex',
-            width: '10%',
+            width: '5%',
+        },
+        vsButton: {
+            display: 'flex',
+            width: '5%',
         },
         rectangle: {
             position: 'absolute',
