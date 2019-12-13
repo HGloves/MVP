@@ -218,6 +218,7 @@ class OnePlayerComponent extends React.Component {
 
 let handWidth = null;
 let handHeight = null;
+let styles = null;
 
 if (screenRatio > 0.6) {
     handWidth = ScreenDim.width * 90 / 100;
@@ -227,8 +228,9 @@ if (screenRatio > 0.6) {
     handHeight = Math.round(handWidth * 2400 / 1920);
 }
 
-let styles = (screenRatio > 0.6 ?
-    StyleSheet.create({
+if (screenRatio > 0.6) {
+    console.log("TABLET");
+    styles = StyleSheet.create({
         container: {
             display: 'flex',
             width: '100%',
@@ -309,22 +311,26 @@ let styles = (screenRatio > 0.6 ?
             textAlign: 'center',
         },
     })
-    :
-    StyleSheet.create({
+
+} else {
+    console.log("MOBILE");
+    styles = StyleSheet.create({
         container: {
             display: 'flex',
             width: '100%',
             height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         backButton: {
             position: 'absolute',
             left: 0,
-            top: 20,
+            top: 40,
             zIndex: 1,
         },
         timerText: {
             fontFamily: 'open-sans-bold',
-            color: '#1C3956',
+            color: '#FFFFFF',
             fontSize: 300,
             textAlign: 'center'
         },
@@ -334,7 +340,7 @@ let styles = (screenRatio > 0.6 ?
             position: 'absolute',
             zIndex: 2,
             top: imageTutoTop,
-            left: 0,
+            left: 10,
             flexDirection: 'row',
             justifyContent: 'center',
         },
@@ -375,6 +381,7 @@ let styles = (screenRatio > 0.6 ?
         },
         progressContainer: {
             display: 'flex',
+            width: '100%',
             flexDirection: 'column',
             position: 'absolute',
             bottom: 0,
@@ -391,6 +398,6 @@ let styles = (screenRatio > 0.6 ?
             textAlign: 'center',
         },
     })
-);
+}
 
 export default OnePlayerComponent;

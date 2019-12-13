@@ -5,17 +5,16 @@ import AppearSide from '../common/Appear';
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
-
+let styles = null;
 const onePlayer = require('../../assets/images/game/1Player.png');
 const twoPlayer = require('../../assets/images/game/2Player.png');
-
 let imageGameWidth = ScreenDim.width * 50 / 100;
 let imageGameHeight = Math.round(imageGameWidth * 894 / 1260);
 
 class GameComponent extends React.Component {
     state = {
         anim: false
-    }
+    };
     componentDidMount() {
         setTimeout(() => {
             this.setState({
@@ -67,8 +66,9 @@ class GameComponent extends React.Component {
     }
 }
 
-let styles = (screenRatio > 0.6 ?
-    StyleSheet.create({
+if (screenRatio > 0.6) {
+    console.log("TABLET");
+    styles = StyleSheet.create({
         container: {
             display: 'flex',
             width: '100%',
@@ -104,18 +104,21 @@ let styles = (screenRatio > 0.6 ?
             display: 'flex',
             flexDirection: 'column',
         },
-    })
-    :
-    StyleSheet.create({
+    });
+} else {
+    console.log("MOBILE");
+    styles = StyleSheet.create({
         container: {
             display: 'flex',
             width: '100%',
             height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         backButton: {
             position: 'absolute',
             left: 0,
-            top: 20,
+            top: 40,
             zIndex: 1,
         },
         gameImageContainer: {
@@ -126,6 +129,7 @@ let styles = (screenRatio > 0.6 ?
         gameImage: {
             width: imageGameWidth,
             height: imageGameHeight,
+            borderRadius: 20,
         },
         gamePlayerNumber: {
             fontFamily: 'open-sans-bold',
@@ -139,7 +143,7 @@ let styles = (screenRatio > 0.6 ?
             display: 'flex',
             flexDirection: 'column',
         },
-    })
-);
+    });
+}
 
 export default GameComponent;
