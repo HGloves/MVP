@@ -147,7 +147,7 @@ class MainComponent extends React.Component {
                         onPress={() => this.helpStatusHandler(true)}
                     />
                     <Switch
-                        style={{marginTop: '40%'}}
+                        style={{marginTop: '30%'}}
                         value={schemaStatus}
                         onValueChange={this.handleSchemaStatus}
                         color='#1c3956'
@@ -353,6 +353,8 @@ if (screenRatio > 0.6) {
             height: 32,
         },
         helpButtonContainer: {
+            height: '20%',
+            width: '15%',
             position: 'absolute',
             right: 6,
             top: 6,
