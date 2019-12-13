@@ -7,13 +7,13 @@ import HelpComponent from './HelpComponent';
 import ExerciseListComponent from '../exercise/ExerciseListComponent';
 import HandComponent from './HandComponent';
 import textToSpeech from '../speaker/speaker';
-import { speak } from 'expo-speech';
 import TextBeat from '../common/TextBeat';
 import Animation from '../annimation/AnnimationComponent'
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
 let styles = null;
+let stylesHand = null;
 let imageWidth = null;
 let imageHeight = null;
 
@@ -54,7 +54,7 @@ class MainComponent extends React.Component {
         this.setState({
             schemaStatus: !this.state.schemaStatus
         });
-    }
+    };
 
     handleInputEnd = () => {
         const { input } = this.state;
@@ -70,7 +70,7 @@ class MainComponent extends React.Component {
     handleGame = () => {
         const { navigation } = this.props;
         navigation.navigate('Game');
-    }
+    };
 
     updateInput = newLetter => {
         this.setState({
@@ -100,7 +100,7 @@ class MainComponent extends React.Component {
             imageSize: { width: imageWidth, height: imageHeigth },
             imagePos: { x: imagePosX, y: imagePosY }
         })
-    }
+    };
 
     render() {
         const { helpStatus, exerciseStatus, input, schemaStatus } = this.state;
@@ -164,7 +164,7 @@ if (screenRatio > 0.6) {
     console.log("TABLET");
     imageWidth = ScreenDim.width * 90 / 100;
     imageHeight = Math.round(imageWidth * 2400 / 1920);
-    if (Platform.OS == 'ios') {
+    if (Platform.OS === 'ios') {
         stylesHand = StyleSheet.create({
             hand: {
                 width: imageWidth,
@@ -265,7 +265,7 @@ if (screenRatio > 0.6) {
     console.log("MOBILE");
     imageWidth = ScreenDim.width;
     imageHeight = Math.round(imageWidth * 2400 / 1920);
-    if (Platform.OS == 'ios') {
+    if (Platform.OS === 'ios') {
         stylesHand = StyleSheet.create({
             hand: {
                 width: imageWidth,
@@ -328,9 +328,9 @@ if (screenRatio > 0.6) {
             flexDirection: 'row',
         },
         inputView: {
-            marginLeft: '8%',
+            marginLeft: '5%',
             height: '75%',
-            width: '70%',
+            width: '60%',
             borderTopRightRadius: 50,
             borderTopLeftRadius: 50,
             borderBottomLeftRadius: 50,
@@ -343,6 +343,15 @@ if (screenRatio > 0.6) {
             marginLeft: '10%',
             color: '#1C3956'
         },
+        exButton: {
+            width: 32,
+            height: 32,
+            marginRight: -10
+        },
+        vsButton: {
+            width: 32,
+            height: 32,
+        },
         helpButtonContainer: {
             position: 'absolute',
             right: 6,
@@ -352,14 +361,6 @@ if (screenRatio > 0.6) {
             alignItems: 'center',
             zIndex: 2,
         },
-        exButton: {
-            display: 'flex',
-            width: '5%',
-        },
-        vsButton: {
-            display: 'flex',
-            width: '5%',
-        },
         rectangle: {
             position: 'absolute',
             zIndex: 1,
@@ -368,17 +369,3 @@ if (screenRatio > 0.6) {
 }
 
 export default MainComponent;
-
-
-
-{/* <View top={this.state.debugLastY0} left={(ScreenDim.width - imageWidth) / 2 + this.state.debugLastX0}
-width={this.state.debugLastX1 - this.state.debugLastX0}
-height={this.state.debugLastY1 - this.state.debugLastY0}
-backgroundColor='salmon' style={styles.rectangle}></View>
-
-                    <Image style={styles.hand} source={require('../../assets/hand.png')}
-                        ref={view => { this.mainComponent = view; }}
-                        {...this._panResponder.panHandlers} />
-
-
-*/}
