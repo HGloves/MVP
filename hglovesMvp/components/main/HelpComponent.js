@@ -5,6 +5,7 @@ import { Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ScreenDim = Dimensions.get("window");
+const screenRatio = ScreenDim.width / ScreenDim.height;
 const imageWidth = ScreenDim.width * 18 / 100;
 const imageHeight = Math.round(imageWidth * 683 / 546);
 
@@ -71,7 +72,7 @@ class HelpComponent extends React.Component {
                                                     key={key}
                                                     source={letter.image}
                                                 />
-                                                <Text style={styles.letterText}>{letter.name}</Text>
+                                                <Text style={letter.name === "Espace" ? letterStyle.letterTextMobile : styles.letterText}>{letter.name}</Text>
                                             </View>
                                         );
                                     })}
@@ -104,6 +105,29 @@ class HelpComponent extends React.Component {
     }
 }
 
+let letterStyle = null;
+
+if (screenRatio > 0.6) {
+    letterStyle = StyleSheet.create({
+        letterTextMobile: {
+            textAlign: 'center',
+            color: '#1c3956',
+            fontFamily: 'open-sans-bold',
+            fontSize: 25,
+        }
+    });
+} else {
+    letterStyle = StyleSheet.create({
+        letterTextMobile: {
+            textAlign: 'center',
+            color: '#1c3956',
+            fontFamily: 'open-sans-bold',
+            marginTop: 10,
+            fontSize: 15,
+        }
+    });
+}
+
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
@@ -132,6 +156,12 @@ const styles = StyleSheet.create({
         color: '#1c3956',
         fontFamily: 'open-sans-bold',
         fontSize: 25,
+    },
+    letterTextMobile: {
+        textAlign: 'center',
+        color: '#1c3956',
+        fontFamily: 'open-sans-bold',
+        fontSize: 15,
     },
     legendContainer: {
         display: 'flex',
