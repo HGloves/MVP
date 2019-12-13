@@ -109,8 +109,13 @@ class OnePlayerComponent extends React.Component {
     }
 
     handleCheckStatus = status => {
+        const { navigation } = this.props;
+
         this.setState({
             checkStatus: status
+        }, () => {
+            if (status === false)
+                navigation.navigate("Game")
         });
     }
 

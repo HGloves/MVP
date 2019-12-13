@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, Image, TouchableOpacity, Platform, Dimensions} f
 import { Audio } from 'expo-av'
 import * as Permissions from 'expo-permissions'
 import * as FileSystem from 'expo-file-system';
-//import apiKey from '../../apiKey.json'
+import apiKey from '../../apiKey.json'
 
 const ScreenDim = Dimensions.get("window");
 const screenRatio = ScreenDim.width / ScreenDim.height;
@@ -157,8 +157,8 @@ class RecordButton extends React.Component {
             this.startRecording()
         } else {
             this.stopRecording()
-            // this.getAudio()
-            this.props.func("aeioussssss")
+            this.getAudio()
+            //this.props.func("aeioussssss")
         }
     };
 
