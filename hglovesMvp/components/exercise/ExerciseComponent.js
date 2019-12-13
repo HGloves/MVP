@@ -80,13 +80,20 @@ class ExerciseComponent extends React.Component {
     };
 
     recupImageSize = (imageWidth, imageHeigth, imagePosX, imagePosY) => {
-        this.setState({imageSize: {width: imageWidth, height: imageHeigth},
-        imagePos: {x: imagePosX, y: imagePosY}, sequenceStatus: true})
+        this.setState({
+            imageSize: { width: imageWidth, height: imageHeigth },
+            imagePos: { x: imagePosX, y: imagePosY }, sequenceStatus: true
+        })
     }
 
     handleCheckStatus = status => {
+        const { navigation } = this.props;
+
         this.setState({
             checkStatus: status
+        }, () => {
+            if (status === false)
+                navigation.getParam('callback')();
         });
     }
 
@@ -114,7 +121,7 @@ class ExerciseComponent extends React.Component {
         let tmp = [...sentence];
         tmp[index] = newLetter.toLowerCase();
         let newIndex = index + (tmp[index] === navigation.getParam('name').toLowerCase().split('')[index] ? 1 : 0);
-        
+
         if ((tmp[index] === navigation.getParam('name').toLowerCase().split('')[index]) == false) {
 
             this.setState({
@@ -127,7 +134,7 @@ class ExerciseComponent extends React.Component {
                 }
             }, 400))
         }
-        
+
         if (newIndex === sentence.length && this.state.playWin == false) {
             this.setState({
                 playWin: true,
@@ -175,12 +182,12 @@ class ExerciseComponent extends React.Component {
                         <Card style={{ ...styles.letterCard, width: width }}
                             key={key}>
                             {key === index ?
-                            (sentence[key] === ' ' ?
-                            <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</TextWink>
-                            : <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#c62828', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink> )
-                            : (key < index ?
-                            <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
-                            : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text> )}
+                                (sentence[key] === ' ' ?
+                                    <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</TextWink>
+                                    : <TextWink key={key} duration={500} textStyle={{ fontFamily: 'open-sans-bold', color: '#c62828', fontSize: fontSize, textAlign: 'center' }}>{letter}</TextWink>)
+                                : (key < index ?
+                                    <Text key={key} style={{ fontFamily: 'open-sans-bold', color: '#1C3956', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>
+                                    : <Text key={key} style={{ fontFamily: 'open-sans-bold', color: 'rgba(28, 57, 86, 0.397)', fontSize: fontSize, textAlign: 'center' }}>{navigation.getParam('name')[key]}</Text>)}
                         </Card>
                     );
                 })}
@@ -206,7 +213,7 @@ class ExerciseComponent extends React.Component {
                 }
                 {
                     this.state.playFailure &&
-                    <MySound source={require('../../assets/sounds/fail.m4a')} play={true} loop={false}/>
+                    <MySound source={require('../../assets/sounds/fail.m4a')} play={true} loop={false} />
                 }
                 <Button
                     icon="arrow-left"
@@ -218,7 +225,7 @@ class ExerciseComponent extends React.Component {
                 <View style={styles.handContainer}>
                     {sequenceStatus === true ?
                         <Animation text={navigation.getParam('name').toLowerCase()} stopAnimation={this.stopAnimation}
-                        imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={stylesHand.hand}/>
+                            imageSize={this.state.imageSize} imagePos={this.state.imagePos} style={stylesHand.hand} />
                         :
                         null
                     }

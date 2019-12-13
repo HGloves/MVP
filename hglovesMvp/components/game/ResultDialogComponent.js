@@ -35,7 +35,7 @@ class ResultDialogComponent extends React.Component {
                         visible={status}
                         onDismiss={() => handleClose(false)}>
                         <ImageBackground source={backgroundImage} resizeMode='cover' style={styles.container}>
-                            <View style={styles.firstPlayerContainer}>
+                            <TouchableOpacity onPress={() => handleClose(false)} style={styles.firstPlayerContainer}>
                                 <View style={{ ...styles.nameContainer, marginBottom: '10%' }}>
                                     <Image source={playerOneImage} style={styles.playerImage} />
                                     <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -53,8 +53,8 @@ class ResultDialogComponent extends React.Component {
                                         <Text style={styles.nameStatText}>Précision</Text>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={styles.secondPlayerContainer}>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleClose(false)} style={styles.secondPlayerContainer}>
                                 <View style={styles.statsContainer}>
                                     <View style={styles.statTextContainer}>
                                         <Text style={styles.numberStatText}>{time[1]}</Text>
@@ -72,7 +72,7 @@ class ResultDialogComponent extends React.Component {
                                     </View>
                                     <Image source={playerTwoImage} style={styles.playerImage} />
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                             <MoveComponent play={true} style={{ position: 'absolute', left: trophyImageLeft, top: trophyImageTop }} dest={{ x: 0, y: ScreenDim.height * 40 / 100 / 3.5 * (time[0] < time[1] ? -1 : 1)}}>
                                 <Image source={trophyImage} style={styles.trophyImage} />
                             </MoveComponent>

@@ -126,8 +126,13 @@ class TwoPlayerComponent extends React.Component {
     }
 
     handleCheckStatus = status => {
+        const { navigation } = this.props;
+
         this.setState({
             checkStatus: status
+        }, () => {
+            if (status === false)
+                navigation.navigate("Game")
         });
     }
 
@@ -235,17 +240,19 @@ class TwoPlayerComponent extends React.Component {
             <LinearGradient
                 colors={gradientValues[1]}
                 style={styles.container}>
+                <TouchableOpacity style={styles.container} onPress={this.handleTransitionScreenClose}>
                     <AppearSide play start={"left"} duration={500}>
                         <Text style={{ ...styles.basicText, fontSize: 50 }}>{'Votre adversaire a mis ' + stopWatchValue[0].toString() + 's'}</Text>
                     </AppearSide>
                     <AppearSide play duration={500}>
-                    <Text style={{ ...styles.basicText, fontSize: 70 }}>Arrivez-vous à le battre ?</Text>
+                        <Text style={{ ...styles.basicText, fontSize: 70 }}>Arrivez-vous à le battre ?</Text>
                     </AppearSide>
                     <ComponentZoom initZoom={10} finalZoom={1} duration={500} play={this.state.go}>
-                <TouchableOpacity onPress={this.handleTransitionScreenClose}>
-                    <Text style={{ ...styles.basicText, fontSize: 120 }}>GO</Text>
-                </TouchableOpacity>
+                        <View>
+                            <Text style={{ ...styles.basicText, fontSize: 120 }}>GO</Text>
+                        </View>
                     </ComponentZoom>
+                </TouchableOpacity>
             </LinearGradient>
         )
     }

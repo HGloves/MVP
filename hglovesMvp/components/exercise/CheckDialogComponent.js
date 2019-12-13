@@ -22,10 +22,10 @@ class CheckDialogComponent extends React.Component {
                         style={{width: '60%', marginLeft: '20%'}}
                         visible={status}
                         onDismiss={() => handleClose(false)}>
-                        <View style={styles.container}>
+                        <TouchableOpacity onPress={() => handleClose(false)} style={styles.container}>
                             <Image source={checked} style={{ width: imageWidth, height: imageHeight }} />
                             <Text style={styles.dialogText}>Bien joué</Text>
-                        </View>
+                        </TouchableOpacity>
                     </Dialog>
                 </Portal>
             </View>
